@@ -12,8 +12,8 @@ Alias: $CondVerStatus = http://terminology.hl7.org/CodeSystem/condition-ver-stat
 Alias: $v3ActCode = http://terminology.hl7.org/CodeSystem/v3-ActCode
 
 // AICURA custom
-Alias: $AicuraCoding = https://aicura-medical.com/fhir/coding
-Alias: $AicuraSD = http://aicura-medical.com/fhir/StructureDefinition
+Alias: $AicuraCoding = https://aicuramedical.com/fhir/coding
+Alias: $AicuraSD = http://aicuramedical.com/fhir/StructureDefinition
 
 // External systems
 Alias: $PubChem = https://pubchem.ncbi.nlm.nih.gov/compound/

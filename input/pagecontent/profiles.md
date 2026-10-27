@@ -4,7 +4,7 @@ This IG defines thirteen FHIR R4B profiles:
 
 #### AicuraImagingStudy
 
-[AicuraImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on core elements (status, subject, started, description, series) and adds 15 series-level extensions for imaging acquisition metadata including voxel resolution, image resolution, MRI sequence, contrast weighting, PET tracer, and device information.
+[AicuraImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on identifier, status, subject, encounter, started, description, endpoint, series and its uid, number, modality, description, instance count, start, endpoint and body site; id, an identifier value and subject are required. It adds the patient's age at the study and 17 series-level extensions for imaging acquisition metadata including voxel resolution, image resolution, MRI sequence, contrast weighting, PET tracer, device information, age at the series and storage size.
 
 #### AicuraObservation
 

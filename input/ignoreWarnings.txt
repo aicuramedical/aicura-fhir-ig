@@ -1,8 +1,8 @@
 == Suppressed Messages ==
 # AICURA custom code systems use production URLs that differ from the IG canonical namespace
-%URL Mismatch http://aicura-medical.com/fhir/CodeSystem%
+%URL Mismatch http://aicuramedical.com/fhir/CodeSystem%
 # AICURA custom code systems are not registered in tx.fhir.org
-%https://aicura-medical.com/fhir/coding%
+%https://aicuramedical.com/fhir/coding%
 # PubChem is not a known FHIR terminology server
 %https://pubchem.ncbi.nlm.nih.gov/compound/%
 # DICOM modality URL is informational
@@ -28,6 +28,6 @@
 %has a status of DISCOURAGED%
 %is deprecated and its use should be reviewed%
 # Conformance resource canonical URL mismatch for AICURA custom code systems
-%the canonical URL (http://aicura-medical.com/fhir%
+%the canonical URL (http://aicuramedical.com/fhir%
 # IG dependency package ID mismatch (R4B inherits R4 extensions)
 %is inconsistent with the stated packageId%

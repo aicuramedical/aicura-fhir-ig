@@ -6,7 +6,7 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 
 | Resource | Profile | Description |
 |----------|---------|-------------|
-| ImagingStudy | [AicuraImagingStudy](StructureDefinition-imaging-study.html) | MRI and PET imaging studies with 15 series-level extensions for acquisition metadata |
+| ImagingStudy | [AicuraImagingStudy](StructureDefinition-imaging-study.html) | MRI and PET imaging studies with 17 series-level extensions for acquisition metadata |
 | Observation | [AicuraObservation](StructureDefinition-observation.html) | Clinical assessments, laboratory results, genetics, vital signs, and imaging-derived measurements |
 | Condition | [AicuraCondition](StructureDefinition-condition.html) | Neurological, cardiovascular, and other clinical conditions |
 | Patient | [AicuraPatient](StructureDefinition-patient.html) | Subject of record, with custom race and ethnicity extensions |
@@ -22,11 +22,11 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 
 #### Extensions
 
-The ImagingStudy profile includes 15 custom extensions on `ImagingStudy.series` for detailed acquisition metadata such as voxel resolution, MRI sequence type, PET tracer, and device information. Additional custom extensions cover `Race` and `Ethnicity` on Patient, and `Laterality` on BodyStructure. See [Extensions](extensions.html) for the full list.
+The ImagingStudy profile includes 17 custom extensions on `ImagingStudy.series` for detailed acquisition metadata such as voxel resolution, MRI sequence type, PET tracer, and device information, and one on `ImagingStudy` for the patient's age at the study. Additional custom extensions cover `Race` and `Ethnicity` on Patient, and `Laterality` on BodyStructure. See [Extensions](extensions.html) for the full list.
 
 #### Terminology
 
-Custom CodeSystems and ValueSets define AICURA-specific codes for MRI sequences, contrasts, device manufacturers, PET tracers, observation types, condition codes, encounter classes, body structures, laterality, location qualifiers, and race/ethnicity. External terminologies (SNOMED-CT, LOINC, MedDRA, DICOM, PubChem, HL7 v3 ActCode, and the US CDC Race & Ethnicity code system) are also referenced.
+One AICURA CodeSystem (`https://aicuramedical.com/fhir/coding`) for all AICURA-specific codes and AICURA ValueSets define the codes for MRI sequences, contrasts, device manufacturers, PET tracers, observation types, condition codes, encounter classes, body structures, laterality, location qualifiers, and race/ethnicity. External terminologies (SNOMED-CT, LOINC, MedDRA, DICOM, PubChem, HL7 v3 ActCode, and the US CDC Race & Ethnicity code system) are also referenced.
 
 #### Authors
 

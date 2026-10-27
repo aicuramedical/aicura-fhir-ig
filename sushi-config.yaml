@@ -1,5 +1,5 @@
 id: aicura.fhir.ig
-canonical: http://aicura-medical.com/fhir
+canonical: http://aicuramedical.com/fhir
 name: AicuraFHIRIG
 title: AICURA FHIR Implementation Guide
 status: draft
