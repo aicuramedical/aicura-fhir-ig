@@ -1,3 +1,23 @@
+Invariant: aic-mr-1
+Description: "An MR series carries a contrast and a sequence."
+Severity: #error
+Expression: "modality.code = 'MR' implies (extension('http://aicuramedical.com/fhir/StructureDefinition/Contrast').exists() and extension('http://aicuramedical.com/fhir/StructureDefinition/SeriesSequence').exists())"
+
+Invariant: aic-mr-2
+Description: "The sequence fits the contrast: T1w needs an IR/MPRAGE-type sequence, T2w TSE or FSE, T2w FLAIR FLAIR, TSE or FSE, T2*w GRE or SWI. Other contrasts are unrestricted; 'Unresolved Sequence Label' is always allowed."
+Severity: #error
+Expression: "extension('http://aicuramedical.com/fhir/StructureDefinition/Contrast').extension('contrast').value.code.exists() implies (
+  extension('http://aicuramedical.com/fhir/StructureDefinition/SeriesSequence').extension('sequence').value.code = 'Unresolved Sequence Label'
+  or ((extension('http://aicuramedical.com/fhir/StructureDefinition/Contrast').extension('contrast').value.code = 'T1w') implies extension('http://aicuramedical.com/fhir/StructureDefinition/SeriesSequence').extension('sequence').value.code in ('MPRAGE' | 'MP2RAGE' | 'IR-SPGR' | 'IR-FSPGR' | 'Accelerated IR-SPGR' | 'Accelerated IR-FSPGR' | 'TFE'))
+  and ((extension('http://aicuramedical.com/fhir/StructureDefinition/Contrast').extension('contrast').value.code = 'T2w') implies extension('http://aicuramedical.com/fhir/StructureDefinition/SeriesSequence').extension('sequence').value.code in ('TSE' | 'FSE'))
+  and ((extension('http://aicuramedical.com/fhir/StructureDefinition/Contrast').extension('contrast').value.code = 'T2w FLAIR') implies extension('http://aicuramedical.com/fhir/StructureDefinition/SeriesSequence').extension('sequence').value.code in ('FLAIR' | 'TSE' | 'FSE'))
+  and ((extension('http://aicuramedical.com/fhir/StructureDefinition/Contrast').extension('contrast').value.code = 'T2*w') implies extension('http://aicuramedical.com/fhir/StructureDefinition/SeriesSequence').extension('sequence').value.code in ('GRE' | 'SWI')))"
+
+Invariant: aic-pt-1
+Description: "A PET series carries a tracer."
+Severity: #error
+Expression: "modality.code = 'PT' implies extension('http://aicuramedical.com/fhir/StructureDefinition/Tracer').exists()"
+
 Profile: AicuraImagingStudy
 Parent: ImagingStudy
 Id: imaging-study
@@ -20,6 +40,7 @@ Description: "Constrained ImagingStudy profile for AICURA's medical imaging data
 * extension contains
     AicuraAgeAtImagingStudy named ageAtImagingStudy 0..1 MS
 * series MS
+* series obeys aic-mr-1 and aic-mr-2 and aic-pt-1
 // Series backbone must-support
 * series.uid MS
 * series.number MS
