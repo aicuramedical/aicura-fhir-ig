@@ -19,5 +19,4 @@ Alias: $AicuraSD = http://aicuramedical.com/fhir/StructureDefinition
 
 // External systems
 Alias: $PubChem = https://pubchem.ncbi.nlm.nih.gov/compound/
-Alias: $DICOMModality = https://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_29.html
 Alias: $MedDRA = https://www.meddra.org/

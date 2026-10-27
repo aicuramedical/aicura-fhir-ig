@@ -24,6 +24,8 @@ Description: "Constrained ImagingStudy profile for AICURA's medical imaging data
 * series.uid MS
 * series.number MS
 * series.modality MS
+* series.modality from AicuraImagingModalityVS (extensible)
+* series.modality ^comment = "Code system is DICOM (http://dicom.nema.org/resources/ontology/DCM). The CID 29 web page URL identifies the value set, not the code system."
 * series.description MS
 * series.numberOfInstances MS
 * series.started MS
