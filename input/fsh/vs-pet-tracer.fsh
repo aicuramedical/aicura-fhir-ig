@@ -1,7 +1,7 @@
 ValueSet: AicuraPETTracerVS
 Id: aicura-pet-tracer
 Title: "AICURA PET Tracer ValueSet"
-Description: "PET radiotracer compounds used in AICURA imaging studies."
+Description: "PET radiotracer compounds used in AICURA imaging studies, coded by PubChem compound ID (CID)."
 * ^experimental = false
 * $PubChem#68614 "Fluorodeoxyglucose F-18"
 * $PubChem#15950376 "Flutemetamol F-18"
@@ -12,6 +12,6 @@ Description: "PET radiotracer compounds used in AICURA imaging studies."
 * $PubChem#17755050 "Florbenazine F-18"
 * $PubChem#2826731 "Pittsburgh Compound B"
 * $PubChem#134202705 "Izaflortaucipir"
-* $PubChem#507524301 "Florquinitau F-18"
+* $PubChem#118577045 "Florquinitau F-18"
 * $PubChem#3086674 "Ioflupane I-123" // DaTscan, on NM (SPECT) series
 * $AicuraCoding#"Unresolved Tracer Label" "Unresolved Tracer Label"
