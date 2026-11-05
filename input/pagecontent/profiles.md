@@ -1,6 +1,6 @@
 ### Profiles
 
-This IG defines seventeen FHIR R4B profiles. All of them follow the [Shared Rules](shared-rules.html), e.g. every identifier names its issuer in `system`.
+This IG defines eighteen FHIR R4B profiles. All of them follow the [Shared Rules](shared-rules.html), e.g. every identifier names its issuer in `system`.
 
 #### AicuraImagingStudy
 
@@ -40,9 +40,30 @@ Each MR series carries one extension, [ModalityMR](StructureDefinition-ModalityM
 | `acquisitionPlane` | Axial, sagittal or coronal (SNOMED CT) | derived | CodeableConcept, [AicuraAcquisitionPlaneVS](ValueSet-aicura-acquisition-plane.html) (extensible) |
 
 - **Sequence name next to the technique codes.** The DICOM technique codes say which physics class a sequence belongs to; they are too coarse to select cohorts. Neurodegeneration research selects series by sequence name ("3D T1 MPRAGE"), so the name is kept as its own part.
-- **Contrast weighting** is the image weighting, the first criterion imaging researchers filter by (T1w for volume measurements, FLAIR for white-matter lesions). It is not the contrast agent, which is recorded separately.
+- **Contrast weighting** is the image weighting, the first criterion imaging researchers filter by (T1w for volume measurements, FLAIR for white-matter lesions). It is not the contrast agent, which is recorded through the series' link to the administration (below).
 - **Coded AICURA parts** carry a coding and its label (`text`); both are required.
 - **Rules:** an MR series carries the extension with a contrast weighting and a sequence name (`aic-mr-1`), and the sequence name fits the weighting (`aic-mr-2`): T1w needs an IR/MPRAGE-type sequence, T2w TSE or FSE, T2w FLAIR FLAIR, TSE or FSE, and T2\*w GRE or SWI. Other weightings accept any sequence; "Unresolved Sequence Label" is always allowed.
+
+##### PET and SPECT: tracer and injection
+
+PET and SPECT series carry their tracer details in [ModalityPT](StructureDefinition-ModalityPT.html) (modality PT) or [ModalityNM](StructureDefinition-ModalityNM.html) (modality NM, SPECT), shaped like MII's PET and NM extensions (`mii-ex-bildgebung-modalitaet-pt`, `-nm`). The first four parts keep MII's names, types and units; the last two are AICURA's.
+
+| Part | Content | Type |
+|---|---|---|
+| `radiopharmaceutical` | Tracer | CodeableConcept |
+| `radionuclide` | Radionuclide, e.g. 18F | CodeableConcept, DICOM CID 4020 (PET) or CID 18 (SPECT), extensible |
+| `radionuclideTotalDose` | Administered activity | Quantity, UCUM `Bq` |
+| `radionuclideHalfLife` | Half-life of the radionuclide | Quantity, UCUM `s` |
+| `injectionTime` | Injection time, as DICOM Radiopharmaceutical Start DateTime (0018,1078) | dateTime |
+| `acquisitionPlane` | Axial, sagittal or coronal (SNOMED CT) | CodeableConcept, [AicuraAcquisitionPlaneVS](ValueSet-aicura-acquisition-plane.html) (extensible) |
+
+A PET series carries the extension with a tracer (`aic-pt-1`).
+
+The injection itself is recorded once, as a [MedicationAdministration](StructureDefinition-medication-administration.html) that names the substance ([Medication](StructureDefinition-medication.html)) and holds dose (`dosage.dose`) and injection time (`effective[x]`). Each series points to it with the extension [SeriesMedicationAdministration](StructureDefinition-SeriesMedicationAdministration.html), so one record serves all series acquired after the same injection. Contrast agents use the same link.
+
+Tracer, dose and injection time are therefore recorded twice: in the PET or SPECT extension, where MII systems expect them, and in the administration record. Both are filled from one source, the one known to be correct for the dataset: curated study data where available, the scanner header where its values have been checked. Scanner headers alone are not reliable for these values. Filled from one source, the two always agree.
+
+The acquisition plane is a part of each modality extension (MR, PET, SPECT). Further modalities, such as CT, get a modality extension with the plane when a dataset needs one.
 
 ##### Linking a result to a series
 
@@ -90,11 +111,15 @@ The lab profile follows the structure of the MII lab module (laboratory category
 
 #### AicuraMedication
 
-[AicuraMedication](StructureDefinition-medication.html) constrains Medication with must-support on code, status, manufacturer, form, amount, ingredient, and batch. It defines the medications referenced by medication statements.
+[AicuraMedication](StructureDefinition-medication.html) constrains Medication with must-support on code, status, manufacturer, form, amount, ingredient, and batch. It defines the medications referenced by medication statements and administrations.
 
 #### AicuraMedicationStatement
 
 [AicuraMedicationStatement](StructureDefinition-medication-statement.html) constrains MedicationStatement with must-support on status, statusReason, category, medication, subject, context, effective, dateAsserted, informationSource, reasonCode, reasonReference, and dosage. This is the medication resource included in AICURA's FHIR Bundle export.
+
+#### AicuraMedicationAdministration
+
+[AicuraMedicationAdministration](StructureDefinition-medication-administration.html) constrains MedicationAdministration with must-support on status, medication, subject, context, effective, dosage, route and dose. It records a tracer or contrast agent administered for imaging; the medication is a reference to an [AicuraMedication](StructureDefinition-medication.html), and imaging series point to the administration through the [SeriesMedicationAdministration](StructureDefinition-SeriesMedicationAdministration.html) extension.
 
 #### AicuraResearchStudy
 

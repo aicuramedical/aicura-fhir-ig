@@ -1,12 +1,12 @@
 ### AICURA FHIR Implementation Guide
 
-This Implementation Guide (IG) formally profiles the FHIR R4B resources implemented by **AICURA Medical's** clinical data platform. The guide covers thirteen resource types in seventeen profiles, with associated terminology and extensions.
+This Implementation Guide (IG) formally profiles the FHIR R4B resources implemented by **AICURA Medical's** clinical data platform. The guide covers fourteen resource types in eighteen profiles, with associated terminology and extensions.
 
 #### Scope
 
 | Resource | Profile | Description |
 |----------|---------|-------------|
-| ImagingStudy | [AicuraImagingStudy](StructureDefinition-imaging-study.html) | MRI and PET imaging studies with series-level extensions for acquisition metadata |
+| ImagingStudy | [AicuraImagingStudy](StructureDefinition-imaging-study.html) | MRI, PET and SPECT imaging studies with series-level extensions for acquisition metadata |
 | Observation | [AicuraObservation](StructureDefinition-observation.html) | Common parent of the Observation profiles per kind of result; used directly for kinds without their own profile (e.g. genetics) |
 | Observation | [AicuraObservationLab](StructureDefinition-observation-lab.html) | Lab values |
 | Observation | [AicuraObservationScore](StructureDefinition-observation-score.html) | Clinical scores |
@@ -17,6 +17,7 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 | Encounter | [AicuraEncounter](StructureDefinition-encounter.html) | Study visits and clinical contacts |
 | Procedure | [AicuraProcedure](StructureDefinition-procedure.html) | Procedures as in base FHIR (no study dataset provides them) |
 | Medication | [AicuraMedication](StructureDefinition-medication.html) | Medication definitions referenced by medication statements |
+| MedicationAdministration | [AicuraMedicationAdministration](StructureDefinition-medication-administration.html) | Tracer or contrast agent administered for imaging, linked from the imaging series |
 | MedicationStatement | [AicuraMedicationStatement](StructureDefinition-medication-statement.html) | Reported patient medication usage (the medication resource in the FHIR Bundle export) |
 | ResearchStudy | [AicuraResearchStudy](StructureDefinition-research-study.html) | Research studies (e.g. ADNI cohorts) patients are enrolled in |
 | ResearchSubject | [AicuraResearchSubject](StructureDefinition-research-subject.html) | Patient enrollment in a research study |
@@ -30,7 +31,7 @@ Rules that apply to all profiles, such as how identifiers name their issuer and 
 
 #### Extensions
 
-The ImagingStudy profile includes custom extensions on `ImagingStudy.series` for detailed acquisition metadata such as the MR acquisition details, voxel resolution, PET tracer, and device information, and one on `ImagingStudy` for the patient's age at the study. Additional custom extensions cover `Race` and `Ethnicity` on Patient, `BodyStructureLaterality` on BodyStructure, the patient's age at each event (observation, encounter, condition, participation, procedure), and the links from an Observation and its components to body structures and analysis devices. See [Extensions](extensions.html) for the full list.
+The ImagingStudy profile includes custom extensions on `ImagingStudy.series` for detailed acquisition metadata such as the MR, PET and SPECT acquisition details, the link to the tracer or contrast administration, voxel resolution, and device information, and one on `ImagingStudy` for the patient's age at the study. Additional custom extensions cover `Race` and `Ethnicity` on Patient, `BodyStructureLaterality` on BodyStructure, the patient's age at each event (observation, encounter, condition, participation, procedure), and the links from an Observation and its components to body structures and analysis devices. See [Extensions](extensions.html) for the full list.
 
 #### Terminology
 

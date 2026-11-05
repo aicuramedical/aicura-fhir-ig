@@ -12,11 +12,12 @@ The following extensions are defined on `ImagingStudy.series` and capture imagin
 | [IsotropicImageResolution](StructureDefinition-IsotropicImageResolution.html) | Boolean | Whether image resolution is isotropic |
 | [NumberOfFrames](StructureDefinition-NumberOfFrames.html) | Integer | Number of frames/slices |
 | [ModalityMR](StructureDefinition-ModalityMR.html) | Complex (10 parts) | MR acquisition details: field strength, technique codes, TE, TR, TI and flip angle (shaped like MII's MR extension, UCUM units), plus sequence name, contrast weighting and plane |
+| [ModalityPT](StructureDefinition-ModalityPT.html) | Complex (6 parts) | PET tracer, radionuclide, dose and half-life (shaped like MII's PET extension, UCUM units), plus injection time and plane |
+| [ModalityNM](StructureDefinition-ModalityNM.html) | Complex (6 parts) | SPECT (NM) tracer, radionuclide, dose and half-life (shaped like MII's NM extension, UCUM units), plus injection time and plane |
+| [SeriesMedicationAdministration](StructureDefinition-SeriesMedicationAdministration.html) | Reference (MedicationAdministration) | The administration of a tracer or contrast agent for this series |
 | [DeviceManufacturer](StructureDefinition-DeviceManufacturer.html) | Complex (Coding + label) | Imaging device manufacturer |
 | [device-model](StructureDefinition-device-model.html) | Complex (Coding + label) | Imaging device model |
 | [DeviceId](StructureDefinition-DeviceId.html) | String | Imaging device identifier |
-| [Tracer](StructureDefinition-Tracer.html) | Complex (Coding + label) | PET radiotracer compound |
-| [AcquisitionPlane](StructureDefinition-AcquisitionPlane.html) | Complex (Coding + label) | Anatomical acquisition plane |
 | [Dimension](StructureDefinition-Dimension.html) | Complex (Coding + label) | 2D or 3D dimensionality |
 | [AgeAtImagingSeries](StructureDefinition-AgeAtImagingSeries.html) | Integer | Patient age at the series date |
 | [ImagingSeriesSize](StructureDefinition-ImagingSeriesSize.html) | Quantity | Storage size of the series files |

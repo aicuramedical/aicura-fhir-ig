@@ -14,9 +14,9 @@ Expression: "extension('http://aicuramedical.com/fhir/StructureDefinition/Modali
   and ((extension('contrastWeighting').value.coding.code = 'T2*w') implies extension('sequenceName').value.coding.code in ('GRE' | 'SWI'))))"
 
 Invariant: aic-pt-1
-Description: "A PET series carries a tracer."
+Description: "A PET series carries the PET extension with a radiopharmaceutical."
 Severity: #error
-Expression: "modality.code = 'PT' implies extension('http://aicuramedical.com/fhir/StructureDefinition/Tracer').exists()"
+Expression: "modality.code = 'PT' implies extension('http://aicuramedical.com/fhir/StructureDefinition/ModalityPT').extension('radiopharmaceutical').exists()"
 
 Invariant: aic-is-1
 Description: "The Study Instance UID identifier holds the resource id as urn:oid:<id>."
@@ -75,7 +75,7 @@ Description: "Constrained ImagingStudy profile for AICURA's medical imaging data
 * series.endpoint ^comment = "Link to the series in the image archive; preferred over the study endpoint when both exist."
 * series.instance ^comment = "Not required: the profile catalogues series and points to the image archive, where single images are retrieved through the endpoints."
 * series.bodySite MS
-// Series extensions (all 0..1); value set bindings sit in the coded extensions
+// Series extensions; value set bindings sit in the extensions
 * series.extension contains
     AicuraVoxelResolution named voxelResolution 0..1 MS and
     AicuraImageResolution named imageResolution 0..1 MS and
@@ -86,8 +86,9 @@ Description: "Constrained ImagingStudy profile for AICURA's medical imaging data
     AicuraDeviceModel named deviceModel 0..1 MS and
     AicuraDeviceId named deviceId 0..1 MS and
     AicuraModalityMR named modalityMR 0..1 MS and
-    AicuraTracer named tracer 0..1 MS and
-    AicuraAcquisitionPlane named acquisitionPlane 0..1 MS and
+    AicuraModalityPT named modalityPT 0..1 MS and
+    AicuraModalityNM named modalityNM 0..1 MS and
+    AicuraSeriesMedicationAdministration named medicationAdministration 0..* MS and
     AicuraDimension named dimension 0..1 MS and
     AicuraAgeAtImagingSeries named ageAtImagingSeries 0..1 MS and
     AicuraImagingSeriesSize named size 0..1 MS

@@ -24,3 +24,7 @@ Alias: $MedDRA = https://www.meddra.org/
 // MII imaging module (IG dependency de.medizininformatikinitiative.kerndatensatz.bildgebung)
 Alias: $MIIScanningSequenceVS = https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/ValueSet/mii-vs-bildgebung-mr-scanning-sequence
 Alias: $MIIScanningSequenceVariantVS = https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/ValueSet/mii-vs-bildgebung-mr-scanning-sequence-variant
+
+// DICOM value sets (package fhir.dicom)
+Alias: $DicomCID4020 = http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_4020.html
+Alias: $DicomCID18 = http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_18.html
