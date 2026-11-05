@@ -4,6 +4,7 @@ Id: consent
 Title: "AICURA Consent"
 Description: "Constrained Consent profile for AICURA's clinical data model, capturing a patient's consent for research participation and data use."
 * insert MetaProfile(consent)
+* insert IdentifierSystem
 // Must-support elements
 * status MS
 * scope MS

@@ -1,6 +1,12 @@
 RuleSet: MetaProfile(profile)
 * ^url = "http://aicuramedical.com/fhir/StructureDefinition/{profile}"
 
+// Every identifier names who issued it: an AICURA system per dataset and kind
+// of number, or the number's global scheme.
+RuleSet: IdentifierSystem
+* identifier.system 1..1
+* identifier.system ^short = "Issuer: http://aicuramedical.com/fhir/sid/<dataset>/<kind>, or the number's global scheme"
+
 RuleSet: ExtensionContext(path)
 * ^context[+].type = #element
 * ^context[=].expression = "{path}"

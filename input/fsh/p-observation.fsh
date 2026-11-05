@@ -5,6 +5,7 @@ Title: "AICURA Observation"
 Description: "Common parent of AICURA's Observation profiles per kind of result: lab value, clinical score and imaging-derived measure. Results of a kind without its own profile (e.g. genetics) use it directly. The vital-sign profile shares its common rules but derives from FHIR's vital-signs profile."
 * insert MetaProfile(observation)
 * insert ObservationCommon
+* insert IdentifierSystem
 // Must-support elements
 * status MS
 * category MS

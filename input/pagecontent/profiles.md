@@ -1,6 +1,6 @@
 ### Profiles
 
-This IG defines seventeen FHIR R4B profiles:
+This IG defines seventeen FHIR R4B profiles. All of them follow the [Shared Rules](shared-rules.html), e.g. every identifier names its issuer in `system`.
 
 #### AicuraImagingStudy
 
@@ -31,7 +31,7 @@ The lab profile follows the structure of the MII lab module (laboratory category
 
 #### AicuraPatient
 
-[AicuraPatient](StructureDefinition-patient.html) constrains Patient with must-support on identifier, gender, birthDate, and deceased. It adds `race` and `ethnicity` extensions bound to the [AicuraRaceEthnicityVS](ValueSet-aicura-race-ethnicity.html) (US CDC Race & Ethnicity code system); these mirror the US Core race/ethnicity extensions without taking a US Core dependency.
+[AicuraPatient](StructureDefinition-patient.html) constrains Patient with must-support on identifier, gender, birthDate, and deceased. It adds `race` and `ethnicity` extensions bound to the [AicuraRaceEthnicityVS](ValueSet-aicura-race-ethnicity.html) (US CDC Race & Ethnicity code system); these mirror the US Core race/ethnicity extensions without taking a US Core dependency. Patient identifiers are typed as pseudonyms (`PSEUDED`).
 
 #### AicuraEncounter
 
@@ -39,7 +39,7 @@ The lab profile follows the structure of the MII lab module (laboratory category
 
 #### AicuraProcedure
 
-[AicuraProcedure](StructureDefinition-procedure.html) leaves Procedure as in base FHIR R4B, without must-support flags or bindings. The `AgeAtProcedure` extension records the patient's age at the procedure. No AICURA study dataset provides procedures; the platform holds them from other clinical sources.
+[AicuraProcedure](StructureDefinition-procedure.html) leaves Procedure as in base FHIR R4B apart from the [Shared Rules](shared-rules.html), without bindings or must-support flags of its own. The `AgeAtProcedure` extension records the patient's age at the procedure. No AICURA study dataset provides procedures; the platform holds them from other clinical sources.
 
 #### AicuraMedication
 
@@ -55,7 +55,7 @@ The lab profile follows the structure of the MII lab module (laboratory category
 
 #### AicuraResearchSubject
 
-[AicuraResearchSubject](StructureDefinition-research-subject.html) constrains ResearchSubject with must-support on identifier, status, period, study, individual, assignedArm, and actualArm. The `AgeAtResearch` extension records the patient's age at the start of the participation.
+[AicuraResearchSubject](StructureDefinition-research-subject.html) constrains ResearchSubject with must-support on identifier, status, period, study, individual, assignedArm, and actualArm. Participant codes are typed as anonymised (`ANON`). The `AgeAtResearch` extension records the patient's age at the start of the participation.
 
 #### AicuraConsent
 

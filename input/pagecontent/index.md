@@ -24,6 +24,10 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 | Device | [AicuraDevice](StructureDefinition-device.html) | Imaging scanners and other devices referenced by clinical resources |
 | BodyStructure | [AicuraBodyStructure](StructureDefinition-body-structure.html) | Anatomical sites (neuroimaging focus) with a custom laterality extension |
 
+#### Shared rules
+
+Rules that apply to all profiles, such as how identifiers name their issuer, are on the [Shared Rules](shared-rules.html) page.
+
 #### Extensions
 
 The ImagingStudy profile includes 17 custom extensions on `ImagingStudy.series` for detailed acquisition metadata such as voxel resolution, MRI sequence type, PET tracer, and device information, and one on `ImagingStudy` for the patient's age at the study. Additional custom extensions cover `Race` and `Ethnicity` on Patient, `BodyStructureLaterality` on BodyStructure, the patient's age at each event (observation, encounter, condition, participation, procedure), and the links from an Observation and its components to body structures and analysis devices. See [Extensions](extensions.html) for the full list.

@@ -4,6 +4,7 @@ Id: device
 Title: "AICURA Device"
 Description: "Constrained Device profile for AICURA's clinical data model, representing imaging scanners and other devices referenced by clinical and imaging resources."
 * insert MetaProfile(device)
+* insert IdentifierSystem
 // Must-support elements
 * identifier MS
 * udiCarrier MS

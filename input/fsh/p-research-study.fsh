@@ -4,6 +4,7 @@ Id: research-study
 Title: "AICURA ResearchStudy"
 Description: "Constrained ResearchStudy profile for AICURA's clinical research data model, describing the studies (e.g. ADNI cohorts) that patients are enrolled in."
 * insert MetaProfile(research-study)
+* insert IdentifierSystem
 // Must-support elements
 * identifier MS
 * title MS
