@@ -48,6 +48,12 @@ Description: "AICURA-local concepts, maintained in the AICURA concepts database.
 // Observations
 * #"Global score [CDR]" "Global score [CDR]"
 * #"Sum of Boxes [CDR]" "Sum of Boxes [CDR]"
+* #"Memory [CDR]" "Memory [CDR]"
+* #"Orientation [CDR]" "Orientation [CDR]"
+* #"Judgment and problem solving [CDR]" "Judgment and problem solving [CDR]"
+* #"Community affairs [CDR]" "Community affairs [CDR]"
+* #"Home and hobbies [CDR]" "Home and hobbies [CDR]"
+* #"Personal care [CDR]" "Personal care [CDR]"
 * #"Total Score [NPI-Q]" "Total Score [NPI-Q]"
 * #"Total Score [NPI-10]" "Total Score [NPI-10]"
 * #"Total Score [ADASCog13]" "Total Score [ADASCog13]"
