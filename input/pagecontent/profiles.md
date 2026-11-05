@@ -217,4 +217,14 @@ FHIR R4B has no element that links an Observation to a BodyStructure; HL7's work
 
 #### AicuraBodyStructure
 
-[AicuraBodyStructure](StructureDefinition-body-structure.html) constrains BodyStructure with must-support on identifier, active, morphology, location, locationQualifier, description, and patient. The `location` and `locationQualifier` elements are bound to the [AicuraBodyStructureVS](ValueSet-aicura-body-structure.html) and [AicuraLocationQualifierVS](ValueSet-aicura-location-qualifier.html) respectively, and a custom `laterality` extension ([BodyStructureLaterality](StructureDefinition-BodyStructureLaterality.html), bound to [AicuraLateralityVS](ValueSet-aicura-laterality.html)) captures body side, which base BodyStructure does not model.
+[AicuraBodyStructure](StructureDefinition-body-structure.html) constrains BodyStructure with must-support on identifier, active, morphology, location, locationQualifier, description, and patient. It describes anatomical sites, mainly the brain regions that imaging-derived measures refer to. A brain region has three parts:
+
+| Part | Element | Example | Value set |
+|---|---|---|---|
+| Structure | `location` | Anterior cingulate cortex | [AicuraBodyStructureVS](ValueSet-aicura-body-structure.html) (extensible) |
+| Side | extension [BodyStructureLaterality](StructureDefinition-BodyStructureLaterality.html) | Left | [AicuraLateralityVS](ValueSet-aicura-laterality.html) (extensible) |
+| Position | `locationQualifier` | Caudal | [AicuraLocationQualifierVS](ValueSet-aicura-location-qualifier.html) (extensible) |
+
+##### Side and position
+
+The side (left, right, bilateral) has its own field, the extension BodyStructureLaterality, apart from the position in `locationQualifier`. FHIR R4B and MII put both into `locationQualifier`; FHIR R5 and R6 give the side its own element, `includedStructure.laterality`, next to the position in `includedStructure.qualifier`. AICURA follows that separation in a flat form, since each region is one atlas structure with one side; the nested `includedStructure` serves regions made of several structures, which atlas regions are not. With the move to R6, `location` becomes `includedStructure.structure`, the extension `includedStructure.laterality` and `locationQualifier` `includedStructure.qualifier`. A reader that does not know the extension sees the side only in the region's name. An export to MII copies the side into `locationQualifier`.

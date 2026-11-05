@@ -61,4 +61,4 @@ These extensions are defined on the clinical and demographic profiles added alon
 |-----------|---------|------|-------------|
 | [Race](StructureDefinition-Race.html) | Patient | CodeableConcept | Patient race (US CDC Race & Ethnicity code system) |
 | [Ethnicity](StructureDefinition-Ethnicity.html) | Patient | CodeableConcept | Patient ethnicity (US CDC Race & Ethnicity code system) |
-| [BodyStructureLaterality](StructureDefinition-BodyStructureLaterality.html) | BodyStructure | CodeableConcept | Body side laterality (left, right, bilateral) |
+| [BodyStructureLaterality](StructureDefinition-BodyStructureLaterality.html) | BodyStructure | CodeableConcept | Body side (left, right, bilateral), apart from the position in `locationQualifier`, as in FHIR R6's `includedStructure.laterality` |
