@@ -163,7 +163,13 @@ The lab profile follows the structure of the MII lab module (laboratory category
 
 Base FHIR and MII's lab module both provide `method` and `device` for this; the profile makes the device link must-support.
 
-**No body site.** A lab value carries no `bodySite` (0..0), as in MII's lab profile: the sample type (CSF, plasma, serum) is part of the LOINC code. Body sites remain for the other kinds of result, e.g. imaging-derived measures.
+**No body site.** A lab value carries no `bodySite` (0..0), as in MII's lab profile: the sample type (CSF, plasma, serum) is part of the LOINC code. Other kinds of result keep it.
+
+**Codes.** A lab value takes a LOINC code wherever LOINC has the analyte. Analytes without a LOINC term (e.g. CSF neurogranin, GAP-43, sTREM2, plasma p-tau217 by mass spectrometry) carry an AICURA code. The IG sets no fixed order of code systems: MII sets one per lab profile, while AICURA's code list is one open (extensible) value set for all kinds of result.
+
+**One record per value; no report or order.** Each lab value is its own record. MII groups values in a lab report (DiagnosticReport) with its order (ServiceRequest), which hold report and order numbers that study data don't have; this IG models neither.
+
+**Date of a result.** `effective[x]` of a lab value is the date the sample was taken (e.g. the lumbar puncture), which is what MII's result date means. Scores and vital signs carry the visit date.
 
 ##### Clinical scores
 
@@ -178,6 +184,10 @@ Every score is a quantity (`valueQuantity`) with the UCUM code `{score}` (system
 ```
 
 Scores stay Observations; a scored questionnaire with its item answers (Questionnaire and QuestionnaireResponse) may follow later.
+
+Scores that belong together, such as the CDR global score, its sum of boxes and its six domains, are separate records, each with its own code, linked by visit and date; no record groups them. An instrument's version or range stays in the code text (e.g. ADASCog13, NPI-10).
+
+Years of education (LOINC `82590-1`) is not a score: it is a quantity in years (UCUM `a`).
 
 ##### Vital signs
 
