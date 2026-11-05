@@ -22,7 +22,7 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 
 #### Extensions
 
-The ImagingStudy profile includes 17 custom extensions on `ImagingStudy.series` for detailed acquisition metadata such as voxel resolution, MRI sequence type, PET tracer, and device information, and one on `ImagingStudy` for the patient's age at the study. Additional custom extensions cover `Race` and `Ethnicity` on Patient, and `Laterality` on BodyStructure. See [Extensions](extensions.html) for the full list.
+The ImagingStudy profile includes 17 custom extensions on `ImagingStudy.series` for detailed acquisition metadata such as voxel resolution, MRI sequence type, PET tracer, and device information, and one on `ImagingStudy` for the patient's age at the study. Additional custom extensions cover `Race` and `Ethnicity` on Patient, `BodyStructureLaterality` on BodyStructure, the patient's age at the observation, and the links from an Observation and its components to body structures and analysis devices. See [Extensions](extensions.html) for the full list.
 
 #### Terminology
 

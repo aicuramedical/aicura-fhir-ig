@@ -14,7 +14,7 @@ Description: "Constrained BodyStructure profile for AICURA's clinical data model
 * patient MS
 * patient only Reference(Patient)
 // Custom extension (BodyStructure has no base laterality element)
-* extension contains AicuraLaterality named laterality 0..1 MS
+* extension contains AicuraBodyStructureLaterality named laterality 0..1 MS
 * extension[laterality].valueCodeableConcept from AicuraLateralityVS (extensible)
 // ValueSet bindings
 * location from AicuraBodyStructureVS (extensible)

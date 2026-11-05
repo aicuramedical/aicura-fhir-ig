@@ -32,6 +32,17 @@ The coded extensions carry a `Coding` and its label as two sub-extensions, both 
 |-----------|------|-------------|
 | [AgeAtImagingStudy](StructureDefinition-AgeAtImagingStudy.html) | Integer | Patient age at the study date |
 
+#### Observation extensions
+
+These extensions link an Observation and its components to the body structure (e.g. a brain region) and the analysis software a value comes from, and record the patient's age at the observation.
+
+| Extension | Context | Type | Description |
+|-----------|---------|------|-------------|
+| [AgeAtObservation](StructureDefinition-AgeAtObservation.html) | Observation | Integer | Patient age at the observation's effective date |
+| [ObservationBodyStructure](StructureDefinition-ObservationBodyStructure.html) | Observation | Reference(BodyStructure) | Body structure the observation's value refers to |
+| [ObservationComponentBodyStructure](StructureDefinition-ObservationComponentBodyStructure.html) | Observation.component | Reference(BodyStructure) | Body structure the component's value refers to |
+| [ObservationComponentDevice](StructureDefinition-ObservationComponentDevice.html) | Observation.component | Reference(Device) | Device (analysis software) that produced the component's value |
+
 #### Cross-resource extensions
 
 These extensions are defined on the clinical and demographic profiles added alongside ImagingStudy.
@@ -40,4 +51,4 @@ These extensions are defined on the clinical and demographic profiles added alon
 |-----------|---------|------|-------------|
 | [Race](StructureDefinition-Race.html) | Patient | CodeableConcept | Patient race (US CDC Race & Ethnicity code system) |
 | [Ethnicity](StructureDefinition-Ethnicity.html) | Patient | CodeableConcept | Patient ethnicity (US CDC Race & Ethnicity code system) |
-| [Laterality](StructureDefinition-Laterality.html) | BodyStructure | CodeableConcept | Body side laterality (left, right, bilateral) |
+| [BodyStructureLaterality](StructureDefinition-BodyStructureLaterality.html) | BodyStructure | CodeableConcept | Body side laterality (left, right, bilateral) |
