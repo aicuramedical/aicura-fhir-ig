@@ -24,7 +24,7 @@ This IG defines thirteen FHIR R4B profiles:
 
 #### AicuraProcedure
 
-[AicuraProcedure](StructureDefinition-procedure.html) constrains Procedure with must-support on status, category, code, subject, encounter, performed, performer, location, reasonCode, reasonReference, bodySite, outcome, complication, followUp, focalDevice, usedReference, and usedCode. The `bodySite` element is bound to the [AicuraBodyStructureVS](ValueSet-aicura-body-structure.html). The `AgeAtProcedure` extension records the patient's age at the procedure.
+[AicuraProcedure](StructureDefinition-procedure.html) leaves Procedure as in base FHIR R4B, without must-support flags or bindings. The `AgeAtProcedure` extension records the patient's age at the procedure. No AICURA study dataset provides procedures; the platform holds them from other clinical sources.
 
 #### AicuraMedication
 

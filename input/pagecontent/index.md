@@ -11,7 +11,7 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 | Condition | [AicuraCondition](StructureDefinition-condition.html) | Neurological, cardiovascular, and other clinical conditions |
 | Patient | [AicuraPatient](StructureDefinition-patient.html) | Subject of record, with custom race and ethnicity extensions |
 | Encounter | [AicuraEncounter](StructureDefinition-encounter.html) | Study visits and clinical contacts |
-| Procedure | [AicuraProcedure](StructureDefinition-procedure.html) | Diagnostic and therapeutic procedures |
+| Procedure | [AicuraProcedure](StructureDefinition-procedure.html) | Procedures as in base FHIR (no study dataset provides them) |
 | Medication | [AicuraMedication](StructureDefinition-medication.html) | Medication definitions referenced by medication statements |
 | MedicationStatement | [AicuraMedicationStatement](StructureDefinition-medication-statement.html) | Reported patient medication usage (the medication resource in the FHIR Bundle export) |
 | ResearchStudy | [AicuraResearchStudy](StructureDefinition-research-study.html) | Research studies (e.g. ADNI cohorts) patients are enrolled in |
