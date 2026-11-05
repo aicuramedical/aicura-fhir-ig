@@ -9,6 +9,9 @@ Description: "Measure derived from an image (e.g. a brain-region volume, cortica
 * component ^comment = "One component per brain region: the value and a link to its region. All components of one Observation share the image series, the measure, the time and the analysis software."
 * component.code MS
 * component.value[x] MS
+// Region links point to the shared atlas regions
+* extension[bodyStructure].value[x] only Reference(AicuraAtlasRegion)
+* component.extension[bodyStructure].value[x] only Reference(AicuraAtlasRegion)
 // Analysis software and its atlas, once for all values
 * device MS
 * device only Reference(AicuraDevice)

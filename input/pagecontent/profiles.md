@@ -1,6 +1,6 @@
 ### Profiles
 
-This IG defines eighteen FHIR R4B profiles. All of them follow the [Shared Rules](shared-rules.html), e.g. every identifier names its issuer in `system`.
+This IG defines nineteen FHIR R4B profiles. All of them follow the [Shared Rules](shared-rules.html), e.g. every identifier names its issuer in `system`.
 
 #### AicuraImagingStudy
 
@@ -162,7 +162,7 @@ FHIR leaves the choice between components and separate Observations to context, 
 
 ##### Link to the brain region
 
-Each value points directly to the [AicuraBodyStructure](StructureDefinition-body-structure.html) of its brain region (structure, side and position):
+Each value points directly to the [AicuraAtlasRegion](StructureDefinition-atlas-region.html) of its brain region (structure, side and position):
 
 | Value on | Extension |
 |---|---|
@@ -219,9 +219,16 @@ The category is `imaging` from the HL7 [observation-category](http://terminology
 
 [AicuraDevice](StructureDefinition-device.html) constrains Device with must-support on identifier, udiCarrier, status, manufacturer, manufactureDate, expirationDate, lotNumber, serialNumber, deviceName, modelNumber, type, version, patient, owner, location, note, safety, and parent. It represents imaging scanners, referenced from `ImagingStudy.series.performer.actor`, and analysis software, referenced by derived results. `type` is required and bound to [AicuraDeviceTypeVS](ValueSet-aicura-device-type.html), which tells the two apart: Acquisition Equipment for a scanner, Processing Equipment for software.
 
-#### AicuraBodyStructure
+#### AicuraBodyStructure and AicuraAtlasRegion
 
-[AicuraBodyStructure](StructureDefinition-body-structure.html) constrains BodyStructure with must-support on identifier, active, morphology, location, locationQualifier, and description. It describes anatomical sites, mainly the brain regions that imaging-derived measures refer to. A brain region has three parts:
+Body structures come in two kinds, each with its own profile:
+
+| Profile | For | Patient |
+|---|---|---|
+| [AicuraAtlasRegion](StructureDefinition-atlas-region.html) | A brain region as an atlas defines it, one record shared by all participants; imaging-derived measures link to it | None (see "Shared brain regions") |
+| [AicuraBodyStructure](StructureDefinition-body-structure.html) | A structure of one person, e.g. a lesion | References the patient |
+
+Both have must-support on identifier, active, morphology, location, locationQualifier, and description, and describe a region in three parts:
 
 | Part | Element | Example | Value set |
 |---|---|---|---|
@@ -235,9 +242,18 @@ The side (left, right, bilateral) has its own field, the extension BodyStructure
 
 ##### Shared brain regions
 
-A brain region from an atlas, such as the left hippocampus, is the same definition for every participant. Each region (structure, side and position) is therefore one BodyStructure, shared by all participants, and every measurement links to it. Region records carry no patient.
+A brain region from an atlas, such as the left hippocampus, is the same definition for every participant. Each region (structure, side and position) is therefore one [AicuraAtlasRegion](StructureDefinition-atlas-region.html), shared by all participants, and every measurement links to it.
 
-This is a known deviation from FHIR R4B, where `BodyStructure.patient` is required (1..1), as it is in R5 and in MII. FHIR R6 makes the patient optional (0..1), and AICURA follows R6 here. A profile cannot loosen a cardinality of base FHIR, so the profile keeps R4B's 1..1 and a validator reports region records as missing the patient; `patient` is not must-support. An export to MII creates one copy of each region per patient.
+FHIR R4B requires `BodyStructure.patient` (1..1), as R5 and MII do. A shared region belongs to no single patient, so in AicuraAtlasRegion the `patient` element carries no reference, only FHIR's standard extension `data-absent-reason` with the code `not-applicable`. The record stays valid R4B. FHIR R6 makes the patient optional (0..1); from then on the element is simply left out. An export to MII creates one copy of each region per patient.
+
+```json
+"patient": {
+  "extension": [{
+    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+    "valueCode": "not-applicable"
+  }]
+}
+```
 
 ##### Region codes
 

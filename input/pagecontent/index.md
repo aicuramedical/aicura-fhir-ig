@@ -1,6 +1,6 @@
 ### AICURA FHIR Implementation Guide
 
-This Implementation Guide (IG) formally profiles the FHIR R4B resources implemented by **AICURA Medical's** clinical data platform. The guide covers fourteen resource types in eighteen profiles, with associated terminology and extensions.
+This Implementation Guide (IG) formally profiles the FHIR R4B resources implemented by **AICURA Medical's** clinical data platform. The guide covers fourteen resource types in nineteen profiles, with associated terminology and extensions.
 
 #### Scope
 
@@ -23,7 +23,8 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 | ResearchSubject | [AicuraResearchSubject](StructureDefinition-research-subject.html) | Patient enrollment in a research study |
 | Consent | [AicuraConsent](StructureDefinition-consent.html) | Patient consent for research participation and data use |
 | Device | [AicuraDevice](StructureDefinition-device.html) | Imaging scanners and analysis software, told apart by device type |
-| BodyStructure | [AicuraBodyStructure](StructureDefinition-body-structure.html) | Anatomical sites (neuroimaging focus) with a custom laterality extension |
+| BodyStructure | [AicuraBodyStructure](StructureDefinition-body-structure.html) | Body structures of one person, with a laterality extension |
+| BodyStructure | [AicuraAtlasRegion](StructureDefinition-atlas-region.html) | Brain regions as an atlas defines them, one record shared by all participants |
 
 #### Shared rules
 
