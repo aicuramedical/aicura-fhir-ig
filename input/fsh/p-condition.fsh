@@ -17,6 +17,7 @@ Description: "Constrained Condition profile for AICURA's clinical data model, co
 * encounter MS
 * onset[x] MS
 * recordedDate MS
+* recordedDate ^short = "Date of the visit at which the diagnosis was recorded"
 * stage MS
 * stage.summary MS
 * stage.summary ^short = "Stage of the disease, e.g. SNOMED CT 288480009 Prodromal phase"

@@ -272,6 +272,10 @@ For example, prodromal motor Parkinson's disease (shortened):
 }]
 ```
 
+##### Date of a diagnosis
+
+`recordedDate` is the date of the visit at which the diagnosis was recorded. The studies record a diagnosis in the case report form of that visit, so the date is both the record date and the date the diagnosis was asserted, and it fills the recorded date MII requires.
+
 #### AicuraPatient
 
 [AicuraPatient](StructureDefinition-patient.html) constrains Patient with must-support on identifier, gender, birthDate, and deceased. It adds `race` and `ethnicity` extensions bound to the [AicuraRaceEthnicityVS](ValueSet-aicura-race-ethnicity.html) (US CDC Race & Ethnicity code system); these mirror the US Core race/ethnicity extensions without taking a US Core dependency. Patient identifiers are typed as pseudonyms (`PSEUDED`).
@@ -283,6 +287,10 @@ When a source reports that a participant has died, the date of death goes on the
 #### AicuraEncounter
 
 [AicuraEncounter](StructureDefinition-encounter.html) constrains Encounter with must-support on status, class, type, subject, period, and location. The `class` element is bound to the [AicuraEncounterClassVS](ValueSet-aicura-encounter-class.html) (HL7 v3 ActCode). The `AgeAtEncounter` extension records the patient's age at the start of the encounter.
+
+##### Planned dates
+
+All visits are recorded after they took place. MII's extensions for planned start and end dates of a contact do not apply.
 
 #### AicuraProcedure
 
