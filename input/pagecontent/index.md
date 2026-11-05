@@ -26,7 +26,7 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 
 #### Shared rules
 
-Rules that apply to all profiles, such as how identifiers name their issuer, are on the [Shared Rules](shared-rules.html) page.
+Rules that apply to all profiles, such as how identifiers name their issuer and how each record names its profile and source dataset, are on the [Shared Rules](shared-rules.html) page.
 
 #### Extensions
 

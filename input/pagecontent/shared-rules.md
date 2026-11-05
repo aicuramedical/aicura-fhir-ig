@@ -33,6 +33,24 @@ The examples illustrate the scheme; the systems per dataset are set with the con
 
 Each type also carries a text. The conversion writes the code's display as the text (`pseudonymized`, `Anonymous identifier`; to confirm).
 
+#### Record metadata
+
+Every record names the AICURA profile it follows and the dataset it comes from. `meta.profile` and `meta.source` are must-support in every profile; the conversion sets both.
+
+- `meta.profile`: the canonical URL of the AICURA profile, with the IG version after a `|`.
+- `meta.source`: the source dataset and its version, under the scheme `http://aicuramedical.com/fhir/dataset/<dataset>#<version>`.
+
+For example, an ADNI patient record:
+
+```json
+"meta": {
+  "profile": ["http://aicuramedical.com/fhir/StructureDefinition/patient|0.1.0"],
+  "source": "http://aicuramedical.com/fhir/dataset/adni#2.0.0"
+}
+```
+
+`<dataset>` is the same short name as in the identifier systems. A record that also meets an MII profile names that profile as well, once it does. Servers can then find records by profile (`_profile`) and by dataset version (`_source`).
+
 #### Coded fields
 
 A coded field (`CodeableConcept`) may carry several codes for the same meaning, from different code systems, next to one text; their order means nothing. Wherever a standard code (SNOMED CT, LOINC, ICD-10-GM) exists, it goes next to AICURA's own code, so one record can meet a standard's code list and keep the more precise code. No profile limits a coded field to one code.

@@ -1,5 +1,10 @@
+// Canonical URL of the profile; every record names its profile and its source dataset.
 RuleSet: MetaProfile(profile)
 * ^url = "http://aicuramedical.com/fhir/StructureDefinition/{profile}"
+* meta.profile MS
+* meta.profile ^short = "AICURA profile with IG version: <profile canonical>|<IG version>"
+* meta.source MS
+* meta.source ^short = "Source dataset and version: http://aicuramedical.com/fhir/dataset/<dataset>#<version>"
 
 // Every identifier names who issued it: an AICURA system per dataset and kind
 // of number, or the number's global scheme.
