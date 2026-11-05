@@ -163,6 +163,8 @@ The lab profile follows the structure of the MII lab module (laboratory category
 
 Base FHIR and MII's lab module both provide `method` and `device` for this; the profile makes the device link must-support.
 
+**No body site.** A lab value carries no `bodySite` (0..0), as in MII's lab profile: the sample type (CSF, plasma, serum) is part of the LOINC code. Body sites remain for the other kinds of result, e.g. imaging-derived measures.
+
 ##### Clinical scores
 
 Every score is a quantity (`valueQuantity`) with the UCUM code `{score}` (system `http://unitsofmeasure.org`), whether the instrument counts whole points (MMSE, MoCA) or half points and decimals (CDR, ADAS-Cog). FHIR R4B has no plain decimal value, so a quantity is the one type that holds every score. `{score}` is not a real unit: UCUM reads text in curly braces as an annotation, a label on the unit `1`, so the value stays dimensionless. LOINC gives `{score}` as the example unit for scores such as the MMSE, and MII's score profiles fix it.
