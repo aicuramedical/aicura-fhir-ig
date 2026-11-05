@@ -15,9 +15,6 @@ The following extensions are defined on `ImagingStudy.series` and capture imagin
 | [ModalityPT](StructureDefinition-ModalityPT.html) | Complex (6 parts) | PET tracer, radionuclide, dose and half-life (shaped like MII's PET extension, UCUM units), plus injection time and plane |
 | [ModalityNM](StructureDefinition-ModalityNM.html) | Complex (6 parts) | SPECT (NM) tracer, radionuclide, dose and half-life (shaped like MII's NM extension, UCUM units), plus injection time and plane |
 | [SeriesMedicationAdministration](StructureDefinition-SeriesMedicationAdministration.html) | Reference (MedicationAdministration) | The administration of a tracer or contrast agent for this series |
-| [DeviceManufacturer](StructureDefinition-DeviceManufacturer.html) | Complex (Coding + label) | Imaging device manufacturer |
-| [device-model](StructureDefinition-device-model.html) | Complex (Coding + label) | Imaging device model |
-| [DeviceId](StructureDefinition-DeviceId.html) | String | Imaging device identifier |
 | [Dimension](StructureDefinition-Dimension.html) | Complex (Coding + label) | 2D or 3D dimensionality |
 | [AgeAtImagingSeries](StructureDefinition-AgeAtImagingSeries.html) | Integer | Patient age at the series date |
 | [ImagingSeriesSize](StructureDefinition-ImagingSeriesSize.html) | Quantity | Storage size of the series files |

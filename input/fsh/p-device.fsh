@@ -2,7 +2,7 @@ Profile: AicuraDevice
 Parent: Device
 Id: device
 Title: "AICURA Device"
-Description: "Constrained Device profile for AICURA's clinical data model, representing imaging scanners and other devices referenced by clinical and imaging resources."
+Description: "Constrained Device profile for AICURA's clinical data model, representing imaging scanners (referenced from ImagingStudy.series.performer.actor) and analysis software (referenced by derived results), told apart by type."
 * insert MetaProfile(device)
 * insert IdentifierSystem
 // Must-support elements
@@ -16,7 +16,9 @@ Description: "Constrained Device profile for AICURA's clinical data model, repre
 * serialNumber MS
 * deviceName MS
 * modelNumber MS
-* type MS
+* type 1..1 MS
+* type from AicuraDeviceTypeVS (required)
+* type ^comment = "Acquisition Equipment for a scanner, Processing Equipment for analysis software."
 * version MS
 * patient MS
 * patient only Reference(Patient)

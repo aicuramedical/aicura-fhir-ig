@@ -83,6 +83,18 @@ Tracer, dose and injection time are therefore recorded twice: in the PET or SPEC
 
 The acquisition plane is a part of each modality extension (MR, PET, SPECT). Further modalities, such as CT, get a modality extension with the plane when a dataset needs one.
 
+##### Scanner
+
+Each scanner is described once, as an [AicuraDevice](StructureDefinition-device.html), and every series it acquired references it in `series.performer.actor`, as MII does. Questions such as "all scans from this scanner model" become direct, and scanner details are not copied into every series. The scanner's DICOM header values map to the Device as follows:
+
+| DICOM attribute | Device element |
+|---|---|
+| Manufacturer (0008,0070) | `manufacturer` |
+| Manufacturer's Model Name (0008,1090) | `deviceName` (type `model-name`) |
+| Device Serial Number (0018,1000), where present | `serialNumber` |
+
+Analysis software that produces results (e.g. FreeSurfer) is a Device too. `Device.type` is required and tells the two apart: DICOM `109101` "Acquisition Equipment" for a scanner, `109102` "Processing Equipment" for software ([AicuraDeviceTypeVS](ValueSet-aicura-device-type.html)).
+
 ##### Linking a result to a series
 
 Almost every result in neurodegeneration imaging (a regional volume, a quality check) is computed from one series, not from the whole study. FHIR R4B cannot reference a single series: a reference targets a whole resource, and the series sits inside the ImagingStudy. A result computed from a series therefore carries two things:
@@ -153,7 +165,7 @@ The lab profile follows the structure of the MII lab module (laboratory category
 
 #### AicuraDevice
 
-[AicuraDevice](StructureDefinition-device.html) constrains Device with must-support on identifier, udiCarrier, status, manufacturer, manufactureDate, expirationDate, lotNumber, serialNumber, deviceName, modelNumber, type, version, patient, owner, location, note, safety, and parent. It represents imaging scanners and other devices referenced by clinical and imaging resources.
+[AicuraDevice](StructureDefinition-device.html) constrains Device with must-support on identifier, udiCarrier, status, manufacturer, manufactureDate, expirationDate, lotNumber, serialNumber, deviceName, modelNumber, type, version, patient, owner, location, note, safety, and parent. It represents imaging scanners, referenced from `ImagingStudy.series.performer.actor`, and analysis software, referenced by derived results. `type` is required and bound to [AicuraDeviceTypeVS](ValueSet-aicura-device-type.html), which tells the two apart: Acquisition Equipment for a scanner, Processing Equipment for software.
 
 #### AicuraBodyStructure
 

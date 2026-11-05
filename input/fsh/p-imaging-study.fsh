@@ -75,6 +75,10 @@ Description: "Constrained ImagingStudy profile for AICURA's medical imaging data
 * series.endpoint ^comment = "Link to the series in the image archive; preferred over the study endpoint when both exist."
 * series.instance ^comment = "Not required: the profile catalogues series and points to the image archive, where single images are retrieved through the endpoints."
 * series.bodySite MS
+* series.performer MS
+* series.performer.actor MS
+* series.performer.actor only Reference(AicuraDevice)
+* series.performer.actor ^comment = "The scanner that acquired the series, described once as a Device (type Acquisition Equipment) and referenced from every series it acquired."
 // Series extensions; value set bindings sit in the extensions
 * series.extension contains
     AicuraVoxelResolution named voxelResolution 0..1 MS and
@@ -82,9 +86,6 @@ Description: "Constrained ImagingStudy profile for AICURA's medical imaging data
     AicuraIsotropicVoxelResolution named isotropicVoxelResolution 0..1 MS and
     AicuraIsotropicImageResolution named isotropicImageResolution 0..1 MS and
     AicuraNumberOfFrames named numberOfFrames 0..1 MS and
-    AicuraDeviceManufacturer named deviceManufacturer 0..1 MS and
-    AicuraDeviceModel named deviceModel 0..1 MS and
-    AicuraDeviceId named deviceId 0..1 MS and
     AicuraModalityMR named modalityMR 0..1 MS and
     AicuraModalityPT named modalityPT 0..1 MS and
     AicuraModalityNM named modalityNM 0..1 MS and

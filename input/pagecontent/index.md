@@ -22,7 +22,7 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 | ResearchStudy | [AicuraResearchStudy](StructureDefinition-research-study.html) | Research studies (e.g. ADNI cohorts) patients are enrolled in |
 | ResearchSubject | [AicuraResearchSubject](StructureDefinition-research-subject.html) | Patient enrollment in a research study |
 | Consent | [AicuraConsent](StructureDefinition-consent.html) | Patient consent for research participation and data use |
-| Device | [AicuraDevice](StructureDefinition-device.html) | Imaging scanners and other devices referenced by clinical resources |
+| Device | [AicuraDevice](StructureDefinition-device.html) | Imaging scanners and analysis software, told apart by device type |
 | BodyStructure | [AicuraBodyStructure](StructureDefinition-body-structure.html) | Anatomical sites (neuroimaging focus) with a custom laterality extension |
 
 #### Shared rules
@@ -31,11 +31,11 @@ Rules that apply to all profiles, such as how identifiers name their issuer and 
 
 #### Extensions
 
-The ImagingStudy profile includes custom extensions on `ImagingStudy.series` for detailed acquisition metadata such as the MR, PET and SPECT acquisition details, the link to the tracer or contrast administration, voxel resolution, and device information, and one on `ImagingStudy` for the patient's age at the study. Additional custom extensions cover `Race` and `Ethnicity` on Patient, `BodyStructureLaterality` on BodyStructure, the patient's age at each event (observation, encounter, condition, participation, procedure), and the links from an Observation and its components to body structures and analysis devices. See [Extensions](extensions.html) for the full list.
+The ImagingStudy profile includes custom extensions on `ImagingStudy.series` for detailed acquisition metadata such as the MR, PET and SPECT acquisition details, the link to the tracer or contrast administration, and voxel resolution, and one on `ImagingStudy` for the patient's age at the study. Additional custom extensions cover `Race` and `Ethnicity` on Patient, `BodyStructureLaterality` on BodyStructure, the patient's age at each event (observation, encounter, condition, participation, procedure), and the links from an Observation and its components to body structures and analysis devices. See [Extensions](extensions.html) for the full list.
 
 #### Terminology
 
-One AICURA CodeSystem (`https://aicuramedical.com/fhir/coding`) for all AICURA-specific codes and AICURA ValueSets define the codes for MRI sequences, contrasts, device manufacturers, PET and SPECT tracers, observation types, condition codes, encounter classes, body structures, laterality, location qualifiers, and race/ethnicity. External terminologies (SNOMED-CT, LOINC, MedDRA, DICOM, UMLS, PubChem, HL7 v3 ActCode, and the US CDC Race & Ethnicity code system) are also referenced.
+One AICURA CodeSystem (`https://aicuramedical.com/fhir/coding`) for all AICURA-specific codes and AICURA ValueSets define the codes for MRI sequences, contrasts, device types, PET and SPECT tracers, observation types, condition codes, encounter classes, body structures, laterality, location qualifiers, and race/ethnicity. External terminologies (SNOMED-CT, LOINC, MedDRA, DICOM, UMLS, PubChem, HL7 v3 ActCode, and the US CDC Race & Ethnicity code system) are also referenced.
 
 #### Authors
 
