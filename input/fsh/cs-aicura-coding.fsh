@@ -36,6 +36,24 @@ Description: "AICURA-local concepts, maintained in the AICURA concepts database.
 * #2D "2-Dimensional"
 // PET tracers
 * #"Unresolved Tracer Label" "Unresolved Tracer Label"
+// Brain regions with an AICURA code (BodyStructure.location)
+* #"Anterior cingulate cortex" "Anterior cingulate cortex"
+* #"Posterior cingulate cortex" "Posterior cingulate cortex"
+* #"Isthmus of cingulate gyrus" "Isthmus of cingulate gyrus"
+* #"Orbitofrontal cortex" "Orbitofrontal cortex"
+* #"Pericalcarine cortex" "Pericalcarine cortex"
+* #"Banks of superior temporal sulcus" "Banks of superior temporal sulcus"
+* #"Hemisphere white matter" "Hemisphere white matter"
+* #"Total brain gray matter" "Total brain gray matter"
+* #"Subcortical gray matter" "Subcortical gray matter"
+* #"White matter hypointensities" "White matter hypointensities"
+* #"Non-white matter hypointensities" "Non-white matter hypointensities"
+* #"Cerebral vasculature" "Cerebral vasculature"
+* #"Intracranial volume [ICV]" "Intracranial volume [ICV]"
+// Location qualifiers SNOMED CT has no concept for (BodyStructure.locationQualifier)
+* #"Ventral" "Ventral"
+* #"Mid-Anterior" "Mid-Anterior"
+* #"Mid-Posterior" "Mid-Posterior"
 // Observations
 * #"Global score [CDR]" "Global score [CDR]"
 * #"Sum of Boxes [CDR]" "Sum of Boxes [CDR]"

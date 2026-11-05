@@ -234,3 +234,17 @@ The side (left, right, bilateral) has its own field, the extension BodyStructure
 A brain region from an atlas, such as the left hippocampus, is the same definition for every participant. Each region (structure, side and position) is therefore one BodyStructure, shared by all participants, and every measurement links to it. Region records carry no patient.
 
 This is a known deviation from FHIR R4B, where `BodyStructure.patient` is required (1..1), as it is in R5 and in MII. FHIR R6 makes the patient optional (0..1), and AICURA follows R6 here. A profile cannot loosen a cardinality of base FHIR, so the profile keeps R4B's 1..1 and a validator reports region records as missing the patient; `patient` is not must-support. An export to MII creates one copy of each region per patient.
+
+##### Region codes
+
+SNOMED CT is the main code system for brain regions (`location`). Brain atlases such as Desikan-Killiany divide the brain more finely than SNOMED CT names it, so a region keeps one of three codings:
+
+| Coding | When | Example |
+|---|---|---|
+| SNOMED CT concept of the region | SNOMED CT names the region | Hippocampus: SNOMED CT 5366008 |
+| AICURA region code | SNOMED CT has no concept of the region; a few regions SNOMED CT names keep the AICURA code they have (e.g. Intracranial volume [ICV]) | Isthmus of cingulate gyrus |
+| Broader SNOMED CT concept, with the position in `locationQualifier` | The atlas region is a part of a SNOMED CT structure | Corpus callosum (SNOMED CT 88442005) with the qualifier Mid-Anterior |
+
+A broader SNOMED CT concept alone would give different regions the same code (caudal anterior, rostral anterior and posterior cingulate would all become "cingulate gyrus"), so it is used only together with a position that tells them apart. The exact region is defined by the atlas (on the analysis software's Device) and the region's label; a code approximates it. As in every coded field (see [Shared Rules](shared-rules.html)), several codes may sit next to each other, e.g. a broader SNOMED CT concept next to an AICURA code. MII requires a SNOMED CT code for every region; regions with only an AICURA code deviate from MII.
+
+[AicuraBodyStructureVS](ValueSet-aicura-body-structure.html) holds every SNOMED CT anatomical or acquired body structure (`442083009` and its descendants) and the AICURA region codes. [AicuraLocationQualifierVS](ValueSet-aicura-location-qualifier.html) holds the position qualifiers: SNOMED CT qualifier values, and AICURA codes for Ventral, Mid-Anterior and Mid-Posterior, which SNOMED CT has no concept for.
