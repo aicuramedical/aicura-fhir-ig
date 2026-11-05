@@ -35,7 +35,7 @@ The ImagingStudy profile includes custom extensions on `ImagingStudy.series` for
 
 #### Terminology
 
-One AICURA CodeSystem (`https://aicuramedical.com/fhir/coding`) for all AICURA-specific codes and AICURA ValueSets define the codes for MRI sequences, contrasts, device manufacturers, PET tracers, observation types, condition codes, encounter classes, body structures, laterality, location qualifiers, and race/ethnicity. External terminologies (SNOMED-CT, LOINC, MedDRA, DICOM, PubChem, HL7 v3 ActCode, and the US CDC Race & Ethnicity code system) are also referenced.
+One AICURA CodeSystem (`https://aicuramedical.com/fhir/coding`) for all AICURA-specific codes and AICURA ValueSets define the codes for MRI sequences, contrasts, device manufacturers, PET and SPECT tracers, observation types, condition codes, encounter classes, body structures, laterality, location qualifiers, and race/ethnicity. External terminologies (SNOMED-CT, LOINC, MedDRA, DICOM, UMLS, PubChem, HL7 v3 ActCode, and the US CDC Race & Ethnicity code system) are also referenced.
 
 #### Authors
 

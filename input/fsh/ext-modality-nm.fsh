@@ -4,6 +4,7 @@ Title: "SPECT (NM) Acquisition"
 Description: "Tracer and acquisition details of a SPECT series (modality NM). Shaped like MII's NM extension (mii-ex-bildgebung-modalitaet-nm): the parts radiopharmaceutical, radionuclide, radionuclideTotalDose and radionuclideHalfLife keep MII's names, types and units, so they map 1:1. AICURA adds the injection time and the acquisition plane. Tracer, dose and injection time are filled from the source known to be correct for the dataset (curated study data, or the scanner header where its values have been checked), the same source as the series' administration record (SeriesMedicationAdministration)."
 * ^url = "http://aicuramedical.com/fhir/StructureDefinition/ModalityNM"
 * insert ExtensionContext(ImagingStudy.series)
+* obeys aic-tr-1
 * extension contains
     radiopharmaceutical 0..1 and
     radionuclide 0..1 and
@@ -13,7 +14,12 @@ Description: "Tracer and acquisition details of a SPECT series (modality NM). Sh
     acquisitionPlane 0..1
 // Parts shaped like MII's
 * extension[radiopharmaceutical] ^short = "Tracer (radiopharmaceutical)"
+* extension[radiopharmaceutical] ^definition = "The tracer, coded with its entry in DICOM's SPECT tracer list (DICOM CID 25; code system as listed there, mostly SNOMED CT), as MII binds it. A tracer the list has no code for is coded by its PubChem compound ID instead. The text is the tracer's PubChem name."
 * extension[radiopharmaceutical].value[x] only CodeableConcept
+* extension[radiopharmaceutical].valueCodeableConcept from $DicomCID25 (extensible)
+* extension[radiopharmaceutical].valueCodeableConcept.coding 1..*
+* extension[radiopharmaceutical].valueCodeableConcept.text 1..1
+* extension[radiopharmaceutical].valueCodeableConcept.text ^short = "PubChem name of the tracer"
 * extension[radionuclide] ^short = "Radionuclide, e.g. 18F"
 * extension[radionuclide].value[x] only CodeableConcept
 * extension[radionuclide].valueCodeableConcept from $DicomCID18 (extensible)

@@ -50,7 +50,7 @@ PET and SPECT series carry their tracer details in [ModalityPT](StructureDefinit
 
 | Part | Content | Type |
 |---|---|---|
-| `radiopharmaceutical` | Tracer | CodeableConcept |
+| `radiopharmaceutical` | Tracer | CodeableConcept, DICOM CID 4021 (PET) or CID 25 (SPECT), extensible; PubChem name as text |
 | `radionuclide` | Radionuclide, e.g. 18F | CodeableConcept, DICOM CID 4020 (PET) or CID 18 (SPECT), extensible |
 | `radionuclideTotalDose` | Administered activity | Quantity, UCUM `Bq` |
 | `radionuclideHalfLife` | Half-life of the radionuclide | Quantity, UCUM `s` |
@@ -58,6 +58,24 @@ PET and SPECT series carry their tracer details in [ModalityPT](StructureDefinit
 | `acquisitionPlane` | Axial, sagittal or coronal (SNOMED CT) | CodeableConcept, [AicuraAcquisitionPlaneVS](ValueSet-aicura-acquisition-plane.html) (extensible) |
 
 A PET series carries the extension with a tracer (`aic-pt-1`).
+
+**Tracer coding.** The tracer is coded with its entry in the DICOM tracer list MII binds: CID 4021 for PET, CID 25 for SPECT (both extensible; code system as listed there, mostly SNOMED CT). A tracer the list has no code for is coded by its PubChem compound ID instead, and only then (`aic-tr-1`). The label (`text`) is the tracer's PubChem name. The same coding goes into `Medication.code` of the administered substance.
+
+| Tracer | Code | PubChem compound ID | Label (PubChem name) |
+|---|---|---|---|
+| Fluorodeoxyglucose F-18 | SNOMED CT 35321007 | 68614 | Fludeoxyglucose F-18 |
+| Flutemetamol F-18 | SNOMED CT 456997008 | 15950376 | Flutemetamol F-18 |
+| Flortaucipir F-18 | SNOMED CT 879808000 | 70957463 | Flortaucipir F-18 |
+| Florbetaben F-18 | SNOMED CT 712736002 | 11501341 | Florbetaben (18F) |
+| Florbetapir F-18 | SNOMED CT 456995000 | 24822371 | Florbetapir F-18 |
+| Pittsburgh Compound B (C-11) | DICOM 126500 | 2826731 | 11C-PiB |
+| Izaflortaucipir (PI-2620) | UMLS C5433257 | 134202705 | Izaflortaucipir |
+| Florbenazine (18F-FP-DTBZ) | UMLS C2934038 | 17755050 | Florbenazine F-18 |
+| Florquinitau (MK-6240) | UMLS C4506764 | 118577045 | Florquinitau |
+| Flutafuranol F-18 (NAV4694) | PubChem 44815683 (not in CID 4021) | 44815683 | Flutafuranol F 18 |
+| Ioflupane I-123 (SPECT) | SNOMED CT 429296007 (CID 25) | 3086674 | Ioflupane I-123 |
+
+Value sets: [AicuraPETTracerVS](ValueSet-aicura-pet-tracer.html), [AicuraSPECTTracerVS](ValueSet-aicura-spect-tracer.html), and [AicuraTracerPubChemVS](ValueSet-aicura-tracer-pubchem.html) for the PubChem IDs and names.
 
 The injection itself is recorded once, as a [MedicationAdministration](StructureDefinition-medication-administration.html) that names the substance ([Medication](StructureDefinition-medication.html)) and holds dose (`dosage.dose`) and injection time (`effective[x]`). Each series points to it with the extension [SeriesMedicationAdministration](StructureDefinition-SeriesMedicationAdministration.html), so one record serves all series acquired after the same injection. Contrast agents use the same link.
 

@@ -3,6 +3,7 @@ Alias: $SCT = http://snomed.info/sct
 Alias: $LOINC = http://loinc.org
 Alias: $UCUM = http://unitsofmeasure.org
 Alias: $DICOM = http://dicom.nema.org/resources/ontology/DCM
+Alias: $UMLS = http://www.nlm.nih.gov/research/umls
 
 // FHIR value sets
 Alias: $ObsCat = http://terminology.hl7.org/CodeSystem/observation-category
@@ -28,3 +29,5 @@ Alias: $MIIScanningSequenceVariantVS = https://www.medizininformatik-initiative.
 // DICOM value sets (package fhir.dicom)
 Alias: $DicomCID4020 = http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_4020.html
 Alias: $DicomCID18 = http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_18.html
+Alias: $DicomCID25 = http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_25.html
+Alias: $DicomCID4021 = http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_4021.html
