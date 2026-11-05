@@ -84,7 +84,7 @@ Description: "AICURA-local concepts, maintained in the AICURA concepts database.
 * #"Plasma P-tau181" "Plasma P-tau181"
 * #"Tau protein.phosphorylated 217 [Mass/volume] in Serum or Plasma by mass-spectrometry" "Tau protein.phosphorylated 217 [Mass/volume] in Serum or Plasma by mass-spectrometry"
 * #"Years Since First AD Symptoms" "Years Since First AD Symptoms"
-* #SRDC "Sporadic Parkison's Disease"
+* #SRDC "Sporadic Parkinson's disease"
 // Conditions
 * #"Motor Neurone disease with parkinsonism" "Motor Neurone disease with parkinsonism"
 * #"Psychogenic parkinsonism" "Psychogenic parkinsonism"

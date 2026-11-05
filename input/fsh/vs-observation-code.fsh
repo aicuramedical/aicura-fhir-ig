@@ -42,7 +42,7 @@ Description: "Observation codes used in AICURA studies, including assessments, l
 * $AicuraCoding#"Plasma P-tau181" "Plasma P-tau181"
 * $AicuraCoding#"Tau protein.phosphorylated 217 [Mass/volume] in Serum or Plasma by mass-spectrometry" "Tau protein.phosphorylated 217 [Mass/volume] in Serum or Plasma by mass-spectrometry"
 * $AicuraCoding#"Years Since First AD Symptoms" "Years Since First AD Symptoms"
-* $AicuraCoding#SRDC "Sporadic Parkison's Disease"
+* $AicuraCoding#SRDC "Sporadic Parkinson's disease"
 // SNOMED-CT codes (3)
 * $SCT#273499007 "Hachinski ischemia score (assessment scale)"
 * $SCT#415238003 "Rapid eye movement sleep behavior disorder (disorder)"

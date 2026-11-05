@@ -3,7 +3,7 @@ Id: aicura-condition-code
 Title: "AICURA Condition Code ValueSet"
 Description: "Condition codes used in AICURA studies, spanning neurological, cardiovascular, and other disorders."
 * ^experimental = false
-// SNOMED-CT codes (38)
+// SNOMED-CT codes (37)
 * $SCT#449888003 "Normal cognition"
 * $SCT#386805003 "Mild cognitive disorder (disorder)"
 * $SCT#26929004 "Alzheimer's disease (disorder)"
@@ -27,9 +27,6 @@ Description: "Condition codes used in AICURA studies, spanning neurological, car
 * $SCT#609558009 "Essential tremor (disorder)"
 * $SCT#737582007 "Hemiparkinsonism hemiatrophy syndrome (disorder)"
 * $SCT#118940003 "Disorder of nervous system (disorder)"
-* $SCT#255604002 "Mild (qualifier value)"
-* $SCT#6736007 "Moderate (severity modifier) (qualifier value)"
-* $SCT#24484000 "Severe (severity modifier) (qualifier value)"
 * $SCT#74732009 "Mental disorder (disorder)"
 * $SCT#49601007 "Disorder of cardiovascular system (disorder)"
 * $SCT#50043002 "Disorder of respiratory system (disorder)"
@@ -42,10 +39,13 @@ Description: "Condition codes used in AICURA studies, spanning neurological, car
 * $SCT#386806002 "Impaired cognition (finding)"
 * $SCT#715574002 "Posterior cortical atrophy syndrome (disorder)"
 * $SCT#723124007 "Primary progressive apraxia of speech (disorder)"
-// AICURA custom codes (3)
+* $SCT#83156004 "Sense of smell impaired (finding)"
+* $SCT#415238003 "Rapid eye movement sleep behavior disorder (disorder)"
+// AICURA custom codes (4)
 * $AicuraCoding#"Motor Neurone disease with parkinsonism" "Motor Neurone disease with parkinsonism"
 * $AicuraCoding#"Psychogenic parkinsonism" "Psychogenic parkinsonism"
 * $AicuraCoding#"Juvenile autosomal recessive parkinsonism" "Juvenile autosomal recessive parkinsonism"
+* $AicuraCoding#SRDC "Sporadic Parkinson's disease"
 // MedDRA codes (10)
 * $MedDRA#10037174 "Psychiatric disorder NOS"
 * $MedDRA#10029298 "Neurological disorder NOS"
@@ -57,9 +57,3 @@ Description: "Condition codes used in AICURA studies, spanning neurological, car
 * $MedDRA#10061087 "Connective tissue disorder"
 * $MedDRA#10001584 "Alcohol abuse"
 * $MedDRA#10048880 "Smoker"
-// LOINC codes (5)
-* $LOINC#11365-4 "History of Psychiatric disorders"
-* $LOINC#8660-3 "History of Cardiovascular system disorders"
-* $LOINC#8680-1 "History of Musculoskeletal system disorders"
-* $LOINC#11362-1 "History of Gastrointestinal system disorders"
-* $LOINC#18663-5 "Alcohol-substance abuse, rehabilitation plan, History of present alcohol/substance abuse (narrative)"

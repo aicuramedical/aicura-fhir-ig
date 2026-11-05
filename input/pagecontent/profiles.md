@@ -12,7 +12,7 @@ This IG defines thirteen FHIR R4B profiles:
 
 #### AicuraCondition
 
-[AicuraCondition](StructureDefinition-condition.html) constrains Condition with must-support on clinicalStatus, verificationStatus, category, severity, code, bodySite, subject, encounter, onset, abatement, recordedDate, stage, and evidence. The `code` element is bound to the [AicuraConditionCodeVS](ValueSet-aicura-condition-code.html) spanning SNOMED-CT, AICURA custom, MedDRA, and LOINC codes. Extensions record the patient's age at the recorded date (`AgeRecorded`) and at onset (`AgeOnset`, and the older `AgeAtCondition` with the same value).
+[AicuraCondition](StructureDefinition-condition.html) constrains Condition with must-support on clinicalStatus, verificationStatus, category, severity, code, bodySite, subject, encounter, onset, abatement, recordedDate, stage, and evidence. The `code` element is bound to the [AicuraConditionCodeVS](ValueSet-aicura-condition-code.html) spanning SNOMED-CT, AICURA custom, and MedDRA codes. Extensions record the patient's age at the recorded date (`AgeRecorded`) and at onset (`AgeOnset`, and the older `AgeAtCondition` with the same value).
 
 #### AicuraPatient
 
