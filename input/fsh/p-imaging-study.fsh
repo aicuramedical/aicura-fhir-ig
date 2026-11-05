@@ -18,6 +18,11 @@ Description: "A PET series carries a tracer."
 Severity: #error
 Expression: "modality.code = 'PT' implies extension('http://aicuramedical.com/fhir/StructureDefinition/Tracer').exists()"
 
+Invariant: aic-is-1
+Description: "The Study Instance UID identifier holds the resource id as urn:oid:<id>."
+Severity: #error
+Expression: "identifier.where(type.coding.where(system = 'http://dicom.nema.org/resources/ontology/DCM' and code = '110180').exists()).all(value = 'urn:oid:' + %resource.id)"
+
 Profile: AicuraImagingStudy
 Parent: ImagingStudy
 Id: imaging-study
@@ -25,9 +30,23 @@ Title: "AICURA ImagingStudy"
 Description: "Constrained ImagingStudy profile for AICURA's medical imaging data model with series-level extensions for MRI/PET metadata."
 * insert MetaProfile(imaging-study)
 * insert IdentifierSystem
+* obeys aic-is-1
 * id 1..1 MS
+* id ^comment = "The plain DICOM Study Instance UID, without the urn:oid: prefix (the id datatype allows no colons)."
 * identifier 1..* MS
 * identifier.value 1..1 MS
+* identifier ^slicing.discriminator.type = #pattern
+* identifier ^slicing.discriminator.path = "type"
+* identifier ^slicing.rules = #open
+* identifier ^slicing.description = "The DICOM Study Instance UID, as in HL7 Europe Imaging"
+* identifier contains studyInstanceUid 1..1 MS
+* identifier[studyInstanceUid] ^short = "DICOM Study Instance UID"
+* identifier[studyInstanceUid].type 1..1 MS
+* identifier[studyInstanceUid].type = $DICOM#110180 "Study Instance UID"
+* identifier[studyInstanceUid].system 1..1 MS
+* identifier[studyInstanceUid].system = "urn:dicom:uid"
+* identifier[studyInstanceUid].value MS
+* identifier[studyInstanceUid].value ^short = "urn:oid: followed by the Study Instance UID"
 * status MS
 * subject 1..1 MS
 * subject only Reference(Patient)

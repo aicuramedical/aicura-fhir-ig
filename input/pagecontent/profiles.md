@@ -6,6 +6,18 @@ This IG defines seventeen FHIR R4B profiles. All of them follow the [Shared Rule
 
 [AicuraImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on identifier, status, subject, encounter, started, description, endpoint, series and its uid, number, modality, description, instance count, start, endpoint and body site; id, an identifier value and subject are required. It adds the patient's age at the study and 17 series-level extensions for imaging acquisition metadata including voxel resolution, image resolution, MRI sequence, contrast weighting, PET tracer, device information, age at the series and storage size.
 
+##### Study identity
+
+Every study carries its DICOM Study Instance UID as an identifier in the form FHIR uses for DICOM UIDs and HL7 Europe's imaging guide requires:
+
+| Element | Value |
+|---|---|
+| `identifier.system` | `urn:dicom:uid` |
+| `identifier.value` | `urn:oid:` followed by the UID, e.g. `urn:oid:2.25.123456789` |
+| `identifier.type` | DICOM `110180` "Study Instance UID" (`http://dicom.nema.org/resources/ontology/DCM`) |
+
+The resource `id` stays the plain UID, since the FHIR `id` datatype allows no colons. Invariant `aic-is-1` checks that the identifier and the id hold the same UID.
+
 ##### Images and the image archive
 
 The profile catalogues the scans; it does not copy them. Single images (`series.instance`) are not required. The study (`endpoint`) and each series (`series.endpoint`) point to the image archive, and both links are must-support. Clients fetch the images from the archive; where both links exist, they use the series link.
