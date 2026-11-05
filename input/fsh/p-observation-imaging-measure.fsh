@@ -13,3 +13,8 @@ Description: "Measure derived from an image (e.g. a brain-region volume, cortica
 * device MS
 * device only Reference(AicuraDevice)
 * device ^short = "Analysis software (with its atlas) that produced the values"
+// Units in UCUM
+* valueQuantity.system = "http://unitsofmeasure.org"
+* valueQuantity ^short = "Value, unit in UCUM (e.g. cm3, cm2, cm)"
+* component.valueQuantity.system = "http://unitsofmeasure.org"
+* component.valueQuantity ^short = "Value of the region, unit in UCUM (e.g. cm3, cm2, cm)"

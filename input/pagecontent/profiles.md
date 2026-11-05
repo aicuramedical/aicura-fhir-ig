@@ -171,6 +171,10 @@ Each value points directly to the [AicuraBodyStructure](StructureDefinition-body
 
 FHIR R4B has no element that links an Observation to a BodyStructure; HL7's workaround is an extension inside `bodySite`, which MII uses. FHIR R5 and R6 add the direct link `Observation.bodyStructure`, and R6 deprecates `bodySite`. The AICURA extensions follow that newer design, so the move to R6 changes the format once: `ObservationBodyStructure` becomes `Observation.bodyStructure`. Components have no region element in any FHIR version, so `ObservationComponentBodyStructure` stays an extension. An export to MII moves the link into `bodySite`, with the region's SNOMED CT code there.
 
+##### Category and units
+
+The category is `imaging` from the HL7 [observation-category](http://terminology.hl7.org/CodeSystem/observation-category) code system (`http://terminology.hl7.org/CodeSystem/observation-category`), not the address of a FHIR web page. Units of `valueQuantity`, on the Observation and on each component, are UCUM: `system` is `http://unitsofmeasure.org` and `code` the UCUM code, e.g. `cm3` for a volume, `cm2` for a surface area and `cm` for a cortical thickness.
+
 #### AicuraCondition
 
 [AicuraCondition](StructureDefinition-condition.html) constrains Condition with must-support on clinicalStatus, verificationStatus, code, bodySite, subject, encounter, onset, recordedDate, and stage. The `code` element is bound to the [AicuraConditionCodeVS](ValueSet-aicura-condition-code.html) spanning SNOMED-CT, AICURA custom, and MedDRA codes. Extensions record the patient's age at the recorded date (`AgeRecorded`) and at onset (`AgeOnset`, and the older `AgeAtCondition` with the same value).
