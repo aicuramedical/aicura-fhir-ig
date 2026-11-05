@@ -1,6 +1,6 @@
 ### Profiles
 
-This IG defines twenty FHIR R4B profiles. All of them follow the [Shared Rules](shared-rules.html), e.g. every identifier names its issuer in `system`.
+This IG defines twenty-one FHIR R4B profiles. All of them follow the [Shared Rules](shared-rules.html), e.g. every identifier names its issuer in `system`.
 
 #### AicuraImagingStudy
 

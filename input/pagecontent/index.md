@@ -1,6 +1,6 @@
 ### AICURA FHIR Implementation Guide
 
-This Implementation Guide (IG) formally profiles the FHIR R4B resources implemented by **AICURA Medical's** clinical data platform. The guide covers fourteen resource types in twenty profiles, with associated terminology and extensions.
+This Implementation Guide (IG) formally profiles the FHIR R4B resources implemented by **AICURA Medical's** clinical data platform. The guide covers fourteen resource types in twenty-one profiles, with associated terminology and extensions.
 
 #### Scope
 
