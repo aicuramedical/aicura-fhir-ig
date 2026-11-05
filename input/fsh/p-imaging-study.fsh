@@ -27,7 +27,7 @@ Profile: AicuraImagingStudy
 Parent: ImagingStudy
 Id: imaging-study
 Title: "AICURA ImagingStudy"
-Description: "Constrained ImagingStudy profile for AICURA's medical imaging data model with series-level extensions for MRI/PET metadata."
+Description: "Constrained ImagingStudy profile for AICURA's medical imaging data model with series-level extensions for MR, PET and SPECT acquisition details."
 * insert MetaProfile(imaging-study)
 * insert IdentifierSystem
 * obeys aic-is-1

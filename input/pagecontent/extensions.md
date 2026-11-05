@@ -20,7 +20,7 @@ The following extensions are defined on `ImagingStudy.series` and capture imagin
 | [AgeAtImagingSeries](StructureDefinition-AgeAtImagingSeries.html) | Integer | Patient age in whole years at the series date |
 | [ImagingSeriesSize](StructureDefinition-ImagingSeriesSize.html) | Quantity | Storage size of the series files |
 
-The coded extensions carry a `Coding` and its label as two sub-extensions, both required.
+Coded values carry a code and its label, both required: in the modality extensions as a CodeableConcept with one coding and `text`, in Dimension as a `Coding` and a label sub-extension.
 
 #### ImagingStudy extensions
 
