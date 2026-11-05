@@ -83,6 +83,25 @@ Tracer, dose and injection time are therefore recorded twice: in the PET or SPEC
 
 The acquisition plane is a part of each modality extension (MR, PET, SPECT). Further modalities, such as CT, get a modality extension with the plane when a dataset needs one.
 
+##### Geometry
+
+Geometry is recorded once per series, the level researchers search at ("1 mm in every direction"), with sizes in UCUM millimetres:
+
+| Extension | Content | Source |
+|---|---|---|
+| [VoxelResolution](StructureDefinition-VoxelResolution.html) x | Column spacing (horizontal) | second value of Pixel Spacing (0028,0030) |
+| [VoxelResolution](StructureDefinition-VoxelResolution.html) y | Row spacing (vertical) | first value of Pixel Spacing (0028,0030) |
+| [VoxelResolution](StructureDefinition-VoxelResolution.html) z | Slice thickness | Slice Thickness (0018,0050) |
+| [SliceSpacing](StructureDefinition-SliceSpacing.html) | Distance between slice centres | Spacing Between Slices (0018,0088), or computed from the slice positions |
+| [ImageResolution](StructureDefinition-ImageResolution.html) x, y | Columns, rows | Columns (0028,0011), Rows (0028,0010) |
+| [ImageResolution](StructureDefinition-ImageResolution.html) z | Slices per volume | all slices divided by the number of time points |
+
+- **Voxel size is the acquired resolution.** DICOM's Pixel Spacing lists the row spacing (vertical) first, so it maps to y, not x; x and y then match the columns and rows of ImageResolution.
+- **Slice spacing is its own value.** It equals the slice thickness for contiguous 3D sequences such as MPRAGE, but differs when slices have gaps (common in 2D MR) or overlap (CT, PET reconstructions). Sizes and volumes are measured correctly only with the spacing.
+- **Slices per volume, not files.** A multi-frame object holds a whole volume in one file, and a series with several volumes (diffusion, functional MR, dynamic PET) holds slices times volumes; neither is the slice count.
+- **Missing values are omitted, never written as 0.** The isotropy flags ([IsotropicVoxelResolution](StructureDefinition-IsotropicVoxelResolution.html), [IsotropicImageResolution](StructureDefinition-IsotropicImageResolution.html)) are omitted when one of x, y, z is missing.
+- The slice thickness maps 1:1 to MII's series slice thickness (`mii-ex-bildgebung-serie-schichtdicke`).
+
 ##### Scanner
 
 Each scanner is described once, as an [AicuraDevice](StructureDefinition-device.html), and every series it acquired references it in `series.performer.actor`, as MII does. Questions such as "all scans from this scanner model" become direct, and scanner details are not copied into every series. The scanner's DICOM header values map to the Device as follows:

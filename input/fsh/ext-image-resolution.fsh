@@ -1,7 +1,7 @@
 Extension: AicuraImageResolution
 Id: ImageResolution
 Title: "Image Resolution"
-Description: "Three-dimensional image resolution (pixel/voxel counts) of an imaging series."
+Description: "Matrix size of an imaging series: columns, rows and slices per volume. A series with several volumes (e.g. diffusion, functional or dynamic PET) counts the slices of one volume."
 * ^url = "http://aicuramedical.com/fhir/StructureDefinition/ImageResolution"
 * insert ExtensionContext(ImagingStudy.series)
 * extension contains
@@ -9,8 +9,9 @@ Description: "Three-dimensional image resolution (pixel/voxel counts) of an imag
     valueY 1..1 and
     valueZ 1..1
 * extension[valueX].value[x] only integer
-* extension[valueX] ^short = "X dimension pixel count"
+* extension[valueX] ^short = "Columns, DICOM (0028,0011)"
 * extension[valueY].value[x] only integer
-* extension[valueY] ^short = "Y dimension pixel count"
+* extension[valueY] ^short = "Rows, DICOM (0028,0010)"
 * extension[valueZ].value[x] only integer
-* extension[valueZ] ^short = "Z dimension pixel count"
+* extension[valueZ] ^short = "Slices per volume (all slices divided by the number of time points), not the number of files"
+* value[x] 0..0

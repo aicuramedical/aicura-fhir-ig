@@ -6,10 +6,11 @@ The following extensions are defined on `ImagingStudy.series` and capture imagin
 
 | Extension | Type | Description |
 |-----------|------|-------------|
-| [VoxelResolution](StructureDefinition-VoxelResolution.html) | Complex (X/Y/Z decimal + unit) | Three-dimensional voxel resolution |
-| [ImageResolution](StructureDefinition-ImageResolution.html) | Complex (X/Y/Z integer) | Three-dimensional image resolution |
-| [IsotropicVoxelResolution](StructureDefinition-IsotropicVoxelResolution.html) | Boolean | Whether voxel resolution is isotropic |
-| [IsotropicImageResolution](StructureDefinition-IsotropicImageResolution.html) | Boolean | Whether image resolution is isotropic |
+| [VoxelResolution](StructureDefinition-VoxelResolution.html) | Complex (X/Y/Z Quantity, mm) | Acquired voxel size: pixel spacing and slice thickness |
+| [SliceSpacing](StructureDefinition-SliceSpacing.html) | Quantity (mm) | Distance between slice centres |
+| [ImageResolution](StructureDefinition-ImageResolution.html) | Complex (X/Y/Z integer) | Matrix size: columns, rows, slices per volume |
+| [IsotropicVoxelResolution](StructureDefinition-IsotropicVoxelResolution.html) | Boolean | Whether the voxel size is equal in x, y and z |
+| [IsotropicImageResolution](StructureDefinition-IsotropicImageResolution.html) | Boolean | Whether the matrix size is equal in x, y and z |
 | [NumberOfFrames](StructureDefinition-NumberOfFrames.html) | Integer | Number of frames/slices |
 | [ModalityMR](StructureDefinition-ModalityMR.html) | Complex (10 parts) | MR acquisition details: field strength, technique codes, TE, TR, TI and flip angle (shaped like MII's MR extension, UCUM units), plus sequence name, contrast weighting and plane |
 | [ModalityPT](StructureDefinition-ModalityPT.html) | Complex (6 parts) | PET tracer, radionuclide, dose and half-life (shaped like MII's PET extension, UCUM units), plus injection time and plane |

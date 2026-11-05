@@ -82,6 +82,7 @@ Description: "Constrained ImagingStudy profile for AICURA's medical imaging data
 // Series extensions; value set bindings sit in the extensions
 * series.extension contains
     AicuraVoxelResolution named voxelResolution 0..1 MS and
+    AicuraSliceSpacing named sliceSpacing 0..1 MS and
     AicuraImageResolution named imageResolution 0..1 MS and
     AicuraIsotropicVoxelResolution named isotropicVoxelResolution 0..1 MS and
     AicuraIsotropicImageResolution named isotropicImageResolution 0..1 MS and

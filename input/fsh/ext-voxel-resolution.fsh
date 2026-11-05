@@ -1,28 +1,20 @@
 Extension: AicuraVoxelResolution
 Id: VoxelResolution
 Title: "Voxel Resolution"
-Description: "Three-dimensional voxel resolution of an imaging series, with optional unit metadata."
+Description: "Acquired voxel size of an imaging series, in millimetres: in-plane pixel spacing (x, y) and slice thickness (z). The distance between slice centres is a separate value (SliceSpacing). The slice thickness maps 1:1 to MII's series slice thickness (mii-ex-bildgebung-serie-schichtdicke)."
 * ^url = "http://aicuramedical.com/fhir/StructureDefinition/VoxelResolution"
 * insert ExtensionContext(ImagingStudy.series)
 * extension contains
     valueX 1..1 and
     valueY 1..1 and
-    valueZ 1..1 and
-    comparator 0..1 and
-    unit 0..1 and
-    system 0..1 and
-    code 0..1
-* extension[valueX].value[x] only decimal
-* extension[valueX] ^short = "X dimension voxel size"
-* extension[valueY].value[x] only decimal
-* extension[valueY] ^short = "Y dimension voxel size"
-* extension[valueZ].value[x] only decimal
-* extension[valueZ] ^short = "Z dimension voxel size"
-* extension[comparator].value[x] only code
-* extension[comparator] ^short = "Comparator for quantity"
-* extension[unit].value[x] only string
-* extension[unit] ^short = "Unit of measure"
-* extension[system].value[x] only uri
-* extension[system] ^short = "System for unit code"
-* extension[code].value[x] only code
-* extension[code] ^short = "Coded form of the unit"
+    valueZ 0..1
+* extension[valueX] ^short = "Column spacing (horizontal), second value of DICOM Pixel Spacing (0028,0030), in mm"
+* extension[valueX].value[x] only Quantity
+* extension[valueX].valueQuantity = $UCUM#mm
+* extension[valueY] ^short = "Row spacing (vertical), first value of DICOM Pixel Spacing (0028,0030), in mm"
+* extension[valueY].value[x] only Quantity
+* extension[valueY].valueQuantity = $UCUM#mm
+* extension[valueZ] ^short = "Slice thickness, DICOM (0018,0050), in mm; omitted where the header has none"
+* extension[valueZ].value[x] only Quantity
+* extension[valueZ].valueQuantity = $UCUM#mm
+* value[x] 0..0
