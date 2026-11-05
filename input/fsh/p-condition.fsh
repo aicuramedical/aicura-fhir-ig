@@ -7,18 +7,14 @@ Description: "Constrained Condition profile for AICURA's clinical data model, co
 // Must-support elements
 * clinicalStatus MS
 * verificationStatus MS
-* category MS
-* severity MS
 * code MS
 * bodySite MS
 * subject MS
 * subject only Reference(Patient)
 * encounter MS
 * onset[x] MS
-* abatement[x] MS
 * recordedDate MS
 * stage MS
-* evidence MS
 // Custom extensions (age instead of dates)
 * extension contains
     AicuraAgeRecorded named ageRecorded 0..1 MS and
