@@ -9,6 +9,8 @@ Description: "Constrained Condition profile for AICURA's clinical data model, co
 * clinicalStatus MS
 * verificationStatus MS
 * code MS
+* code ^short = "Diagnosis: SNOMED CT where it has the concept, else an AICURA code"
+* code ^comment = "Main code system SNOMED CT: every diagnosis carries its SNOMED CT concept where SNOMED CT has one, which keeps the neurodegenerative subtypes apart and fits MII's SNOMED CT slot. An AICURA code (https://aicuramedical.com/fhir/coding) is used only where SNOMED CT has no concept. ICD-10-GM and Orphanet codes may follow as further codings of the same diagnosis."
 * bodySite MS
 * subject MS
 * subject only Reference(Patient)
