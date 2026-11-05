@@ -6,6 +6,15 @@ This IG defines seventeen FHIR R4B profiles. All of them follow the [Shared Rule
 
 [AicuraImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on identifier, status, subject, encounter, started, description, endpoint, series and its uid, number, modality, description, instance count, start, endpoint and body site; id, an identifier value and subject are required. It adds the patient's age at the study and 17 series-level extensions for imaging acquisition metadata including voxel resolution, image resolution, MRI sequence, contrast weighting, PET tracer, device information, age at the series and storage size.
 
+##### Linking a result to a series
+
+Almost every result in neurodegeneration imaging (a regional volume, a quality check) is computed from one series, not from the whole study. FHIR R4B cannot reference a single series: a reference targets a whole resource, and the series sits inside the ImagingStudy. A result computed from a series therefore carries two things:
+
+- `Observation.derivedFrom` referencing the ImagingStudy, and
+- MII's series-UID extension (`https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-series-uid`, `valueId`) holding the `series.uid` of that series, the DICOM Series Instance UID.
+
+The extension is used exactly as the MII imaging module publishes it (this IG depends on `de.medizininformatikinitiative.kerndatensatz.bildgebung` 2026.0.0), so MII systems recognise the link. A reference to the series as a resource of its own, such as `ImagingSeries/<uid>`, is not valid FHIR. When the model moves to FHIR R6, the resource ImagingSelection takes the place of this pair.
+
 #### AicuraObservation
 
 [AicuraObservation](StructureDefinition-observation.html) is the common parent of the Observation profiles per kind of result (below). It constrains Observation with must-support on status, category, code, subject, effective, value, performer, derivedFrom, component, bodySite, interpretation, and method. The `code` element is bound to the [AicuraObservationCodeVS](ValueSet-aicura-observation-code.html) covering LOINC, SNOMED-CT, and AICURA custom observation codes. Extensions record the patient's age at the observation and link the Observation to the body structure its value refers to; on each component, extensions link the component's value to its body structure and to the device (analysis software) that produced it.

@@ -43,6 +43,7 @@ Description: "Constrained ImagingStudy profile for AICURA's medical imaging data
 * series obeys aic-mr-1 and aic-mr-2 and aic-pt-1
 // Series backbone must-support
 * series.uid MS
+* series.uid ^comment = "DICOM Series Instance UID. A result computed from this series references the ImagingStudy in derivedFrom and carries this UID in MII's series-UID extension (https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-series-uid). A reference to the series as a resource of its own (e.g. ImagingSeries/<uid>) is not valid FHIR."
 * series.number MS
 * series.modality MS
 * series.modality from AicuraImagingModalityVS (extensible)
