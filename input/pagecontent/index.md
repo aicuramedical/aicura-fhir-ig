@@ -1,13 +1,17 @@
 ### AICURA FHIR Implementation Guide
 
-This Implementation Guide (IG) formally profiles the FHIR R4B resources implemented by **AICURA Medical's** clinical data platform. The guide covers thirteen resource types with associated terminology and extensions.
+This Implementation Guide (IG) formally profiles the FHIR R4B resources implemented by **AICURA Medical's** clinical data platform. The guide covers thirteen resource types in seventeen profiles, with associated terminology and extensions.
 
 #### Scope
 
 | Resource | Profile | Description |
 |----------|---------|-------------|
 | ImagingStudy | [AicuraImagingStudy](StructureDefinition-imaging-study.html) | MRI and PET imaging studies with 17 series-level extensions for acquisition metadata |
-| Observation | [AicuraObservation](StructureDefinition-observation.html) | Clinical assessments, laboratory results, genetics, vital signs, and imaging-derived measurements |
+| Observation | [AicuraObservation](StructureDefinition-observation.html) | Common parent of the Observation profiles per kind of result; used directly for kinds without their own profile (e.g. genetics) |
+| Observation | [AicuraObservationLab](StructureDefinition-observation-lab.html) | Lab values |
+| Observation | [AicuraObservationScore](StructureDefinition-observation-score.html) | Clinical scores |
+| Observation | [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html) | Vital signs, meeting FHIR's vital-signs profile |
+| Observation | [AicuraObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) | Imaging-derived measures |
 | Condition | [AicuraCondition](StructureDefinition-condition.html) | Neurological, cardiovascular, and other clinical conditions |
 | Patient | [AicuraPatient](StructureDefinition-patient.html) | Subject of record, with custom race and ethnicity extensions |
 | Encounter | [AicuraEncounter](StructureDefinition-encounter.html) | Study visits and clinical contacts |
