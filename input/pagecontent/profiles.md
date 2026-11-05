@@ -1,6 +1,6 @@
 ### Profiles
 
-This IG defines nineteen FHIR R4B profiles. All of them follow the [Shared Rules](shared-rules.html), e.g. every identifier names its issuer in `system`.
+This IG defines twenty FHIR R4B profiles. All of them follow the [Shared Rules](shared-rules.html), e.g. every identifier names its issuer in `system`.
 
 #### AicuraImagingStudy
 
@@ -141,6 +141,7 @@ Each kind of result has its own Observation profile, so each kind can get the ru
 | [AicuraObservationScore](StructureDefinition-observation-score.html) | AicuraObservation | `survey` | Clinical scores from assessment instruments, clinician-rated or participant-reported |
 | [AicuraObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) | AicuraObservation | `imaging` | Measures derived from images, e.g. brain-region volumes and PET SUVr |
 | [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html) | FHIR [vital signs](http://hl7.org/fhir/R4B/observation-vitalsigns.html) | `vital-signs` | Vital signs, e.g. weight, height and heart rate |
+| [AicuraObservationBloodPressure](StructureDefinition-observation-blood-pressure.html) | FHIR [blood pressure](http://hl7.org/fhir/R4B/bp.html) | `vital-signs` | Blood pressure, one record with systolic and diastolic components |
 
 The category codes come from the HL7 [observation-category](http://terminology.hl7.org/CodeSystem/observation-category) code system; each profile requires its code and allows further categories. The lab, score and imaging profiles inherit all rules of AicuraObservation. The vital-sign profile derives from FHIR's vital-signs profile, as FHIR requires for vital signs, and repeats the rules all AICURA Observation profiles share: a Patient as subject and the patient's age at the observation. Results of a kind without its own profile (e.g. genetics) use AicuraObservation directly.
 
@@ -175,6 +176,20 @@ Every score is a quantity (`valueQuantity`) with the UCUM code `{score}` (system
 ```
 
 Scores stay Observations; a scored questionnaire with its item answers (Questionnaire and QuestionnaireResponse) may follow later.
+
+##### Vital signs
+
+FHIR requires vital signs to conform to its [vital-signs profiles](http://hl7.org/fhir/R4B/observation-vitalsigns.html): category `vital-signs`, a LOINC code and UCUM units. Both AICURA vital-sign profiles derive from them. Weight, height, BMI, heart rate, respiratory rate and body temperature are single records in [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html). Heart and respiratory rate carry the UCUM code `/min`, as FHIR's heart-rate and respiratory-rate profiles fix, with `beats/min` or `breaths/min` as the unit text.
+
+Blood pressure is one record with two parts, in [AicuraObservationBloodPressure](StructureDefinition-observation-blood-pressure.html):
+
+| Element | Code |
+|---------|------|
+| `code` | LOINC `85354-9` Blood pressure panel with all children optional |
+| `component` (systolic) | LOINC `8480-6` Systolic blood pressure, `valueQuantity` in `mm[Hg]` |
+| `component` (diastolic) | LOINC `8462-4` Diastolic blood pressure, `valueQuantity` in `mm[Hg]` |
+
+The profile derives from FHIR's [blood-pressure profile](http://hl7.org/fhir/R4B/bp.html), which defines the code and both components, and adds the rules all AICURA Observation profiles share. FHIR tools expect blood pressure in this shape. A systolic or diastolic value is never a record of its own: AicuraObservationVitalSign rejects the codes `8480-6` and `8462-4` as a record's code (invariant `aic-vs-1`).
 
 #### AicuraObservationImagingMeasure
 

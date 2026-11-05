@@ -1,6 +1,6 @@
 ### AICURA FHIR Implementation Guide
 
-This Implementation Guide (IG) formally profiles the FHIR R4B resources implemented by **AICURA Medical's** clinical data platform. The guide covers fourteen resource types in nineteen profiles, with associated terminology and extensions.
+This Implementation Guide (IG) formally profiles the FHIR R4B resources implemented by **AICURA Medical's** clinical data platform. The guide covers fourteen resource types in twenty profiles, with associated terminology and extensions.
 
 #### Scope
 
@@ -11,6 +11,7 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 | Observation | [AicuraObservationLab](StructureDefinition-observation-lab.html) | Lab values |
 | Observation | [AicuraObservationScore](StructureDefinition-observation-score.html) | Clinical scores |
 | Observation | [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html) | Vital signs, meeting FHIR's vital-signs profile |
+| Observation | [AicuraObservationBloodPressure](StructureDefinition-observation-blood-pressure.html) | Blood pressure as one record with systolic and diastolic components, meeting FHIR's blood-pressure profile |
 | Observation | [AicuraObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) | Imaging-derived measures |
 | Condition | [AicuraCondition](StructureDefinition-condition.html) | Neurological, cardiovascular, and other clinical conditions |
 | Patient | [AicuraPatient](StructureDefinition-patient.html) | Subject of record, with custom race and ethnicity extensions |
