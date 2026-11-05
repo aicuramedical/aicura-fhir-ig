@@ -217,7 +217,7 @@ FHIR R4B has no element that links an Observation to a BodyStructure; HL7's work
 
 #### AicuraBodyStructure
 
-[AicuraBodyStructure](StructureDefinition-body-structure.html) constrains BodyStructure with must-support on identifier, active, morphology, location, locationQualifier, description, and patient. It describes anatomical sites, mainly the brain regions that imaging-derived measures refer to. A brain region has three parts:
+[AicuraBodyStructure](StructureDefinition-body-structure.html) constrains BodyStructure with must-support on identifier, active, morphology, location, locationQualifier, and description. It describes anatomical sites, mainly the brain regions that imaging-derived measures refer to. A brain region has three parts:
 
 | Part | Element | Example | Value set |
 |---|---|---|---|
@@ -228,3 +228,9 @@ FHIR R4B has no element that links an Observation to a BodyStructure; HL7's work
 ##### Side and position
 
 The side (left, right, bilateral) has its own field, the extension BodyStructureLaterality, apart from the position in `locationQualifier`. FHIR R4B and MII put both into `locationQualifier`; FHIR R5 and R6 give the side its own element, `includedStructure.laterality`, next to the position in `includedStructure.qualifier`. AICURA follows that separation in a flat form, since each region is one atlas structure with one side; the nested `includedStructure` serves regions made of several structures, which atlas regions are not. With the move to R6, `location` becomes `includedStructure.structure`, the extension `includedStructure.laterality` and `locationQualifier` `includedStructure.qualifier`. A reader that does not know the extension sees the side only in the region's name. An export to MII copies the side into `locationQualifier`.
+
+##### Shared brain regions
+
+A brain region from an atlas, such as the left hippocampus, is the same definition for every participant. Each region (structure, side and position) is therefore one BodyStructure, shared by all participants, and every measurement links to it. Region records carry no patient.
+
+This is a known deviation from FHIR R4B, where `BodyStructure.patient` is required (1..1), as it is in R5 and in MII. FHIR R6 makes the patient optional (0..1), and AICURA follows R6 here. A profile cannot loosen a cardinality of base FHIR, so the profile keeps R4B's 1..1 and a validator reports region records as missing the patient; `patient` is not must-support. An export to MII creates one copy of each region per patient.
