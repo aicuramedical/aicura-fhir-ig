@@ -160,6 +160,17 @@ Brain volumetry produces one value per brain region, often more than a hundred p
 
 FHIR leaves the choice between components and separate Observations to context, and components fit when one method, one software and one time apply to all values, as they do here. Separate Observations would repeat the same patient, time, image series and software on every value. MII requires a value on every Observation; an export to MII turns each component into an Observation of its own. A measure that comes as a single value (e.g. the intracranial volume of a study without a regional breakdown) is one Observation with `valueQuantity` and no components.
 
+##### Link to the brain region
+
+Each value points directly to the [AicuraBodyStructure](StructureDefinition-body-structure.html) of its brain region (structure, side and position):
+
+| Value on | Extension |
+|---|---|
+| the Observation | [ObservationBodyStructure](StructureDefinition-ObservationBodyStructure.html) |
+| a component | [ObservationComponentBodyStructure](StructureDefinition-ObservationComponentBodyStructure.html) |
+
+FHIR R4B has no element that links an Observation to a BodyStructure; HL7's workaround is an extension inside `bodySite`, which MII uses. FHIR R5 and R6 add the direct link `Observation.bodyStructure`, and R6 deprecates `bodySite`. The AICURA extensions follow that newer design, so the move to R6 changes the format once: `ObservationBodyStructure` becomes `Observation.bodyStructure`. Components have no region element in any FHIR version, so `ObservationComponentBodyStructure` stays an extension. An export to MII moves the link into `bodySite`, with the region's SNOMED CT code there.
+
 #### AicuraCondition
 
 [AicuraCondition](StructureDefinition-condition.html) constrains Condition with must-support on clinicalStatus, verificationStatus, code, bodySite, subject, encounter, onset, recordedDate, and stage. The `code` element is bound to the [AicuraConditionCodeVS](ValueSet-aicura-condition-code.html) spanning SNOMED-CT, AICURA custom, and MedDRA codes. Extensions record the patient's age at the recorded date (`AgeRecorded`) and at onset (`AgeOnset`, and the older `AgeAtCondition` with the same value).

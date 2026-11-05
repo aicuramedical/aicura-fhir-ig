@@ -38,6 +38,8 @@ These extensions link an Observation and its components to the body structure (e
 | [ObservationBodyStructure](StructureDefinition-ObservationBodyStructure.html) | Observation | Reference(BodyStructure) | Body structure the observation's value refers to |
 | [ObservationComponentBodyStructure](StructureDefinition-ObservationComponentBodyStructure.html) | Observation.component | Reference(BodyStructure) | Body structure the component's value refers to |
 
+The two body-structure links follow the direct link FHIR R5 and R6 define (`Observation.bodyStructure`), which FHIR R4B lacks. With the move to R6, ObservationBodyStructure becomes that element; ObservationComponentBodyStructure stays, since components have no such element in any FHIR version.
+
 #### Age at an event
 
 Research datasets usually remove dates, so AICURA records the patient's age in whole years at each event in an extension of its own. Besides AgeAtImagingStudy, AgeAtImagingSeries and AgeAtObservation above, these are:
