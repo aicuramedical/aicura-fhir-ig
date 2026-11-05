@@ -240,6 +240,10 @@ The category is `imaging` from the HL7 [observation-category](http://terminology
 
 [AicuraPatient](StructureDefinition-patient.html) constrains Patient with must-support on identifier, gender, birthDate, and deceased. It adds `race` and `ethnicity` extensions bound to the [AicuraRaceEthnicityVS](ValueSet-aicura-race-ethnicity.html) (US CDC Race & Ethnicity code system); these mirror the US Core race/ethnicity extensions without taking a US Core dependency. Patient identifiers are typed as pseudonyms (`PSEUDED`).
 
+##### Death
+
+When a source reports that a participant has died, the date of death goes on the Patient record in `deceasedDateTime`, as base FHIR intends, with the precision the source gives (partial dates as in the [Shared Rules](shared-rules.html)). MII records vital status as a separate Observation with dated checks (alive, dead, lost to follow-up), which suits hospitals that check vital status repeatedly. No source reports such checks, so AICURA does not use that Observation; follow-up states such as lost to follow-up belong to the study participation ([AicuraResearchSubject](StructureDefinition-research-subject.html)). MII's pseudonymised Patient profile allows `deceased[x]`, and an export to MII can derive the vital-status Observation from it.
+
 #### AicuraEncounter
 
 [AicuraEncounter](StructureDefinition-encounter.html) constrains Encounter with must-support on status, class, type, subject, period, and location. The `class` element is bound to the [AicuraEncounterClassVS](ValueSet-aicura-encounter-class.html) (HL7 v3 ActCode). The `AgeAtEncounter` extension records the patient's age at the start of the encounter.
