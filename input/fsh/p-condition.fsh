@@ -19,5 +19,10 @@ Description: "Constrained Condition profile for AICURA's clinical data model, co
 * recordedDate MS
 * stage MS
 * evidence MS
+// Custom extensions (age instead of dates)
+* extension contains
+    AicuraAgeRecorded named ageRecorded 0..1 MS and
+    AicuraAgeOnset named ageOnset 0..1 and
+    AicuraAgeAtCondition named ageAtCondition 0..1
 // ValueSet bindings
 * code from AicuraConditionCodeVS (extensible)

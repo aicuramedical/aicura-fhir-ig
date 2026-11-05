@@ -43,6 +43,19 @@ These extensions link an Observation and its components to the body structure (e
 | [ObservationComponentBodyStructure](StructureDefinition-ObservationComponentBodyStructure.html) | Observation.component | Reference(BodyStructure) | Body structure the component's value refers to |
 | [ObservationComponentDevice](StructureDefinition-ObservationComponentDevice.html) | Observation.component | Reference(Device) | Device (analysis software) that produced the component's value |
 
+#### Age at an event
+
+Research datasets usually remove dates, so AICURA records the patient's age in whole years at each event in an extension of its own. Besides AgeAtImagingStudy, AgeAtImagingSeries and AgeAtObservation above, these are:
+
+| Extension | Context | Type | Description |
+|-----------|---------|------|-------------|
+| [AgeAtEncounter](StructureDefinition-AgeAtEncounter.html) | Encounter | Integer | Patient age at the start of the encounter |
+| [AgeRecorded](StructureDefinition-AgeRecorded.html) | Condition | Integer | Patient age at the condition's recorded date |
+| [AgeOnset](StructureDefinition-AgeOnset.html) | Condition | Integer | Patient age at the condition's onset date |
+| [AgeAtCondition](StructureDefinition-AgeAtCondition.html) | Condition | Integer | Patient age at the condition's onset date (same value as AgeOnset, which supersedes it) |
+| [AgeAtResearch](StructureDefinition-AgeAtResearch.html) | ResearchSubject | Integer | Patient age at the start of the study participation |
+| [AgeAtProcedure](StructureDefinition-AgeAtProcedure.html) | Procedure | Integer | Patient age at the date of the procedure |
+
 #### Cross-resource extensions
 
 These extensions are defined on the clinical and demographic profiles added alongside ImagingStudy.

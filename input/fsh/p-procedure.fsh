@@ -23,5 +23,7 @@ Description: "Constrained Procedure profile for AICURA's clinical data model, co
 * focalDevice MS
 * usedReference MS
 * usedCode MS
+// Custom extensions (age instead of dates)
+* extension contains AicuraAgeAtProcedure named ageAtProcedure 0..1
 // ValueSet bindings
 * bodySite from AicuraBodyStructureVS (extensible)

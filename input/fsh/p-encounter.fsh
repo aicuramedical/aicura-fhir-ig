@@ -20,5 +20,7 @@ Description: "Constrained Encounter profile for AICURA's clinical data model, re
 * location MS
 * serviceProvider MS
 * partOf MS
+// Custom extensions (age instead of dates)
+* extension contains AicuraAgeAtEncounter named ageAtEncounter 0..1 MS
 // ValueSet bindings
 * class from AicuraEncounterClassVS (extensible)

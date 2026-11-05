@@ -12,7 +12,7 @@ This IG defines thirteen FHIR R4B profiles:
 
 #### AicuraCondition
 
-[AicuraCondition](StructureDefinition-condition.html) constrains Condition with must-support on clinicalStatus, verificationStatus, category, severity, code, bodySite, subject, encounter, onset, abatement, recordedDate, stage, and evidence. The `code` element is bound to the [AicuraConditionCodeVS](ValueSet-aicura-condition-code.html) spanning SNOMED-CT, AICURA custom, MedDRA, and LOINC codes.
+[AicuraCondition](StructureDefinition-condition.html) constrains Condition with must-support on clinicalStatus, verificationStatus, category, severity, code, bodySite, subject, encounter, onset, abatement, recordedDate, stage, and evidence. The `code` element is bound to the [AicuraConditionCodeVS](ValueSet-aicura-condition-code.html) spanning SNOMED-CT, AICURA custom, MedDRA, and LOINC codes. Extensions record the patient's age at the recorded date (`AgeRecorded`) and at onset (`AgeOnset`, and the older `AgeAtCondition` with the same value).
 
 #### AicuraPatient
 
@@ -20,11 +20,11 @@ This IG defines thirteen FHIR R4B profiles:
 
 #### AicuraEncounter
 
-[AicuraEncounter](StructureDefinition-encounter.html) constrains Encounter with must-support on status, class, type, serviceType, priority, subject, period, participant, length, reasonCode, diagnosis, location, serviceProvider, and partOf. The `class` element is bound to the [AicuraEncounterClassVS](ValueSet-aicura-encounter-class.html) (HL7 v3 ActCode).
+[AicuraEncounter](StructureDefinition-encounter.html) constrains Encounter with must-support on status, class, type, serviceType, priority, subject, period, participant, length, reasonCode, diagnosis, location, serviceProvider, and partOf. The `class` element is bound to the [AicuraEncounterClassVS](ValueSet-aicura-encounter-class.html) (HL7 v3 ActCode). The `AgeAtEncounter` extension records the patient's age at the start of the encounter.
 
 #### AicuraProcedure
 
-[AicuraProcedure](StructureDefinition-procedure.html) constrains Procedure with must-support on status, category, code, subject, encounter, performed, performer, location, reasonCode, reasonReference, bodySite, outcome, complication, followUp, focalDevice, usedReference, and usedCode. The `bodySite` element is bound to the [AicuraBodyStructureVS](ValueSet-aicura-body-structure.html).
+[AicuraProcedure](StructureDefinition-procedure.html) constrains Procedure with must-support on status, category, code, subject, encounter, performed, performer, location, reasonCode, reasonReference, bodySite, outcome, complication, followUp, focalDevice, usedReference, and usedCode. The `bodySite` element is bound to the [AicuraBodyStructureVS](ValueSet-aicura-body-structure.html). The `AgeAtProcedure` extension records the patient's age at the procedure.
 
 #### AicuraMedication
 
@@ -40,7 +40,7 @@ This IG defines thirteen FHIR R4B profiles:
 
 #### AicuraResearchSubject
 
-[AicuraResearchSubject](StructureDefinition-research-subject.html) constrains ResearchSubject with must-support on identifier, status, period, study, individual, assignedArm, and actualArm.
+[AicuraResearchSubject](StructureDefinition-research-subject.html) constrains ResearchSubject with must-support on identifier, status, period, study, individual, assignedArm, and actualArm. The `AgeAtResearch` extension records the patient's age at the start of the participation.
 
 #### AicuraConsent
 
