@@ -162,6 +162,20 @@ The lab profile follows the structure of the MII lab module (laboratory category
 
 Base FHIR and MII's lab module both provide `method` and `device` for this; the profile makes the device link must-support.
 
+##### Clinical scores
+
+Every score is a quantity (`valueQuantity`) with the UCUM code `{score}` (system `http://unitsofmeasure.org`), whether the instrument counts whole points (MMSE, MoCA) or half points and decimals (CDR, ADAS-Cog). FHIR R4B has no plain decimal value, so a quantity is the one type that holds every score. `{score}` is not a real unit: UCUM reads text in curly braces as an annotation, a label on the unit `1`, so the value stays dimensionless. LOINC gives `{score}` as the example unit for scores such as the MMSE, and MII's score profiles fix it.
+
+```json
+"valueQuantity": {
+  "value": 0.5,
+  "system": "http://unitsofmeasure.org",
+  "code": "{score}"
+}
+```
+
+Scores stay Observations; a scored questionnaire with its item answers (Questionnaire and QuestionnaireResponse) may follow later.
+
 #### AicuraObservationImagingMeasure
 
 [AicuraObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) holds measures derived from images, such as brain-region volumes, surface areas, cortical thickness and PET values. It inherits all rules of AicuraObservation and requires the category `imaging`.
