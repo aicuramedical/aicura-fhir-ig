@@ -144,7 +144,23 @@ Each kind of result has its own Observation profile, so each kind can get the ru
 
 The category codes come from the HL7 [observation-category](http://terminology.hl7.org/CodeSystem/observation-category) code system; each profile requires its code and allows further categories. The lab, score and imaging profiles inherit all rules of AicuraObservation. The vital-sign profile derives from FHIR's vital-signs profile, as FHIR requires for vital signs, and repeats the rules all AICURA Observation profiles share: a Patient as subject and the patient's age at the observation. Results of a kind without its own profile (e.g. genetics) use AicuraObservation directly.
 
+##### Lab values
+
 The lab profile follows the structure of the MII lab module (laboratory category, grouping of lab codes) but uses international codes and English displays instead of MII's German ones, and claims no conformance to MII's lab profiles.
+
+**Assay platform and technique.** The same biomarker measured with different assays gives values on different scales, so every lab value names the platform that produced it. `device` is must-support and references an [AicuraAssayDevice](StructureDefinition-assay-device.html): one shared record per platform (e.g. Roche Elecsys, Fujirebio Lumipulse, Quanterix SIMOA), referenced from every value it produced. Values from different assays then stay apart, and the platform can be searched. `method` names only the technique, from [AicuraLabMethodVS](ValueSet-aicura-lab-method.html) (extensible): immunoassay, one of its specific techniques, or mass spectrometry. The platform never goes into the method or its text.
+
+| Record | Element | Example |
+|--------|---------|---------|
+| Lab value | `code` | LOINC `33203-1` Amyloid beta 42 peptide (CSF) |
+| Lab value | `method` | SNOMED CT `726449005` Immunoassay technique |
+| Lab value | `device` | `Device/roche-elecsys` |
+| Assay device | `type` | SNOMED CT `30234008` Medical laboratory analyzer |
+| Assay device | `manufacturer` | Roche |
+| Assay device | `deviceName` | Elecsys (type `manufacturer-name`) |
+| Assay device | `version` | Assay generation, where known |
+
+Base FHIR and MII's lab module both provide `method` and `device` for this; the profile makes the device link must-support.
 
 #### AicuraObservationImagingMeasure
 
@@ -217,7 +233,11 @@ The category is `imaging` from the HL7 [observation-category](http://terminology
 
 #### AicuraDevice
 
-[AicuraDevice](StructureDefinition-device.html) constrains Device with must-support on identifier, udiCarrier, status, manufacturer, manufactureDate, expirationDate, lotNumber, serialNumber, deviceName, modelNumber, type, version, patient, owner, location, note, safety, and parent. It represents imaging scanners, referenced from `ImagingStudy.series.performer.actor`, and analysis software, referenced by derived results. `type` is required and bound to [AicuraDeviceTypeVS](ValueSet-aicura-device-type.html), which tells the two apart: Acquisition Equipment for a scanner, Processing Equipment for software.
+[AicuraDevice](StructureDefinition-device.html) constrains Device with must-support on identifier, udiCarrier, status, manufacturer, manufactureDate, expirationDate, lotNumber, serialNumber, deviceName, modelNumber, type, version, patient, owner, location, note, safety, and parent. It represents imaging scanners, referenced from `ImagingStudy.series.performer.actor`, analysis software, referenced by derived results, and lab assay platforms, referenced from lab results. `type` is required and bound to [AicuraDeviceTypeVS](ValueSet-aicura-device-type.html), which tells them apart: Acquisition Equipment for a scanner, Processing Equipment for software, Medical laboratory analyzer for an assay platform.
+
+#### AicuraAssayDevice
+
+[AicuraAssayDevice](StructureDefinition-assay-device.html) derives from AicuraDevice and describes a lab assay platform, e.g. Roche Elecsys, Fujirebio Lumipulse or Quanterix SIMOA. There is one shared record per platform, referenced from the `device` of every lab value it produced. `type` is always SNOMED CT `30234008` "Medical laboratory analyzer": SNOMED CT has no concept for an assay or test kit, nor for a mass spectrometer, so the platform is told apart by `manufacturer` (required) and `deviceName` (at least one, type `manufacturer-name`). `version` is must-support and holds the assay generation where known. `patient` is not used, since the record is shared by all participants' results.
 
 #### AicuraBodyStructure and AicuraAtlasRegion
 
