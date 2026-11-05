@@ -1,17 +1,17 @@
 Invariant: aic-mr-1
-Description: "An MR series carries a contrast and a sequence."
+Description: "An MR series carries the MR extension with a contrast weighting and a sequence name."
 Severity: #error
-Expression: "modality.code = 'MR' implies (extension('http://aicuramedical.com/fhir/StructureDefinition/Contrast').exists() and extension('http://aicuramedical.com/fhir/StructureDefinition/SeriesSequence').exists())"
+Expression: "modality.code = 'MR' implies extension('http://aicuramedical.com/fhir/StructureDefinition/ModalityMR').where(extension('contrastWeighting').exists() and extension('sequenceName').exists()).exists()"
 
 Invariant: aic-mr-2
-Description: "The sequence fits the contrast: T1w needs an IR/MPRAGE-type sequence, T2w TSE or FSE, T2w FLAIR FLAIR, TSE or FSE, T2*w GRE or SWI. Other contrasts are unrestricted; 'Unresolved Sequence Label' is always allowed."
+Description: "The sequence name fits the contrast weighting: T1w needs an IR/MPRAGE-type sequence, T2w TSE or FSE, T2w FLAIR FLAIR, TSE or FSE, T2*w GRE or SWI. Other weightings are unrestricted; 'Unresolved Sequence Label' is always allowed."
 Severity: #error
-Expression: "extension('http://aicuramedical.com/fhir/StructureDefinition/Contrast').extension('contrast').value.code.exists() implies (
-  extension('http://aicuramedical.com/fhir/StructureDefinition/SeriesSequence').extension('sequence').value.code = 'Unresolved Sequence Label'
-  or ((extension('http://aicuramedical.com/fhir/StructureDefinition/Contrast').extension('contrast').value.code = 'T1w') implies extension('http://aicuramedical.com/fhir/StructureDefinition/SeriesSequence').extension('sequence').value.code in ('MPRAGE' | 'MP2RAGE' | 'IR-SPGR' | 'IR-FSPGR' | 'Accelerated IR-SPGR' | 'Accelerated IR-FSPGR' | 'TFE'))
-  and ((extension('http://aicuramedical.com/fhir/StructureDefinition/Contrast').extension('contrast').value.code = 'T2w') implies extension('http://aicuramedical.com/fhir/StructureDefinition/SeriesSequence').extension('sequence').value.code in ('TSE' | 'FSE'))
-  and ((extension('http://aicuramedical.com/fhir/StructureDefinition/Contrast').extension('contrast').value.code = 'T2w FLAIR') implies extension('http://aicuramedical.com/fhir/StructureDefinition/SeriesSequence').extension('sequence').value.code in ('FLAIR' | 'TSE' | 'FSE'))
-  and ((extension('http://aicuramedical.com/fhir/StructureDefinition/Contrast').extension('contrast').value.code = 'T2*w') implies extension('http://aicuramedical.com/fhir/StructureDefinition/SeriesSequence').extension('sequence').value.code in ('GRE' | 'SWI')))"
+Expression: "extension('http://aicuramedical.com/fhir/StructureDefinition/ModalityMR').all(extension('contrastWeighting').value.coding.code.exists() implies (
+  extension('sequenceName').value.coding.code = 'Unresolved Sequence Label'
+  or ((extension('contrastWeighting').value.coding.code = 'T1w') implies extension('sequenceName').value.coding.code in ('MPRAGE' | 'MP2RAGE' | 'IR-SPGR' | 'IR-FSPGR' | 'Accelerated IR-SPGR' | 'Accelerated IR-FSPGR' | 'TFE'))
+  and ((extension('contrastWeighting').value.coding.code = 'T2w') implies extension('sequenceName').value.coding.code in ('TSE' | 'FSE'))
+  and ((extension('contrastWeighting').value.coding.code = 'T2w FLAIR') implies extension('sequenceName').value.coding.code in ('FLAIR' | 'TSE' | 'FSE'))
+  and ((extension('contrastWeighting').value.coding.code = 'T2*w') implies extension('sequenceName').value.coding.code in ('GRE' | 'SWI'))))"
 
 Invariant: aic-pt-1
 Description: "A PET series carries a tracer."
@@ -81,15 +81,12 @@ Description: "Constrained ImagingStudy profile for AICURA's medical imaging data
     AicuraImageResolution named imageResolution 0..1 MS and
     AicuraIsotropicVoxelResolution named isotropicVoxelResolution 0..1 MS and
     AicuraIsotropicImageResolution named isotropicImageResolution 0..1 MS and
-    AicuraMagneticFieldStrength named magneticFieldStrength 0..1 MS and
-    AicuraEchotime named echotime 0..1 MS and
     AicuraNumberOfFrames named numberOfFrames 0..1 MS and
     AicuraDeviceManufacturer named deviceManufacturer 0..1 MS and
     AicuraDeviceModel named deviceModel 0..1 MS and
     AicuraDeviceId named deviceId 0..1 MS and
-    AicuraSeriesSequence named seriesSequence 0..1 MS and
+    AicuraModalityMR named modalityMR 0..1 MS and
     AicuraTracer named tracer 0..1 MS and
-    AicuraContrast named contrast 0..1 MS and
     AicuraAcquisitionPlane named acquisitionPlane 0..1 MS and
     AicuraDimension named dimension 0..1 MS and
     AicuraAgeAtImagingSeries named ageAtImagingSeries 0..1 MS and

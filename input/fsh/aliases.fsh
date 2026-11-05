@@ -20,3 +20,7 @@ Alias: $AicuraSD = http://aicuramedical.com/fhir/StructureDefinition
 // External systems
 Alias: $PubChem = https://pubchem.ncbi.nlm.nih.gov/compound/
 Alias: $MedDRA = https://www.meddra.org/
+
+// MII imaging module (IG dependency de.medizininformatikinitiative.kerndatensatz.bildgebung)
+Alias: $MIIScanningSequenceVS = https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/ValueSet/mii-vs-bildgebung-mr-scanning-sequence
+Alias: $MIIScanningSequenceVariantVS = https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/ValueSet/mii-vs-bildgebung-mr-scanning-sequence-variant

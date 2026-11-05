@@ -10,15 +10,12 @@ The following extensions are defined on `ImagingStudy.series` and capture imagin
 | [ImageResolution](StructureDefinition-ImageResolution.html) | Complex (X/Y/Z integer) | Three-dimensional image resolution |
 | [IsotropicVoxelResolution](StructureDefinition-IsotropicVoxelResolution.html) | Boolean | Whether voxel resolution is isotropic |
 | [IsotropicImageResolution](StructureDefinition-IsotropicImageResolution.html) | Boolean | Whether image resolution is isotropic |
-| [MagneticFieldStrength](StructureDefinition-MagneticFieldStrength.html) | Decimal | MRI scanner field strength in Tesla |
-| [Echotime](StructureDefinition-Echotime.html) | Decimal | Echo time (TE) in milliseconds |
 | [NumberOfFrames](StructureDefinition-NumberOfFrames.html) | Integer | Number of frames/slices |
+| [ModalityMR](StructureDefinition-ModalityMR.html) | Complex (10 parts) | MR acquisition details: field strength, technique codes, TE, TR, TI and flip angle (shaped like MII's MR extension, UCUM units), plus sequence name, contrast weighting and plane |
 | [DeviceManufacturer](StructureDefinition-DeviceManufacturer.html) | Complex (Coding + label) | Imaging device manufacturer |
 | [device-model](StructureDefinition-device-model.html) | Complex (Coding + label) | Imaging device model |
 | [DeviceId](StructureDefinition-DeviceId.html) | String | Imaging device identifier |
-| [SeriesSequence](StructureDefinition-SeriesSequence.html) | Complex (Coding + label) | MRI pulse sequence type |
 | [Tracer](StructureDefinition-Tracer.html) | Complex (Coding + label) | PET radiotracer compound |
-| [Contrast](StructureDefinition-Contrast.html) | Complex (Coding + label) | MRI contrast weighting |
 | [AcquisitionPlane](StructureDefinition-AcquisitionPlane.html) | Complex (Coding + label) | Anatomical acquisition plane |
 | [Dimension](StructureDefinition-Dimension.html) | Complex (Coding + label) | 2D or 3D dimensionality |
 | [AgeAtImagingSeries](StructureDefinition-AgeAtImagingSeries.html) | Integer | Patient age at the series date |

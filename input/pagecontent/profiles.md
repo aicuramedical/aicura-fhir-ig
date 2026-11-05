@@ -4,7 +4,7 @@ This IG defines seventeen FHIR R4B profiles. All of them follow the [Shared Rule
 
 #### AicuraImagingStudy
 
-[AicuraImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on identifier, status, subject, encounter, started, description, endpoint, series and its uid, number, modality, description, instance count, start, endpoint and body site; id, an identifier value and subject are required. It adds the patient's age at the study and 17 series-level extensions for imaging acquisition metadata including voxel resolution, image resolution, MRI sequence, contrast weighting, PET tracer, device information, age at the series and storage size.
+[AicuraImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on identifier, status, subject, encounter, started, description, endpoint, series and its uid, number, modality, description, instance count, start, endpoint and body site; id, an identifier value and subject are required. It adds the patient's age at the study and series-level extensions for the acquisition details listed on the [Extensions](extensions.html) page. The sections below explain the rules that go beyond base FHIR.
 
 ##### Study identity
 
@@ -21,6 +21,28 @@ The resource `id` stays the plain UID, since the FHIR `id` datatype allows no co
 ##### Images and the image archive
 
 The profile catalogues the scans; it does not copy them. Single images (`series.instance`) are not required. The study (`endpoint`) and each series (`series.endpoint`) point to the image archive, and both links are must-support. Clients fetch the images from the archive; where both links exist, they use the series link.
+
+##### MR acquisition details
+
+Each MR series carries one extension, [ModalityMR](StructureDefinition-ModalityMR.html), with the acquisition details read from the DICOM header. Its first seven parts are shaped like MII's MR extension (`mii-ex-bildgebung-modalitaet-mr`): same names, types and units, so they map 1:1 to MII. Explicit units make scans from different studies comparable. The last three parts are AICURA's and have no MII counterpart.
+
+| Part | Content | DICOM tag | Type |
+|---|---|---|---|
+| `magneticFieldStrength` | Magnetic field strength | (0018,0087) | Quantity, UCUM `T` |
+| `scanningSequence` | Scanning technique (SE, IR, GR, EP, RM), one entry per value | (0018,0020) | CodeableConcept, MII value set (required) |
+| `scanningSequenceVariant` | Sequence variant (SK, SS, SP, MP, ...), one entry per value | (0018,0021) | CodeableConcept, MII value set (required) |
+| `echoTime` | Echo time (TE) | (0018,0081) | Quantity, UCUM `ms` |
+| `repetitionTime` | Repetition time (TR) | (0018,0080) | Quantity, UCUM `ms` |
+| `inversionTime` | Inversion time (TI) | (0018,0082) | Quantity, UCUM `ms` |
+| `flipAngle` | Flip angle | (0018,1314) | Quantity, UCUM `deg` |
+| `sequenceName` | Sequence name, e.g. MPRAGE, IR-SPGR, TSE | derived | CodeableConcept, [AicuraMRISequenceVS](ValueSet-aicura-mri-sequence.html) (required) |
+| `contrastWeighting` | Contrast weighting, e.g. T1w, T2w, T2w FLAIR | derived | CodeableConcept, [AicuraMRIContrastVS](ValueSet-aicura-mri-contrast.html) (required) |
+| `acquisitionPlane` | Axial, sagittal or coronal (SNOMED CT) | derived | CodeableConcept, [AicuraAcquisitionPlaneVS](ValueSet-aicura-acquisition-plane.html) (extensible) |
+
+- **Sequence name next to the technique codes.** The DICOM technique codes say which physics class a sequence belongs to; they are too coarse to select cohorts. Neurodegeneration research selects series by sequence name ("3D T1 MPRAGE"), so the name is kept as its own part.
+- **Contrast weighting** is the image weighting, the first criterion imaging researchers filter by (T1w for volume measurements, FLAIR for white-matter lesions). It is not the contrast agent, which is recorded separately.
+- **Coded AICURA parts** carry a coding and its label (`text`); both are required.
+- **Rules:** an MR series carries the extension with a contrast weighting and a sequence name (`aic-mr-1`), and the sequence name fits the weighting (`aic-mr-2`): T1w needs an IR/MPRAGE-type sequence, T2w TSE or FSE, T2w FLAIR FLAIR, TSE or FSE, and T2\*w GRE or SWI. Other weightings accept any sequence; "Unresolved Sequence Label" is always allowed.
 
 ##### Linking a result to a series
 

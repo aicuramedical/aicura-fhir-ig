@@ -6,7 +6,7 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 
 | Resource | Profile | Description |
 |----------|---------|-------------|
-| ImagingStudy | [AicuraImagingStudy](StructureDefinition-imaging-study.html) | MRI and PET imaging studies with 17 series-level extensions for acquisition metadata |
+| ImagingStudy | [AicuraImagingStudy](StructureDefinition-imaging-study.html) | MRI and PET imaging studies with series-level extensions for acquisition metadata |
 | Observation | [AicuraObservation](StructureDefinition-observation.html) | Common parent of the Observation profiles per kind of result; used directly for kinds without their own profile (e.g. genetics) |
 | Observation | [AicuraObservationLab](StructureDefinition-observation-lab.html) | Lab values |
 | Observation | [AicuraObservationScore](StructureDefinition-observation-score.html) | Clinical scores |
@@ -30,7 +30,7 @@ Rules that apply to all profiles, such as how identifiers name their issuer and 
 
 #### Extensions
 
-The ImagingStudy profile includes 17 custom extensions on `ImagingStudy.series` for detailed acquisition metadata such as voxel resolution, MRI sequence type, PET tracer, and device information, and one on `ImagingStudy` for the patient's age at the study. Additional custom extensions cover `Race` and `Ethnicity` on Patient, `BodyStructureLaterality` on BodyStructure, the patient's age at each event (observation, encounter, condition, participation, procedure), and the links from an Observation and its components to body structures and analysis devices. See [Extensions](extensions.html) for the full list.
+The ImagingStudy profile includes custom extensions on `ImagingStudy.series` for detailed acquisition metadata such as the MR acquisition details, voxel resolution, PET tracer, and device information, and one on `ImagingStudy` for the patient's age at the study. Additional custom extensions cover `Race` and `Ethnicity` on Patient, `BodyStructureLaterality` on BodyStructure, the patient's age at each event (observation, encounter, condition, participation, procedure), and the links from an Observation and its components to body structures and analysis devices. See [Extensions](extensions.html) for the full list.
 
 #### Terminology
 
