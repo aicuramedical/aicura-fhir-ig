@@ -18,6 +18,9 @@ Description: "Constrained Condition profile for AICURA's clinical data model, co
 * onset[x] MS
 * recordedDate MS
 * stage MS
+* stage.summary MS
+* stage.summary ^short = "Stage of the disease, e.g. SNOMED CT 288480009 Prodromal phase"
+* stage.summary ^comment = "A prodromal disease is recorded as the disease it precedes in code (e.g. Parkinson's disease, synucleinopathy) with SNOMED CT 288480009 Prodromal phase as the stage summary, not as a diagnosis of its own. Base FHIR requires a summary or an assessment on every stage (con-1)."
 // Custom extensions (age instead of dates)
 * extension contains
     AicuraAgeRecorded named ageRecorded 0..1 MS and
