@@ -70,3 +70,24 @@ Fields that base FHIR types as a single `Coding` (e.g. `Encounter.class`, `Imagi
 | `BodyStructure.location` (brain regions) | SNOMED CT | An AICURA code where SNOMED CT has no exact concept |
 | PET and SPECT tracer | DICOM CID 4021 (PET) and CID 25 (SPECT), code system as listed (mostly SNOMED CT) | PubChem compound where the DICOM list has no code |
 | `ImagingStudy.series.modality` | DICOM DCM (`http://dicom.nema.org/resources/ontology/DCM`) | |
+
+#### Partial dates
+
+A date keeps the precision the source gives it: a year (`1950`), a year and month (`1950-03`) or a full date (`1950-03-15`), as FHIR's `date` and `dateTime` types allow. A partial date is not padded to a full date, since FHIR reads `1950-03` as the whole month.
+
+#### Age at an event
+
+Research datasets usually remove dates to protect participants, so AICURA records the participant's age at each event in its own extensions, as whole years:
+
+| Event | Extension |
+|-------|-----------|
+| Imaging study | [AgeAtImagingStudy](StructureDefinition-AgeAtImagingStudy.html) |
+| Imaging series | [AgeAtImagingSeries](StructureDefinition-AgeAtImagingSeries.html) |
+| Observation | [AgeAtObservation](StructureDefinition-AgeAtObservation.html) |
+| Encounter | [AgeAtEncounter](StructureDefinition-AgeAtEncounter.html) |
+| Condition, recorded date | [AgeRecorded](StructureDefinition-AgeRecorded.html) |
+| Condition, onset | [AgeOnset](StructureDefinition-AgeOnset.html) (and the older [AgeAtCondition](StructureDefinition-AgeAtCondition.html) with the same value) |
+| Study participation | [AgeAtResearch](StructureDefinition-AgeAtResearch.html) |
+| Procedure | [AgeAtProcedure](StructureDefinition-AgeAtProcedure.html) |
+
+See [Extensions](extensions.html) for their definitions.
