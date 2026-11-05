@@ -6,6 +6,10 @@ This IG defines seventeen FHIR R4B profiles. All of them follow the [Shared Rule
 
 [AicuraImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on identifier, status, subject, encounter, started, description, endpoint, series and its uid, number, modality, description, instance count, start, endpoint and body site; id, an identifier value and subject are required. It adds the patient's age at the study and 17 series-level extensions for imaging acquisition metadata including voxel resolution, image resolution, MRI sequence, contrast weighting, PET tracer, device information, age at the series and storage size.
 
+##### Images and the image archive
+
+The profile catalogues the scans; it does not copy them. Single images (`series.instance`) are not required. The study (`endpoint`) and each series (`series.endpoint`) point to the image archive, and both links are must-support. Clients fetch the images from the archive; where both links exist, they use the series link.
+
 ##### Linking a result to a series
 
 Almost every result in neurodegeneration imaging (a regional volume, a quality check) is computed from one series, not from the whole study. FHIR R4B cannot reference a single series: a reference targets a whole resource, and the series sits inside the ImagingStudy. A result computed from a series therefore carries two things:

@@ -35,6 +35,7 @@ Description: "Constrained ImagingStudy profile for AICURA's medical imaging data
 * started MS
 * description MS
 * endpoint MS
+* endpoint ^comment = "Link to the study in the image archive. Where a series also carries an endpoint, clients fetch the images through the series endpoint."
 * numberOfSeries MS
 * numberOfInstances MS
 * extension contains
@@ -52,6 +53,8 @@ Description: "Constrained ImagingStudy profile for AICURA's medical imaging data
 * series.numberOfInstances MS
 * series.started MS
 * series.endpoint MS
+* series.endpoint ^comment = "Link to the series in the image archive; preferred over the study endpoint when both exist."
+* series.instance ^comment = "Not required: the profile catalogues series and points to the image archive, where single images are retrieved through the endpoints."
 * series.bodySite MS
 // Series extensions (all 0..1); value set bindings sit in the coded extensions
 * series.extension contains
