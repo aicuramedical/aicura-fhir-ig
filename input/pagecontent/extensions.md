@@ -17,7 +17,7 @@ The following extensions are defined on `ImagingStudy.series` and capture imagin
 | [ModalityNM](StructureDefinition-ModalityNM.html) | Complex (6 parts) | SPECT (NM) tracer, radionuclide, dose and half-life (shaped like MII's NM extension, UCUM units), plus injection time and plane |
 | [SeriesMedicationAdministration](StructureDefinition-SeriesMedicationAdministration.html) | Reference (MedicationAdministration) | The administration of a tracer or contrast agent for this series |
 | [Dimension](StructureDefinition-Dimension.html) | Complex (Coding + label) | 2D or 3D dimensionality |
-| [AgeAtImagingSeries](StructureDefinition-AgeAtImagingSeries.html) | Integer | Patient age at the series date |
+| [AgeAtImagingSeries](StructureDefinition-AgeAtImagingSeries.html) | Integer | Patient age in whole years at the series date |
 | [ImagingSeriesSize](StructureDefinition-ImagingSeriesSize.html) | Quantity | Storage size of the series files |
 
 The coded extensions carry a `Coding` and its label as two sub-extensions, both required.
@@ -26,7 +26,7 @@ The coded extensions carry a `Coding` and its label as two sub-extensions, both 
 
 | Extension | Type | Description |
 |-----------|------|-------------|
-| [AgeAtImagingStudy](StructureDefinition-AgeAtImagingStudy.html) | Integer | Patient age at the study date |
+| [AgeAtImagingStudy](StructureDefinition-AgeAtImagingStudy.html) | Integer | Patient age in whole years at the study date |
 
 #### Observation extensions
 

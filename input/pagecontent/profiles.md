@@ -114,6 +114,10 @@ Each scanner is described once, as an [AicuraDevice](StructureDefinition-device.
 
 Analysis software that produces results (e.g. FreeSurfer) is a Device too. `Device.type` is required and tells the two apart: DICOM `109101` "Acquisition Equipment" for a scanner, `109102` "Processing Equipment" for software ([AicuraDeviceTypeVS](ValueSet-aicura-device-type.html)).
 
+##### Age at study and series
+
+Research datasets usually remove dates to protect participants, so the patient's age at an event is what remains, and an age is easier to query than dates ("all scans between age 65 and 75"). The profile records the age in whole years at the study ([AgeAtImagingStudy](StructureDefinition-AgeAtImagingStudy.html), on `ImagingStudy`) and at each series ([AgeAtImagingSeries](StructureDefinition-AgeAtImagingSeries.html), on `ImagingStudy.series`), next to `started` and `series.started` where the data still carries dates. Neither MII nor base FHIR has such a field; the same pattern records the age at other events across the model.
+
 ##### Linking a result to a series
 
 Almost every result in neurodegeneration imaging (a regional volume, a quality check) is computed from one series, not from the whole study. FHIR R4B cannot reference a single series: a reference targets a whole resource, and the series sits inside the ImagingStudy. A result computed from a series therefore carries two things:
