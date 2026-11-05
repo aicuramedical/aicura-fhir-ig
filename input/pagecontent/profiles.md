@@ -129,7 +129,7 @@ The extension is used exactly as the MII imaging module publishes it (this IG de
 
 #### AicuraObservation
 
-[AicuraObservation](StructureDefinition-observation.html) is the common parent of the Observation profiles per kind of result (below). It constrains Observation with must-support on status, category, code, subject, effective, value, performer, derivedFrom, component, bodySite, interpretation, and method. The `code` element is bound to the [AicuraObservationCodeVS](ValueSet-aicura-observation-code.html) covering LOINC, SNOMED-CT, and AICURA custom observation codes. Extensions record the patient's age at the observation and link the Observation to the body structure its value refers to; on each component, extensions link the component's value to its body structure and to the device (analysis software) that produced it.
+[AicuraObservation](StructureDefinition-observation.html) is the common parent of the Observation profiles per kind of result (below). It constrains Observation with must-support on status, category, code, subject, effective, value, performer, derivedFrom, component, bodySite, interpretation, and method. The `code` element is bound to the [AicuraObservationCodeVS](ValueSet-aicura-observation-code.html) covering LOINC, SNOMED-CT, and AICURA custom observation codes. Extensions record the patient's age at the observation and link the Observation to the body structure its value refers to; on each component, an extension links the component's value to its body structure.
 
 #### Observation profiles per kind of result
 
@@ -145,6 +145,20 @@ Each kind of result has its own Observation profile, so each kind can get the ru
 The category codes come from the HL7 [observation-category](http://terminology.hl7.org/CodeSystem/observation-category) code system; each profile requires its code and allows further categories. The lab, score and imaging profiles inherit all rules of AicuraObservation. The vital-sign profile derives from FHIR's vital-signs profile, as FHIR requires for vital signs, and repeats the rules all AICURA Observation profiles share: a Patient as subject and the patient's age at the observation. Results of a kind without its own profile (e.g. genetics) use AicuraObservation directly.
 
 The lab profile follows the structure of the MII lab module (laboratory category, grouping of lab codes) but uses international codes and English displays instead of MII's German ones, and claims no conformance to MII's lab profiles.
+
+#### AicuraObservationImagingMeasure
+
+[AicuraObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) holds measures derived from images, such as brain-region volumes, surface areas, cortical thickness and PET values. It inherits all rules of AicuraObservation and requires the category `imaging`.
+
+##### One Observation per image series, measure and atlas
+
+Brain volumetry produces one value per brain region, often more than a hundred per image series. The values of one image series, one measure (e.g. volume) and one atlas (e.g. Desikan-Killiany) form one Observation:
+
+- one component per brain region, holding the value (`component.valueQuantity`) and the link to its region (below);
+- the analysis software, with its atlas, once on the Observation in `Observation.device`, referencing an [AicuraDevice](StructureDefinition-device.html) of type Processing Equipment;
+- the image series once on the Observation (`derivedFrom` and MII's series-UID extension, see "Linking a result to a series" under AicuraImagingStudy).
+
+FHIR leaves the choice between components and separate Observations to context, and components fit when one method, one software and one time apply to all values, as they do here. Separate Observations would repeat the same patient, time, image series and software on every value. MII requires a value on every Observation; an export to MII turns each component into an Observation of its own. A measure that comes as a single value (e.g. the intracranial volume of a study without a regional breakdown) is one Observation with `valueQuantity` and no components.
 
 #### AicuraCondition
 
