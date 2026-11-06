@@ -19,6 +19,6 @@ Description: "Constrained ResearchSubject profile linking an AICURA patient to a
 * assignedArm MS
 * actualArm MS
 // Not must-support: the study datasets hold no consent per person.
-* consent ^comment = "Empty for the study datasets: they hold no consent per person, and each dataset's data use agreement governs the use of its data. No Consent record is created in its place, since it would claim a consent nobody documented. Where a source records consent per person, each consent is a Consent record referencing the patient, and this element links the consent to take part in the study; FHIR R4B allows one link, so further consents (e.g. for samples or future research) are found through Consent.patient."
+* consent ^comment = "Empty for the study datasets: they hold no consent per person, and each dataset's data use agreement governs the use of its data. No Consent record is created in its place, since it would claim a consent nobody documented. Where a source records consent per person, each consent is a Consent record that should reference the patient, and this element links the consent to take part in the study; FHIR R4B allows one link, so further consents (e.g. for samples or future research) are found through Consent.patient where it is filled."
 // Custom extensions (age instead of dates)
 * extension contains AicuraAgeAtResearch named ageAtResearch 0..1

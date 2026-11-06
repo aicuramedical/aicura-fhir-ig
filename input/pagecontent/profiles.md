@@ -320,11 +320,11 @@ All visits are recorded after they took place. MII's extensions for planned star
 
 The study datasets are open research datasets, many of them natural history studies, and hold no consent per person. Each dataset comes with a data use agreement, and that agreement governs the use of its data. Participants therefore link no consent record (`ResearchSubject.consent` stays empty), and no Consent record is created in its place: it would claim a consent nobody documented. Participants thus meet base FHIR, where the consent link is optional, but not MII's study participant profile, which requires one.
 
-Where a source does record consent per person, each consent is one [AicuraConsent](StructureDefinition-consent.html) record referencing the patient, and a person may have several, e.g. consents to take part, to give samples and to future research. FHIR R4B lets a participation link one consent, so `ResearchSubject.consent` links the consent to take part; the others are found through `Consent.patient`.
+Where a source does record consent per person, each consent is one [AicuraConsent](StructureDefinition-consent.html) record that should reference the patient, and a person may have several, e.g. consents to take part, to give samples and to future research. FHIR R4B lets a participation link one consent, so `ResearchSubject.consent` links the consent to take part; the others are found through `Consent.patient` where it is filled.
 
 #### AicuraConsent
 
-[AicuraConsent](StructureDefinition-consent.html) constrains Consent with must-support on status, scope, category, patient, dateTime, performer, organization, source, policy, policyRule, verification, and provision. It is for sources that record consent per person, one Consent record per consent (see Consent and data use under AicuraResearchSubject). The study datasets hold no consent per person and carry no Consent records.
+[AicuraConsent](StructureDefinition-consent.html) constrains Consent with must-support on status, scope, category, patient, dateTime, performer, organization, source, policy, policyRule, verification, and provision. It is for sources that record consent per person, one Consent record per consent (see Consent and data use under AicuraResearchSubject). `patient` stays optional, as in FHIR R4B; a consent that is to be found from the person fills it. The study datasets hold no consent per person and carry no Consent records.
 
 #### AicuraDevice
 
