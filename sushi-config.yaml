@@ -13,8 +13,10 @@ publisher:
 dependencies:
   de.medizininformatikinitiative.kerndatensatz.bildgebung: 2026.0.0
 description: >-
-  FHIR R4B Implementation Guide for AICURA Medical's clinical data model,
-  covering ImagingStudy (with series-level extensions), Observation, and Condition profiles.
+  FHIR R4B Implementation Guide for AICURA Medical's clinical data model for
+  neurodegeneration research, covering fourteen resource types in twenty-one profiles.
+parameters:
+  special-url: https://aicuramedical.com/fhir/coding
 
 pages:
   index.md:
