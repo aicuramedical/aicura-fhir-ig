@@ -42,24 +42,24 @@ Each MR series carries one extension, [ModalityMR](StructureDefinition-ModalityM
 - **Sequence name next to the technique codes.** The DICOM technique codes say which physics class a sequence belongs to; they are too coarse to select cohorts. Neurodegeneration research selects series by sequence name ("3D T1 MPRAGE"), so the name is kept as its own part.
 - **Contrast weighting** is the image weighting, the first criterion imaging researchers filter by (T1w for volume measurements, FLAIR for white-matter lesions). It is not the contrast agent, which is recorded through the series' link to the administration (below).
 - **Coded AICURA parts** carry a coding and its label (`text`); both are required.
-- **Rules:** an MR series carries the extension with a contrast weighting and a sequence name (`aic-mr-1`), and the sequence name fits the weighting (`aic-mr-2`): T1w needs an IR/MPRAGE-type sequence, T2w TSE or FSE, T2w FLAIR FLAIR, TSE or FSE, and T2\*w GRE or SWI. Other weightings accept any sequence; "Unresolved Sequence Label" is always allowed.
+- **Rules:** an MR series carries the extension with a contrast weighting and a sequence name (`aic-mr-1`), and the sequence name fits the weighting (`aic-mr-2`): T1w needs an IR/MPRAGE-type sequence, T2w TSE or FSE, T2w FLAIR TSE or FSE, and T2\*w GRE or SWI. Other weightings accept any sequence; "Unresolved Sequence Label" is always allowed.
 
 ##### PET and SPECT: tracer and injection
 
-PET and SPECT series carry their tracer details in [ModalityPT](StructureDefinition-ModalityPT.html) (modality PT) or [ModalityNM](StructureDefinition-ModalityNM.html) (modality NM, SPECT), shaped like MII's PET and NM extensions (`mii-ex-bildgebung-modalitaet-pt`, `-nm`). The first four parts keep MII's names, types and units; the last two are AICURA's.
+PET and SPECT series carry their tracer details in [ModalityPT](StructureDefinition-ModalityPT.html) (modality PT) or [ModalityNM](StructureDefinition-ModalityNM.html) (modality NM, SPECT), shaped like MII's PET and NM extensions (`mii-ex-bildgebung-modalitaet-pt`, `-nm`). The first four parts keep MII's names, types and units (PET dose in Bq, SPECT dose in MBq, as in MII); the last two are AICURA's.
 
 | Part | Content | Type |
 |---|---|---|
 | `radiopharmaceutical` | Tracer | CodeableConcept, DICOM CID 4021 (PET) or CID 25 (SPECT), extensible; PubChem name as text |
 | `radionuclide` | Radionuclide, e.g. 18F | CodeableConcept, DICOM CID 4020 (PET) or CID 18 (SPECT), extensible |
-| `radionuclideTotalDose` | Administered activity | Quantity, UCUM `Bq` |
+| `radionuclideTotalDose` | Administered activity | Quantity, UCUM `Bq` (PET) or `MBq` (SPECT) |
 | `radionuclideHalfLife` | Half-life of the radionuclide | Quantity, UCUM `s` |
 | `injectionTime` | Injection time, as DICOM Radiopharmaceutical Start DateTime (0018,1078) | dateTime |
 | `acquisitionPlane` | Axial, sagittal or coronal (SNOMED CT) | CodeableConcept, [AicuraAcquisitionPlaneVS](ValueSet-aicura-acquisition-plane.html) (extensible) |
 
 A PET series carries the extension with a tracer (`aic-pt-1`).
 
-**Tracer coding.** The tracer is coded with its entry in the DICOM tracer list MII binds: CID 4021 for PET, CID 25 for SPECT (both extensible; code system as listed there, mostly SNOMED CT). A tracer the list has no code for is coded by its PubChem compound ID instead, and only then (`aic-tr-1`). The label (`text`) is the tracer's PubChem name. The same coding goes into `Medication.code` of the administered substance.
+**Tracer coding.** The tracer is coded with its entry in the DICOM tracer list MII binds: CID 4021 for PET, CID 25 for SPECT (both extensible; code system as listed there, mostly SNOMED CT). A tracer the list has no code for is coded by its PubChem compound ID instead; a PubChem coding then stands alone, without a second coding (`aic-tr-1`). The label (`text`) is the tracer's PubChem name. The same coding goes into `Medication.code` of the administered substance.
 
 | Tracer | Code | PubChem compound ID | Label (PubChem name) |
 |---|---|---|---|

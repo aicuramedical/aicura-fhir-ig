@@ -17,7 +17,7 @@
 %is not included anywhere in the produced implementation guide%
 # Inherited base resource bindings to external canonical URLs that cannot be resolved
 %http://www.rsna.org/RadLex_Playbook.aspx%
-%https://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_29.html%
+%http://dicom.nema.org/medical/dicom/current/output/chtml/part16/sect_CID_29.html%
 %http://dicom.nema.org/medical/dicom/current/output/chtml/part04/sect_B.5.html%
 # Observation binds to value sets marked experimental in the base spec
 %which is experimental, but this structure is not labeled as experimental%

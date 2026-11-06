@@ -4,6 +4,7 @@ Id: medication-administration
 Title: "AICURA MedicationAdministration"
 Description: "Constrained MedicationAdministration profile for AICURA's clinical data model, recording a tracer or contrast agent administered for imaging. Imaging series point to it through the SeriesMedicationAdministration extension."
 * insert MetaProfile(medication-administration)
+* insert IdentifierSystem
 // Must-support elements
 * status MS
 * medication[x] MS
@@ -17,4 +18,4 @@ Description: "Constrained MedicationAdministration profile for AICURA's clinical
 * dosage MS
 * dosage.route MS
 * dosage.dose MS
-* dosage.dose ^comment = "Administered amount; for a radiopharmaceutical the activity in UCUM (e.g. MBq). Equals radionuclideTotalDose in the series' PET or SPECT extension."
+* dosage.dose ^comment = "Administered amount; for a radiopharmaceutical the activity in UCUM (e.g. MBq). The same activity as radionuclideTotalDose in the series' PET extension (in Bq) or SPECT extension (in MBq)."

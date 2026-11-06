@@ -4,14 +4,14 @@ Severity: #error
 Expression: "modality.code = 'MR' implies extension('http://aicuramedical.com/fhir/StructureDefinition/ModalityMR').where(extension('contrastWeighting').exists() and extension('sequenceName').exists()).exists()"
 
 Invariant: aic-mr-2
-Description: "The sequence name fits the contrast weighting: T1w needs an IR/MPRAGE-type sequence, T2w TSE or FSE, T2w FLAIR FLAIR, TSE or FSE, T2*w GRE or SWI. Other weightings are unrestricted; 'Unresolved Sequence Label' is always allowed."
+Description: "The sequence name fits the contrast weighting: T1w needs an IR/MPRAGE-type sequence, T2w TSE or FSE, T2w FLAIR TSE or FSE, T2*w GRE or SWI. Other weightings are unrestricted; 'Unresolved Sequence Label' is always allowed."
 Severity: #error
 Expression: "extension('http://aicuramedical.com/fhir/StructureDefinition/ModalityMR').all(extension('contrastWeighting').value.coding.code.exists() implies (
-  extension('sequenceName').value.coding.code = 'Unresolved Sequence Label'
-  or ((extension('contrastWeighting').value.coding.code = 'T1w') implies extension('sequenceName').value.coding.code in ('MPRAGE' | 'MP2RAGE' | 'IR-SPGR' | 'IR-FSPGR' | 'Accelerated IR-SPGR' | 'Accelerated IR-FSPGR' | 'TFE'))
-  and ((extension('contrastWeighting').value.coding.code = 'T2w') implies extension('sequenceName').value.coding.code in ('TSE' | 'FSE'))
-  and ((extension('contrastWeighting').value.coding.code = 'T2w FLAIR') implies extension('sequenceName').value.coding.code in ('FLAIR' | 'TSE' | 'FSE'))
-  and ((extension('contrastWeighting').value.coding.code = 'T2*w') implies extension('sequenceName').value.coding.code in ('GRE' | 'SWI'))))"
+  extension('sequenceName').value.coding.where(code = 'Unresolved Sequence Label').exists()
+  or (extension('contrastWeighting').value.coding.where(code = 'T1w').exists() implies extension('sequenceName').value.coding.where(code in ('MPRAGE' | 'MP2RAGE' | 'IR-SPGR' | 'IR-FSPGR' | 'Accelerated IR-SPGR' | 'Accelerated IR-FSPGR' | 'TFE')).exists())
+  and (extension('contrastWeighting').value.coding.where(code = 'T2w').exists() implies extension('sequenceName').value.coding.where(code in ('TSE' | 'FSE')).exists())
+  and (extension('contrastWeighting').value.coding.where(code = 'T2w FLAIR').exists() implies extension('sequenceName').value.coding.where(code in ('TSE' | 'FSE')).exists())
+  and (extension('contrastWeighting').value.coding.where(code = 'T2*w').exists() implies extension('sequenceName').value.coding.where(code in ('GRE' | 'SWI')).exists())))"
 
 Invariant: aic-pt-1
 Description: "A PET series carries the PET extension with a radiopharmaceutical."
@@ -63,7 +63,7 @@ Description: "Constrained ImagingStudy profile for AICURA's medical imaging data
 * series obeys aic-mr-1 and aic-mr-2 and aic-pt-1
 // Series backbone must-support
 * series.uid MS
-* series.uid ^comment = "DICOM Series Instance UID. A result computed from this series references the ImagingStudy in derivedFrom and carries this UID in MII's series-UID extension (https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-series-uid). A reference to the series as a resource of its own (e.g. ImagingSeries/<uid>) is not valid FHIR."
+* series.uid ^comment = "DICOM Series Instance UID. A result computed from this series references the ImagingStudy in derivedFrom and carries this UID in MII's series-UID extension (https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-series-uid). A reference to the series as a resource of its own (e.g. `ImagingSeries/` followed by the UID) is not valid FHIR."
 * series.number MS
 * series.modality MS
 * series.modality from AicuraImagingModalityVS (extensible)

@@ -31,10 +31,10 @@ Description: "Tracer and acquisition details of a PET series (modality PT). Shap
 * extension[radionuclide].valueCodeableConcept.text MS
 * extension[radionuclideTotalDose] ^short = "Administered activity, in becquerel"
 * extension[radionuclideTotalDose].value[x] only Quantity
-* extension[radionuclideTotalDose].valueQuantity = $UCUM#Bq
+* extension[radionuclideTotalDose].valueQuantity = $UCUM#Bq "Becquerel"
 * extension[radionuclideHalfLife] ^short = "Half-life of the radionuclide, in seconds"
 * extension[radionuclideHalfLife].value[x] only Quantity
-* extension[radionuclideHalfLife].valueQuantity = $UCUM#s
+* extension[radionuclideHalfLife].valueQuantity = $UCUM#s "Seconds"
 // AICURA parts
 * extension[injectionTime] ^short = "Injection time (start of the administration)"
 * extension[injectionTime] ^definition = "Date and time the radiopharmaceutical was injected, as DICOM Radiopharmaceutical Start DateTime (0018,1078). Equals the effective time of the linked administration record."

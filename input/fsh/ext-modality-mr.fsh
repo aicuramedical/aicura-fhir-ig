@@ -18,7 +18,7 @@ Description: "Acquisition details of an MR series, filled from the DICOM header.
 // Parts shaped like MII's
 * extension[magneticFieldStrength] ^short = "Magnetic field strength, DICOM (0018,0087), in tesla"
 * extension[magneticFieldStrength].value[x] only Quantity
-* extension[magneticFieldStrength].valueQuantity = $UCUM#T
+* extension[magneticFieldStrength].valueQuantity = $UCUM#T "tesla"
 * extension[scanningSequence] ^short = "Scanning technique, DICOM (0018,0020), one entry per value"
 * extension[scanningSequence].value[x] only CodeableConcept
 * extension[scanningSequence].valueCodeableConcept from $MIIScanningSequenceVS (required)
@@ -27,18 +27,18 @@ Description: "Acquisition details of an MR series, filled from the DICOM header.
 * extension[scanningSequenceVariant].valueCodeableConcept from $MIIScanningSequenceVariantVS (required)
 * extension[echoTime] ^short = "Echo time (TE), DICOM (0018,0081), in milliseconds"
 * extension[echoTime].value[x] only Quantity
-* extension[echoTime].valueQuantity = $UCUM#ms
+* extension[echoTime].valueQuantity = $UCUM#ms "milliseconds"
 * extension[repetitionTime] ^short = "Repetition time (TR), DICOM (0018,0080), in milliseconds"
 * extension[repetitionTime].value[x] only Quantity
-* extension[repetitionTime].valueQuantity = $UCUM#ms
+* extension[repetitionTime].valueQuantity = $UCUM#ms "milliseconds"
 * extension[inversionTime] ^short = "Inversion time (TI), DICOM (0018,0082), in milliseconds"
 * extension[inversionTime].value[x] only Quantity
-* extension[inversionTime].valueQuantity = $UCUM#ms
+* extension[inversionTime].valueQuantity = $UCUM#ms "milliseconds"
 * extension[flipAngle] ^short = "Flip angle, DICOM (0018,1314), in degrees"
 * extension[flipAngle].value[x] only Quantity
-* extension[flipAngle].valueQuantity = $UCUM#deg
+* extension[flipAngle].valueQuantity = $UCUM#deg "plane angle degree"
 // AICURA parts
-* extension[sequenceName] ^short = "Sequence name, e.g. MPRAGE, TSE, FLAIR"
+* extension[sequenceName] ^short = "Sequence name, e.g. MPRAGE, TSE, SWI"
 * extension[sequenceName] ^definition = "The protocol-level sequence name by which neurodegeneration research selects cohorts. It is finer than the DICOM technique codes in scanningSequence and scanningSequenceVariant, which it complements."
 * extension[sequenceName].value[x] only CodeableConcept
 * extension[sequenceName].valueCodeableConcept from AicuraMRISequenceVS (required)

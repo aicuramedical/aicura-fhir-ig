@@ -17,7 +17,7 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 | Patient | [AicuraPatient](StructureDefinition-patient.html) | Subject of record, with custom race and ethnicity extensions |
 | Encounter | [AicuraEncounter](StructureDefinition-encounter.html) | Study visits and clinical contacts |
 | Procedure | [AicuraProcedure](StructureDefinition-procedure.html) | Procedures as in base FHIR (no study dataset provides them) |
-| Medication | [AicuraMedication](StructureDefinition-medication.html) | Medication definitions referenced by medication statements |
+| Medication | [AicuraMedication](StructureDefinition-medication.html) | Medication definitions referenced by medication statements and administrations |
 | MedicationAdministration | [AicuraMedicationAdministration](StructureDefinition-medication-administration.html) | Tracer or contrast agent administered for imaging, linked from the imaging series |
 | MedicationStatement | [AicuraMedicationStatement](StructureDefinition-medication-statement.html) | Reported patient medication usage (the medication resource in the FHIR Bundle export) |
 | ResearchStudy | [AicuraResearchStudy](StructureDefinition-research-study.html) | Research studies (e.g. ADNI cohorts) patients are enrolled in; each dataset's data use agreement governs the use of its data |
