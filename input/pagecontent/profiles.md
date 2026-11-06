@@ -4,7 +4,7 @@ This IG defines twenty-one FHIR R4B profiles. All of them follow the [Shared Rul
 
 #### AicuraImagingStudy
 
-[AicuraImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on identifier, status, subject, encounter, started, description, endpoint, series and its uid, number, modality, description, instance count, start, endpoint, body site and performer (the scanner); id, the Study Instance UID identifier and subject are required. It adds the patient's age at the study and series-level extensions for the acquisition details listed on the [Extensions](extensions.html) page. The sections below explain the rules that go beyond base FHIR.
+[AicuraImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on identifier, status, subject, encounter, started, number of series, number of instances, description, endpoint, series and its uid, number, modality, description, instance count, start, endpoint, body site and performer (the scanner); id, the Study Instance UID identifier and subject are required. It adds the patient's age at the study and series-level extensions for the acquisition details listed on the [Extensions](extensions.html) page. The sections below explain the rules that go beyond base FHIR.
 
 ##### Study identity
 
@@ -129,7 +129,7 @@ The extension is used exactly as the MII imaging module publishes it (this IG de
 
 #### AicuraObservation
 
-[AicuraObservation](StructureDefinition-observation.html) is the common parent of the Observation profiles per kind of result (below). It constrains Observation with must-support on status, category, code, subject, effective, value, performer, derivedFrom, component, bodySite, interpretation, and method. The `code` element is bound to the [AicuraObservationCodeVS](ValueSet-aicura-observation-code.html) covering LOINC, SNOMED-CT, and AICURA custom observation codes. Extensions record the patient's age at the observation and link the Observation to the body structure its value refers to; on each component, an extension links the component's value to its body structure.
+[AicuraObservation](StructureDefinition-observation.html) is the common parent of the Observation profiles per kind of result (below). It constrains Observation with must-support on status, category, code, subject, encounter, effective, value, performer, derivedFrom, component, bodySite, interpretation, and method. The `code` element is bound to the [AicuraObservationCodeVS](ValueSet-aicura-observation-code.html) covering LOINC, SNOMED CT, and AICURA custom observation codes. Extensions record the patient's age at the observation and link the Observation to the body structure its value refers to; on each component, an extension links the component's value to its body structure.
 
 #### Observation profiles per kind of result
 
