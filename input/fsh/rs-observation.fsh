@@ -1,5 +1,5 @@
 // Rules every AICURA Observation profile shares, whatever its parent
-// (AicuraObservation or FHIR's vital-signs profile).
+// (AicuraObservation or one of FHIR's vital-signs profiles).
 RuleSet: ObservationCommon
 * subject MS
 * subject only Reference(Patient)

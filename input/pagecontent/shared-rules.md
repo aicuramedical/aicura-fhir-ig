@@ -62,7 +62,7 @@ Fields that base FHIR types as a single `Coding` (e.g. `Encounter.class`, `Imagi
 | Field | Main code system | Next to it |
 |-------|------------------|------------|
 | `Condition.code` (diagnoses) | SNOMED CT | An AICURA code where SNOMED CT has no concept; ICD-10 and Orphanet as further codes later |
-| `Observation.code`, lab value | LOINC | |
+| `Observation.code`, lab value | LOINC where it has the analyte, else AICURA | |
 | `Observation.code`, vital sign | LOINC, as FHIR's vital-signs profile requires | |
 | `Observation.code`, clinical score | LOINC where it has the score, else AICURA (to confirm) | |
 | `Observation.code`, imaging-derived measure | To confirm | |

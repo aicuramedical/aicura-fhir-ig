@@ -112,7 +112,7 @@ Each scanner is described once, as an [AicuraDevice](StructureDefinition-device.
 | Manufacturer's Model Name (0008,1090) | `deviceName` (type `model-name`) |
 | Device Serial Number (0018,1000), where present | `serialNumber` |
 
-Analysis software that produces results (e.g. FreeSurfer) is a Device too. `Device.type` is required and tells the two apart: DICOM `109101` "Acquisition Equipment" for a scanner, `109102` "Processing Equipment" for software ([AicuraDeviceTypeVS](ValueSet-aicura-device-type.html)).
+Analysis software that produces results (e.g. FreeSurfer) is a Device too. `Device.type` is required and tells them apart: DICOM `109101` "Acquisition Equipment" for a scanner, `109102` "Processing Equipment" for software ([AicuraDeviceTypeVS](ValueSet-aicura-device-type.html); lab assay platforms use the third type, see AicuraAssayDevice).
 
 ##### Age at study and series
 
@@ -140,22 +140,22 @@ Each kind of result has its own Observation profile, so each kind can get the ru
 | [AicuraObservationLab](StructureDefinition-observation-lab.html) | AicuraObservation | `laboratory` | Lab values, e.g. CSF and plasma biomarkers |
 | [AicuraObservationScore](StructureDefinition-observation-score.html) | AicuraObservation | `survey` | Clinical scores from assessment instruments, clinician-rated or participant-reported |
 | [AicuraObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) | AicuraObservation | `imaging` | Measures derived from images, e.g. brain-region volumes and PET SUVr |
-| [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html) | FHIR [vital signs](http://hl7.org/fhir/R4B/observation-vitalsigns.html) | `vital-signs` | Vital signs, e.g. weight, height and heart rate |
+| [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html) | FHIR [vital signs](http://hl7.org/fhir/R4B/vitalsigns.html) | `vital-signs` | Vital signs, e.g. weight, height and heart rate |
 | [AicuraObservationBloodPressure](StructureDefinition-observation-blood-pressure.html) | FHIR [blood pressure](http://hl7.org/fhir/R4B/bp.html) | `vital-signs` | Blood pressure, one record with systolic and diastolic components |
 
-The category codes come from the HL7 [observation-category](http://terminology.hl7.org/CodeSystem/observation-category) code system; each profile requires its code and allows further categories. The lab, score and imaging profiles inherit all rules of AicuraObservation. The vital-sign profile derives from FHIR's vital-signs profile, as FHIR requires for vital signs, and repeats the rules all AICURA Observation profiles share: a Patient as subject and the patient's age at the observation. Results of a kind without its own profile (e.g. genetics) use AicuraObservation directly.
+The category codes come from the HL7 [observation-category](http://terminology.hl7.org/CodeSystem/observation-category) code system; each profile requires its code and allows further categories. The lab, score and imaging profiles inherit all rules of AicuraObservation. The vital-sign and blood-pressure profiles derive from FHIR's vital-signs and blood-pressure profiles, as FHIR requires for vital signs, and repeat the rules all AICURA Observation profiles share: a Patient as subject and the patient's age at the observation. Results of a kind without its own profile (e.g. genetics) use AicuraObservation directly.
 
 ##### Lab values
 
-The lab profile follows the structure of the MII lab module (laboratory category, grouping of lab codes) but uses international codes and English displays instead of MII's German ones, and claims no conformance to MII's lab profiles.
+The lab profile follows the structure of the MII lab module (laboratory category; MII's grouping code is added on export) but uses international codes and English displays instead of MII's German ones, and claims no conformance to MII's lab profiles.
 
 **Assay platform and technique.** The same biomarker measured with different assays gives values on different scales, so every lab value names the platform that produced it. `device` is must-support and references an [AicuraAssayDevice](StructureDefinition-assay-device.html): one shared record per platform (e.g. Roche Elecsys, Fujirebio Lumipulse, Quanterix SIMOA), referenced from every value it produced. Values from different assays then stay apart, and the platform can be searched. `method` names only the technique, from [AicuraLabMethodVS](ValueSet-aicura-lab-method.html) (extensible): immunoassay, one of its specific techniques, or mass spectrometry. The platform never goes into the method or its text.
 
 | Record | Element | Example |
 |--------|---------|---------|
 | Lab value | `code` | LOINC `33203-1` Amyloid beta 42 peptide (CSF) |
-| Lab value | `method` | SNOMED CT `726449005` Immunoassay technique |
-| Lab value | `device` | `Device/roche-elecsys` |
+| Lab value | `method` | SNOMED CT `66691000052100` Electrochemiluminescence immunoassay technique |
+| Lab value | `device` | `Device/lab-platform-roche-elecsys` |
 | Assay device | `type` | SNOMED CT `30234008` Medical laboratory analyzer |
 | Assay device | `manufacturer` | Roche |
 | Assay device | `deviceName` | Elecsys (type `manufacturer-name`) |
@@ -163,7 +163,7 @@ The lab profile follows the structure of the MII lab module (laboratory category
 
 Base FHIR and MII's lab module both provide `method` and `device` for this; the profile makes the device link must-support.
 
-**No body site.** A lab value carries no `bodySite` (0..0), as in MII's lab profile: the sample type (CSF, plasma, serum) is part of the LOINC code. Other kinds of result keep it.
+**No body site.** A lab value carries no `bodySite` and no link to a body structure (both 0..0), as in MII's lab profile: the sample type (CSF, plasma, serum) is part of the LOINC code. Other kinds of result keep them.
 
 **Codes.** A lab value takes a LOINC code wherever LOINC has the analyte. Analytes without a LOINC term (e.g. CSF neurogranin, GAP-43, sTREM2, plasma p-tau217 by mass spectrometry) carry an AICURA code. The IG sets no fixed order of code systems: MII sets one per lab profile, while AICURA's code list is one open (extensible) value set for all kinds of result.
 
@@ -191,7 +191,7 @@ Years of education (LOINC `82590-1`) is not a score: it is a quantity in years (
 
 ##### Vital signs
 
-FHIR requires vital signs to conform to its [vital-signs profiles](http://hl7.org/fhir/R4B/observation-vitalsigns.html): category `vital-signs`, a LOINC code and UCUM units. Both AICURA vital-sign profiles derive from them. Weight, height, BMI, heart rate, respiratory rate and body temperature are single records in [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html). Heart and respiratory rate carry the UCUM code `/min`, as FHIR's heart-rate and respiratory-rate profiles fix, with `beats/min` or `breaths/min` as the unit text.
+FHIR requires vital signs to conform to its [vital-signs profiles](http://hl7.org/fhir/R4B/vitalsigns.html): category `vital-signs`, a LOINC code and UCUM units. Both AICURA vital-sign profiles derive from them. Weight, height, BMI, heart rate, respiratory rate and body temperature are single records in [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html). Heart and respiratory rate carry the UCUM code `/min`, as FHIR's heart-rate and respiratory-rate profiles fix, with `beats/min` or `breaths/min` as the unit text.
 
 Blood pressure is one record with two parts, in [AicuraObservationBloodPressure](StructureDefinition-observation-blood-pressure.html):
 
