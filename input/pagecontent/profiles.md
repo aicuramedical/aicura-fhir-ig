@@ -244,21 +244,21 @@ ICD-10-GM, as German routine care uses it, and Orphanet, which covers the rare n
 
 ##### Prodromal: the stage of a disease
 
-Prodromal is the early phase before a disease shows its typical signs. It is recorded as the stage of the disease it precedes, not as a diagnosis of its own: `code` holds the disease, and `stage.summary` holds SNOMED CT 288480009 "Prodromal phase". The disease stays explicit, and the stage field is what FHIR provides for how far a disease has progressed. A stage needs a summary or an assessment (FHIR invariant `con-1`), so the stage goes in `summary`. Base FHIR and MII leave `stage` optional; AICURA keeps it and its summary must-support.
+Prodromal is the early phase before a disease shows its typical signs. It is recorded as the stage of the disease it precedes, not as a diagnosis of its own: `code` holds the disease, and `stage.summary` holds SNOMED CT 288480009 "Prodromal phase (qualifier value)". The disease stays explicit, and the stage field is what FHIR provides for how far a disease has progressed. A stage needs a summary or an assessment (FHIR invariant `con-1`), so the stage goes in `summary`. Base FHIR and MII leave `stage` optional; AICURA keeps it and its summary must-support.
 
 | Source diagnosis | `code` | `stage.summary` |
 |---|---|---|
-| Prodromal non-motor or motor Parkinson's disease | SNOMED CT 49049000 "Parkinson's disease" | SNOMED CT 288480009 "Prodromal phase" |
-| Prodromal synucleinopathy (e.g. REM sleep behaviour disorder) | SNOMED CT 785810000 "Synucleinopathy" | SNOMED CT 288480009 "Prodromal phase" |
+| Prodromal non-motor or motor Parkinson's disease | SNOMED CT 49049000 "Parkinson's disease (disorder)" | SNOMED CT 288480009 "Prodromal phase (qualifier value)" |
+| Prodromal synucleinopathy (e.g. REM sleep behaviour disorder) | SNOMED CT 785810000 "Synucleinopathy" | SNOMED CT 288480009 "Prodromal phase (qualifier value)" |
 
-For example, prodromal motor Parkinson's disease (shortened):
+For example, prodromal motor Parkinson's disease (shortened; displays as in [AicuraConditionCodeVS](ValueSet-aicura-condition-code.html)):
 
 ```json
 "code": {
   "coding": [{
     "system": "http://snomed.info/sct",
     "code": "49049000",
-    "display": "Parkinson's disease"
+    "display": "Parkinson's disease (disorder)"
   }]
 },
 "stage": [{
@@ -266,7 +266,7 @@ For example, prodromal motor Parkinson's disease (shortened):
     "coding": [{
       "system": "http://snomed.info/sct",
       "code": "288480009",
-      "display": "Prodromal phase"
+      "display": "Prodromal phase (qualifier value)"
     }]
   }
 }]

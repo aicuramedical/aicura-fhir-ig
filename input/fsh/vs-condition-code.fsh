@@ -1,9 +1,9 @@
 ValueSet: AicuraConditionCodeVS
 Id: aicura-condition-code
 Title: "AICURA Condition Code ValueSet"
-Description: "Condition codes used in AICURA studies, spanning neurological, cardiovascular, and other disorders. SNOMED CT is the main code system; an AICURA code stands in only where SNOMED CT has no concept."
+Description: "Condition codes used in AICURA studies, spanning neurological, cardiovascular, and other disorders. SNOMED CT is the main code system; an AICURA code stands in only where SNOMED CT has no concept. The MedDRA codes and the AICURA codes listed for diagnoses SNOMED CT covers are still in use and move to SNOMED CT."
 * ^experimental = false
-// SNOMED-CT codes (37)
+// SNOMED CT codes (37)
 * $SCT#449888003 "Normal cognition"
 * $SCT#386805003 "Mild cognitive disorder (disorder)"
 * $SCT#26929004 "Alzheimer's disease (disorder)"
