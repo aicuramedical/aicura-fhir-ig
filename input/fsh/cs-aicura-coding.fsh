@@ -1,7 +1,7 @@
 CodeSystem: AicuraCodingCS
 Id: aicura-coding
 Title: "AICURA CodeSystem"
-Description: "AICURA-local concepts, maintained in the AICURA concepts database. This IG lists only the concepts its value sets use (content = fragment)."
+Description: "AICURA-local concepts, maintained in the AICURA concepts database. This IG lists only the concepts it uses (content = fragment)."
 * ^url = $AicuraCoding
 * ^version = "1.0"
 * ^status = #active
@@ -50,7 +50,7 @@ Description: "AICURA-local concepts, maintained in the AICURA concepts database.
 * #"Non-white matter hypointensities" "Non-white matter hypointensities"
 * #"Cerebral vasculature" "Cerebral vasculature"
 * #"Intracranial volume [ICV]" "Intracranial volume [ICV]"
-// Location qualifiers SNOMED CT has no concept for (BodyStructure.locationQualifier)
+// Location qualifiers SNOMED CT has no fitting concept for (BodyStructure.locationQualifier)
 * #"Ventral" "Ventral"
 * #"Mid-Anterior" "Mid-Anterior"
 * #"Mid-Posterior" "Mid-Posterior"
@@ -104,3 +104,5 @@ Description: "AICURA-local concepts, maintained in the AICURA concepts database.
 * #"Motor Neurone disease with parkinsonism" "Motor Neurone disease with parkinsonism"
 * #"Psychogenic parkinsonism" "Psychogenic parkinsonism"
 * #"Juvenile autosomal recessive parkinsonism" "Juvenile autosomal recessive parkinsonism"
+// Device properties (Device.property.type)
+* #brain-atlas "brain-atlas"

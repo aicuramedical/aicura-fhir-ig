@@ -67,7 +67,7 @@ Fields that base FHIR types as a single `Coding` (e.g. `Encounter.class`, `Imagi
 | `Observation.code`, clinical score | LOINC where it has the score, else AICURA (to confirm) | |
 | `Observation.code`, imaging-derived measure | To confirm | |
 | `Observation.category` | HL7 observation-category | |
-| `BodyStructure.location` (brain regions) | SNOMED CT, where it names the region | Otherwise an AICURA region code, or a broader SNOMED CT concept with the position in `locationQualifier` (see AicuraBodyStructure on the [Profiles](profiles.html) page) |
+| `BodyStructure.location` (brain regions) | SNOMED CT, where it names the region | Otherwise an AICURA region code, or a broader SNOMED CT concept with the position in `locationQualifier` (see "Region codes" under AicuraBodyStructure and AicuraAtlasRegion on the [Profiles](profiles.html) page) |
 | PET and SPECT tracer | DICOM CID 4021 (PET) and CID 25 (SPECT), code system as listed (mostly SNOMED CT) | PubChem compound where the DICOM list has no code |
 | `ImagingStudy.series.modality` | DICOM DCM (`http://dicom.nema.org/resources/ontology/DCM`) | |
 
