@@ -4,27 +4,27 @@ This IG defines thirteen FHIR R4B profiles:
 
 #### AicuraImagingStudy
 
-[AicuraImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on core elements (status, subject, started, description, series) and adds 15 series-level extensions for imaging acquisition metadata including voxel resolution, image resolution, MRI sequence, contrast weighting, PET tracer, and device information.
+[AicuraImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on identifier, status, subject, encounter, started, description, endpoint, series and its uid, number, modality, description, instance count, start, endpoint and body site; id, an identifier value and subject are required. It adds the patient's age at the study and 17 series-level extensions for imaging acquisition metadata including voxel resolution, image resolution, MRI sequence, contrast weighting, PET tracer, device information, age at the series and storage size.
 
 #### AicuraObservation
 
-[AicuraObservation](StructureDefinition-observation.html) constrains Observation with must-support on status, category, code, subject, effective, value, performer, derivedFrom, component, bodySite, interpretation, and method. The `code` element is bound to the [AicuraObservationCodeVS](ValueSet-aicura-observation-code.html) covering LOINC, SNOMED-CT, and AICURA custom observation codes.
+[AicuraObservation](StructureDefinition-observation.html) constrains Observation with must-support on status, category, code, subject, effective, value, performer, derivedFrom, component, bodySite, interpretation, and method. The `code` element is bound to the [AicuraObservationCodeVS](ValueSet-aicura-observation-code.html) covering LOINC, SNOMED-CT, and AICURA custom observation codes. Extensions record the patient's age at the observation and link the Observation to the body structure its value refers to; on each component, extensions link the component's value to its body structure and to the device (analysis software) that produced it.
 
 #### AicuraCondition
 
-[AicuraCondition](StructureDefinition-condition.html) constrains Condition with must-support on clinicalStatus, verificationStatus, category, severity, code, bodySite, subject, encounter, onset, abatement, recordedDate, stage, and evidence. The `code` element is bound to the [AicuraConditionCodeVS](ValueSet-aicura-condition-code.html) spanning SNOMED-CT, AICURA custom, MedDRA, and LOINC codes.
+[AicuraCondition](StructureDefinition-condition.html) constrains Condition with must-support on clinicalStatus, verificationStatus, code, bodySite, subject, encounter, onset, recordedDate, and stage. The `code` element is bound to the [AicuraConditionCodeVS](ValueSet-aicura-condition-code.html) spanning SNOMED-CT, AICURA custom, and MedDRA codes. Extensions record the patient's age at the recorded date (`AgeRecorded`) and at onset (`AgeOnset`, and the older `AgeAtCondition` with the same value).
 
 #### AicuraPatient
 
-[AicuraPatient](StructureDefinition-patient.html) constrains Patient with must-support on identifier, active, gender, birthDate, and deceased. It adds `race` and `ethnicity` extensions bound to the [AicuraRaceEthnicityVS](ValueSet-aicura-race-ethnicity.html) (US CDC Race & Ethnicity code system); these mirror the US Core race/ethnicity extensions without taking a US Core dependency.
+[AicuraPatient](StructureDefinition-patient.html) constrains Patient with must-support on identifier, gender, birthDate, and deceased. It adds `race` and `ethnicity` extensions bound to the [AicuraRaceEthnicityVS](ValueSet-aicura-race-ethnicity.html) (US CDC Race & Ethnicity code system); these mirror the US Core race/ethnicity extensions without taking a US Core dependency.
 
 #### AicuraEncounter
 
-[AicuraEncounter](StructureDefinition-encounter.html) constrains Encounter with must-support on status, class, type, serviceType, priority, subject, period, participant, length, reasonCode, diagnosis, location, serviceProvider, and partOf. The `class` element is bound to the [AicuraEncounterClassVS](ValueSet-aicura-encounter-class.html) (HL7 v3 ActCode).
+[AicuraEncounter](StructureDefinition-encounter.html) constrains Encounter with must-support on status, class, type, subject, period, and location. The `class` element is bound to the [AicuraEncounterClassVS](ValueSet-aicura-encounter-class.html) (HL7 v3 ActCode). The `AgeAtEncounter` extension records the patient's age at the start of the encounter.
 
 #### AicuraProcedure
 
-[AicuraProcedure](StructureDefinition-procedure.html) constrains Procedure with must-support on status, category, code, subject, encounter, performed, performer, location, reasonCode, reasonReference, bodySite, outcome, complication, followUp, focalDevice, usedReference, and usedCode. The `bodySite` element is bound to the [AicuraBodyStructureVS](ValueSet-aicura-body-structure.html).
+[AicuraProcedure](StructureDefinition-procedure.html) leaves Procedure as in base FHIR R4B, without must-support flags or bindings. The `AgeAtProcedure` extension records the patient's age at the procedure. No AICURA study dataset provides procedures; the platform holds them from other clinical sources.
 
 #### AicuraMedication
 
@@ -40,7 +40,7 @@ This IG defines thirteen FHIR R4B profiles:
 
 #### AicuraResearchSubject
 
-[AicuraResearchSubject](StructureDefinition-research-subject.html) constrains ResearchSubject with must-support on identifier, status, period, study, individual, assignedArm, and actualArm.
+[AicuraResearchSubject](StructureDefinition-research-subject.html) constrains ResearchSubject with must-support on identifier, status, period, study, individual, assignedArm, and actualArm. The `AgeAtResearch` extension records the patient's age at the start of the participation.
 
 #### AicuraConsent
 
@@ -52,4 +52,4 @@ This IG defines thirteen FHIR R4B profiles:
 
 #### AicuraBodyStructure
 
-[AicuraBodyStructure](StructureDefinition-body-structure.html) constrains BodyStructure with must-support on identifier, active, morphology, location, locationQualifier, description, and patient. The `location` and `locationQualifier` elements are bound to the [AicuraBodyStructureVS](ValueSet-aicura-body-structure.html) and [AicuraLocationQualifierVS](ValueSet-aicura-location-qualifier.html) respectively, and a custom `laterality` extension (bound to [AicuraLateralityVS](ValueSet-aicura-laterality.html)) captures body side, which base BodyStructure does not model.
+[AicuraBodyStructure](StructureDefinition-body-structure.html) constrains BodyStructure with must-support on identifier, active, morphology, location, locationQualifier, description, and patient. The `location` and `locationQualifier` elements are bound to the [AicuraBodyStructureVS](ValueSet-aicura-body-structure.html) and [AicuraLocationQualifierVS](ValueSet-aicura-location-qualifier.html) respectively, and a custom `laterality` extension ([BodyStructureLaterality](StructureDefinition-BodyStructureLaterality.html), bound to [AicuraLateralityVS](ValueSet-aicura-laterality.html)) captures body side, which base BodyStructure does not model.

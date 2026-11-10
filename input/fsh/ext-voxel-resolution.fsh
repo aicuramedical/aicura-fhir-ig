@@ -2,7 +2,7 @@ Extension: AicuraVoxelResolution
 Id: VoxelResolution
 Title: "Voxel Resolution"
 Description: "Three-dimensional voxel resolution of an imaging series, with optional unit metadata."
-* ^url = "http://aicura-medical.com/fhir/StructureDefinition/VoxelResolution"
+* ^url = "http://aicuramedical.com/fhir/StructureDefinition/VoxelResolution"
 * insert ExtensionContext(ImagingStudy.series)
 * extension contains
     valueX 1..1 and

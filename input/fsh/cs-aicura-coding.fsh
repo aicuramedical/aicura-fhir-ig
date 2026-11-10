@@ -1,15 +1,59 @@
-CodeSystem: AicuraObservationCS
-Id: aicura-observation
-Title: "AICURA Observation CodeSystem"
-Description: "AICURA custom observation codes for assessments, biomarkers, and imaging-derived measurements."
-* ^url = "https://aicura-medical.com/fhir/coding/observation"
+CodeSystem: AicuraCodingCS
+Id: aicura-coding
+Title: "AICURA CodeSystem"
+Description: "AICURA-local concepts, maintained in the AICURA concepts database. This IG lists only the concepts its value sets use (content = fragment)."
+* ^url = $AicuraCoding
 * ^version = "1.0"
 * ^status = #active
 * ^caseSensitive = true
 * ^experimental = false
-* ^content = #complete
+* ^content = #fragment
+// MRI sequences
+* #MPRAGE "Magnetization-Prepared Rapid Gradient Echo"
+* #IR-SPGR "Inversion Recovery Spoiled Gradient Echo"
+* #IR-FSPGR "Inversion Recovery Fast Spoiled Gradient Echo"
+* #"Accelerated IR-SPGR" "Accelerated Inversion Recovery Spoiled Gradient Echo"
+* #"Accelerated IR-FSPGR" "Accelerated Inversion Recovery Fast Spoiled Gradient Echo"
+* #TFE "Turbo Field Echo"
+* #TSE "Turbo Spin Echo"
+* #FSE "Fast Spin Echo"
+* #GRE "Gradient Recalled Echo"
+* #MEGRE "Multi-Echo Gradient Recalled Echo"
+* #SWI "Susceptibility-Weighted Imaging"
+* #MP2RAGE "Magnetization-Prepared 2 Rapid Acquisition Gradient Echoes"
+* #"Unresolved Sequence Label" "Unresolved Sequence Label"
+// MRI contrasts
+* #T1w "T1w"
+* #"T2w FLAIR" "T2w FLAIR"
+* #"T1w FLAIR" "T1w FLAIR"
+* #PDw "Proton Density"
+* #T2w "T2w"
+* #"PDw/T2w" "PDw/T2w (dual echo)"
+* #"T2*w" "T2*w (gradient echo)"
+* #DWI "Diffusion Weighted Imaging"
+// Imaging dimension
+* #3D "3-Dimensional"
+* #2D "2-Dimensional"
+// Imaging device manufacturers
+* #Siemens "Siemens"
+* #GE "General Electric"
+* #Philips "Philips"
+* #CPS "CPS Innovations"
+* #Hitachi "Hitachi Medical Corporation"
+* #PMOD "PMOD Technologies"
+* #Toshiba "Toshiba"
+* #MiE "MiE medical imaging electronics"
+// PET tracers
+* #"Unresolved Tracer Label" "Unresolved Tracer Label"
+// Observations
 * #"Global score [CDR]" "Global score [CDR]"
 * #"Sum of Boxes [CDR]" "Sum of Boxes [CDR]"
+* #"Memory [CDR]" "Memory [CDR]"
+* #"Orientation [CDR]" "Orientation [CDR]"
+* #"Judgment and problem solving [CDR]" "Judgment and problem solving [CDR]"
+* #"Community affairs [CDR]" "Community affairs [CDR]"
+* #"Home and hobbies [CDR]" "Home and hobbies [CDR]"
+* #"Personal care [CDR]" "Personal care [CDR]"
 * #"Total Score [NPI-Q]" "Total Score [NPI-Q]"
 * #"Total Score [NPI-10]" "Total Score [NPI-10]"
 * #"Total Score [ADASCog13]" "Total Score [ADASCog13]"
@@ -46,4 +90,8 @@ Description: "AICURA custom observation codes for assessments, biomarkers, and i
 * #"Plasma P-tau181" "Plasma P-tau181"
 * #"Tau protein.phosphorylated 217 [Mass/volume] in Serum or Plasma by mass-spectrometry" "Tau protein.phosphorylated 217 [Mass/volume] in Serum or Plasma by mass-spectrometry"
 * #"Years Since First AD Symptoms" "Years Since First AD Symptoms"
-* #SRDC "Sporadic Parkison's Disease"
+* #SRDC "Sporadic Parkinson's disease"
+// Conditions
+* #"Motor Neurone disease with parkinsonism" "Motor Neurone disease with parkinsonism"
+* #"Psychogenic parkinsonism" "Psychogenic parkinsonism"
+* #"Juvenile autosomal recessive parkinsonism" "Juvenile autosomal recessive parkinsonism"

@@ -13,3 +13,5 @@ Description: "Constrained ResearchSubject profile linking an AICURA patient to a
 * individual only Reference(Patient)
 * assignedArm MS
 * actualArm MS
+// Custom extensions (age instead of dates)
+* extension contains AicuraAgeAtResearch named ageAtResearch 0..1

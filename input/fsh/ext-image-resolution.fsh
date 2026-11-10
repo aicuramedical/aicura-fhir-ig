@@ -2,7 +2,7 @@ Extension: AicuraImageResolution
 Id: ImageResolution
 Title: "Image Resolution"
 Description: "Three-dimensional image resolution (pixel/voxel counts) of an imaging series."
-* ^url = "http://aicura-medical.com/fhir/StructureDefinition/ImageResolution"
+* ^url = "http://aicuramedical.com/fhir/StructureDefinition/ImageResolution"
 * insert ExtensionContext(ImagingStudy.series)
 * extension contains
     valueX 1..1 and

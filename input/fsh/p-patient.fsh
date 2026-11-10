@@ -6,7 +6,6 @@ Description: "Constrained Patient profile for AICURA's clinical data model, the 
 * insert MetaProfile(patient)
 // Must-support elements
 * identifier MS
-* active MS
 * gender MS
 * birthDate MS
 * deceased[x] MS

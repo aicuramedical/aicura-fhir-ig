@@ -13,4 +13,5 @@ Description: "PET radiotracer compounds used in AICURA imaging studies."
 * $PubChem#2826731 "Pittsburgh Compound B"
 * $PubChem#134202705 "Izaflortaucipir"
 * $PubChem#507524301 "Florquinitau F-18"
+* $PubChem#3086674 "Ioflupane I-123" // DaTscan, on NM (SPECT) series
 * $AicuraCoding#"Unresolved Tracer Label" "Unresolved Tracer Label"
