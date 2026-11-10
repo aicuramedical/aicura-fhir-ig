@@ -1,8 +1,8 @@
-CodeSystem: AicuraCodingCS
-Id: aicura-coding
-Title: "AICURA CodeSystem"
-Description: "AICURA-local concepts, maintained in the AICURA concepts database. This IG lists only the concepts it uses (content = fragment)."
-* ^url = $AicuraCoding
+CodeSystem: NeuroPlusCodingCS
+Id: neuroplus-coding
+Title: "Neuro+ CodeSystem"
+Description: "Concepts specific to Neuro+, for which no standard terminology has a code. This IG lists only the concepts it uses (content = fragment)."
+* ^url = $NeuroPlusCoding
 * ^version = "1.0"
 * ^status = #active
 * ^caseSensitive = true
@@ -36,7 +36,7 @@ Description: "AICURA-local concepts, maintained in the AICURA concepts database.
 * #2D "2-Dimensional"
 // PET tracers
 * #"Unresolved Tracer Label" "Unresolved Tracer Label"
-// Brain regions with an AICURA code (BodyStructure.location)
+// Brain regions with a Neuro+ code (BodyStructure.location)
 * #"Anterior cingulate cortex" "Anterior cingulate cortex"
 * #"Posterior cingulate cortex" "Posterior cingulate cortex"
 * #"Isthmus of cingulate gyrus" "Isthmus of cingulate gyrus"

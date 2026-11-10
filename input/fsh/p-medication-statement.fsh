@@ -1,8 +1,8 @@
-Profile: AicuraMedicationStatement
+Profile: NeuroPlusMedicationStatement
 Parent: MedicationStatement
 Id: medication-statement
-Title: "AICURA MedicationStatement"
-Description: "Constrained MedicationStatement profile for AICURA's clinical data model, recording a patient's reported medication usage. This is the medication resource included in AICURA's FHIR Bundle export."
+Title: "Neuro+ MedicationStatement"
+Description: "Constrained MedicationStatement profile for Neuro+'s clinical data model, recording a patient's reported medication usage. This is the medication resource included in Neuro+'s FHIR Bundle export."
 * insert MetaProfile(medication-statement)
 * insert IdentifierSystem
 // Must-support elements

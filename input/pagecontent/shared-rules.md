@@ -1,15 +1,15 @@
 ### Shared Rules
 
-These rules apply to all AICURA profiles.
+These rules apply to all Neuro+ profiles.
 
 #### Identifiers
 
 Every identifier names who issued the number: `system` is required on every identifier in every profile. Together, `system` and `value` identify the number, so participant 123 of one study and participant 123 of another stay two people once the data leave the platform.
 
-**Naming scheme.** AICURA defines one system per dataset and kind of number:
+**Naming scheme.** Neuro+ defines one system per dataset and kind of number:
 
 ```
-http://aicuramedical.com/fhir/sid/<dataset>/<kind>
+http://sphin-x.de/fhir/sid/<dataset>/<kind>
 ```
 
 - `<dataset>`: the dataset's short name in lower case, e.g. `adni`, `aibl`.
@@ -17,8 +17,8 @@ http://aicuramedical.com/fhir/sid/<dataset>/<kind>
 
 | Example | system | value |
 |---------|--------|-------|
-| ADNI participant | `http://aicuramedical.com/fhir/sid/adni/rid` | `123` |
-| AIBL participant | `http://aicuramedical.com/fhir/sid/aibl/id` | `123` |
+| ADNI participant | `http://sphin-x.de/fhir/sid/adni/rid` | `123` |
+| AIBL participant | `http://sphin-x.de/fhir/sid/aibl/id` | `123` |
 
 The examples illustrate the scheme; the systems per dataset are set with the conversion (to confirm).
 
@@ -28,24 +28,24 @@ The examples illustrate the scheme; the systems per dataset are set with the con
 
 | Profile | identifier.type | Meaning |
 |---------|-----------------|---------|
-| [AicuraPatient](StructureDefinition-patient.html) | `http://terminology.hl7.org/CodeSystem/v3-ObservationValue#PSEUDED` | Pseudonym: the dataset's number replaces the person's identity |
-| [AicuraResearchSubject](StructureDefinition-research-subject.html) | `http://terminology.hl7.org/CodeSystem/v2-0203#ANON` | Anonymised participant code |
+| [NeuroPlusPatient](StructureDefinition-patient.html) | `http://terminology.hl7.org/CodeSystem/v3-ObservationValue#PSEUDED` | Pseudonym: the dataset's number replaces the person's identity |
+| [NeuroPlusResearchSubject](StructureDefinition-research-subject.html) | `http://terminology.hl7.org/CodeSystem/v2-0203#ANON` | Anonymised participant code |
 
 Each type also carries a text. The conversion writes the code's display as the text (`pseudonymized`, `Anonymous identifier`; to confirm).
 
 #### Record metadata
 
-Every record names the AICURA profile it follows and the dataset it comes from. `meta.profile` and `meta.source` are must-support in every profile; the conversion sets both.
+Every record names the Neuro+ profile it follows and the dataset it comes from. `meta.profile` and `meta.source` are must-support in every profile; the conversion sets both.
 
-- `meta.profile`: the canonical URL of the AICURA profile, with the IG version after a `|`.
-- `meta.source`: the source dataset and its version, under the scheme `http://aicuramedical.com/fhir/dataset/<dataset>#<version>`.
+- `meta.profile`: the canonical URL of the Neuro+ profile, with the IG version after a `|`.
+- `meta.source`: the source dataset and its version, under the scheme `http://sphin-x.de/fhir/dataset/<dataset>#<version>`.
 
 For example, an ADNI patient record:
 
 ```json
 "meta": {
-  "profile": ["http://aicuramedical.com/fhir/StructureDefinition/patient|0.1.0"],
-  "source": "http://aicuramedical.com/fhir/dataset/adni#2.0.0"
+  "profile": ["http://sphin-x.de/fhir/StructureDefinition/patient|1.0.0"],
+  "source": "http://sphin-x.de/fhir/dataset/adni#2.0.0"
 }
 ```
 
@@ -53,21 +53,21 @@ For example, an ADNI patient record:
 
 #### Coded fields
 
-A coded field (`CodeableConcept`) may carry several codes for the same meaning, from different code systems, next to one text; their order means nothing. Wherever a standard code (SNOMED CT, LOINC, ICD-10-GM) exists, it goes next to AICURA's own code, so one record can meet a standard's code list and keep the more precise code. No profile limits a coded field to one code.
+A coded field (`CodeableConcept`) may carry several codes for the same meaning, from different code systems, next to one text; their order means nothing. Wherever a standard code (SNOMED CT, LOINC, ICD-10-GM) exists, it goes next to Neuro+'s own code, so one record can meet a standard's code list and keep the more precise code. No profile limits a coded field to one code.
 
-Fields that base FHIR types as a single `Coding` (e.g. `Encounter.class`, `ImagingStudy.series.modality`) and AICURA's coded extensions, which carry a `Coding` and its label, hold one code each.
+Fields that base FHIR types as a single `Coding` (e.g. `Encounter.class`, `ImagingStudy.series.modality`) and Neuro+'s coded extensions, which carry a `Coding` and its label, hold one code each.
 
 **Main code system per field.** The main code system is the one every record should carry for the field; other codes may go next to it.
 
 | Field | Main code system | Next to it |
 |-------|------------------|------------|
-| `Condition.code` (diagnoses) | SNOMED CT | An AICURA code where SNOMED CT has no concept; ICD-10 and Orphanet as further codes later |
-| `Observation.code`, lab value | LOINC where it has the analyte, else AICURA | |
+| `Condition.code` (diagnoses) | SNOMED CT | A Neuro+ code where SNOMED CT has no concept; ICD-10 and Orphanet as further codes later |
+| `Observation.code`, lab value | LOINC where it has the analyte, else Neuro+ | |
 | `Observation.code`, vital sign | LOINC, as FHIR's vital-signs profile requires | |
-| `Observation.code`, clinical score | LOINC where it has the score, else AICURA (to confirm) | |
+| `Observation.code`, clinical score | LOINC where it has the score, else Neuro+ (to confirm) | |
 | `Observation.code`, imaging-derived measure | To confirm | |
 | `Observation.category` | HL7 observation-category | |
-| `BodyStructure.location` (brain regions) | SNOMED CT, where it names the region | Otherwise an AICURA region code, or a broader SNOMED CT concept with the position in `locationQualifier` (see "Region codes" under AicuraBodyStructure and AicuraAtlasRegion on the [Profiles](profiles.html) page) |
+| `BodyStructure.location` (brain regions) | SNOMED CT, where it names the region | Otherwise a Neuro+ region code, or a broader SNOMED CT concept with the position in `locationQualifier` (see "Region codes" under NeuroPlusBodyStructure and NeuroPlusAtlasRegion on the [Profiles](profiles.html) page) |
 | PET and SPECT tracer | DICOM CID 4021 (PET) and CID 25 (SPECT), code system as listed (mostly SNOMED CT) | PubChem compound where the DICOM list has no code |
 | `ImagingStudy.series.modality` | DICOM DCM (`http://dicom.nema.org/resources/ontology/DCM`) | |
 
@@ -77,7 +77,7 @@ A date keeps the precision the source gives it: a year (`1950`), a year and mont
 
 #### Age at an event
 
-Research datasets usually remove dates to protect participants, so AICURA records the participant's age at each event in its own extensions, as whole years:
+Research datasets usually remove dates to protect participants, so Neuro+ records the participant's age at each event in its own extensions, as whole years:
 
 | Event | Extension |
 |-------|-----------|

@@ -1,7 +1,7 @@
-ValueSet: AicuraEncounterClassVS
-Id: aicura-encounter-class
-Title: "AICURA Encounter Class ValueSet"
-Description: "Encounter classification codes used in AICURA studies, drawn from the HL7 v3 ActCode system."
+ValueSet: NeuroPlusEncounterClassVS
+Id: neuroplus-encounter-class
+Title: "Neuro+ Encounter Class ValueSet"
+Description: "Encounter classification codes used in Neuro+ studies, drawn from the HL7 v3 ActCode system."
 * ^experimental = false
 * $v3ActCode#AMB "Ambulatory"
 * $v3ActCode#EMER "Emergency"

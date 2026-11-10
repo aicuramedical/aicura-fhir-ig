@@ -20,7 +20,7 @@ The following extensions are defined on `ImagingStudy.series` and capture imagin
 | [AgeAtImagingSeries](StructureDefinition-AgeAtImagingSeries.html) | Integer | Patient age in whole years at the series date |
 | [ImagingSeriesSize](StructureDefinition-ImagingSeriesSize.html) | Quantity | Storage size of the series files |
 
-AICURA's own coded parts carry a code and its label, both required: in the modality extensions as a CodeableConcept with one coding and `text`, in Dimension as a `Coding` and a label sub-extension. The parts shaped like MII's follow MII: the tracer has one or more codings and its PubChem name as `text`; radionuclide, scanning sequence and sequence variant are coded as MII codes them.
+Neuro+'s own coded parts carry a code and its label, both required: in the modality extensions as a CodeableConcept with one coding and `text`, in Dimension as a `Coding` and a label sub-extension. The parts shaped like MII's follow MII: the tracer has one or more codings and its PubChem name as `text`; radionuclide, scanning sequence and sequence variant are coded as MII codes them.
 
 #### ImagingStudy extensions
 
@@ -42,7 +42,7 @@ The two body-structure links follow the direct link FHIR R5 and R6 define (`Obse
 
 #### Age at an event
 
-Research datasets usually remove dates, so AICURA records the patient's age in whole years at each event in an extension of its own. Besides AgeAtImagingStudy, AgeAtImagingSeries and AgeAtObservation above, these are:
+Research datasets usually remove dates, so Neuro+ records the patient's age in whole years at each event in an extension of its own. Besides AgeAtImagingStudy, AgeAtImagingSeries and AgeAtObservation above, these are:
 
 | Extension | Context | Type | Description |
 |-----------|---------|------|-------------|

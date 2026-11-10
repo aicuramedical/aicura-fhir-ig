@@ -14,9 +14,9 @@ Alias: $v3ActCode = http://terminology.hl7.org/CodeSystem/v3-ActCode
 Alias: $v3ObsValue = http://terminology.hl7.org/CodeSystem/v3-ObservationValue
 Alias: $v2IdType = http://terminology.hl7.org/CodeSystem/v2-0203
 
-// AICURA custom
-Alias: $AicuraCoding = https://aicuramedical.com/fhir/coding
-Alias: $AicuraSD = http://aicuramedical.com/fhir/StructureDefinition
+// Neuro+ custom
+Alias: $NeuroPlusCoding = https://sphin-x.de/fhir/coding
+Alias: $NeuroPlusSD = http://sphin-x.de/fhir/StructureDefinition
 
 // External systems
 Alias: $PubChem = https://pubchem.ncbi.nlm.nih.gov/compound/

@@ -1,6 +1,6 @@
-ValueSet: AicuraLabMethodVS
-Id: aicura-lab-method
-Title: "AICURA Lab Method ValueSet"
+ValueSet: NeuroPlusLabMethodVS
+Id: neuroplus-lab-method
+Title: "Neuro+ Lab Method ValueSet"
 Description: "Technique by which a lab value was measured: immunoassay, one of its specific techniques, or mass spectrometry (SNOMED CT). The method names the technique only; the platform that ran the assay is the result's device."
 * ^experimental = false
 * $SCT#726449005 "Immunoassay technique"

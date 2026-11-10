@@ -1,8 +1,8 @@
-Profile: AicuraObservationImagingMeasure
-Parent: AicuraObservation
+Profile: NeuroPlusObservationImagingMeasure
+Parent: NeuroPlusObservation
 Id: observation-imaging-measure
-Title: "AICURA Imaging-Derived Measure"
-Description: "Measure derived from an image (e.g. a brain-region volume, cortical thickness or a PET SUVr) in AICURA's clinical data model. Region-wise measures are grouped: one Observation per image series, measure and atlas, with one component per brain region holding the value and its region."
+Title: "Neuro+ Imaging-Derived Measure"
+Description: "Measure derived from an image (e.g. a brain-region volume, cortical thickness or a PET SUVr) in Neuro+'s clinical data model. Region-wise measures are grouped: one Observation per image series, measure and atlas, with one component per brain region holding the value and its region."
 * insert MetaProfile(observation-imaging-measure)
 * insert ObservationCategory(imaging)
 // One Observation per image series, measure and atlas
@@ -11,13 +11,13 @@ Description: "Measure derived from an image (e.g. a brain-region volume, cortica
 * component.value[x] MS
 * component.valueQuantity MS
 // Region links point to the shared atlas regions
-* extension[bodyStructure].value[x] only Reference(AicuraAtlasRegion)
-* component.extension[bodyStructure].value[x] only Reference(AicuraAtlasRegion)
+* extension[bodyStructure].value[x] only Reference(NeuroPlusAtlasRegion)
+* component.extension[bodyStructure].value[x] only Reference(NeuroPlusAtlasRegion)
 // Analysis software and its atlas, once for all values
 * device MS
-* device only Reference(AicuraDevice)
+* device only Reference(NeuroPlusDevice)
 * device ^short = "Analysis software (with its atlas) that produced the values"
-* device ^comment = "The atlas is the Device's brainAtlas property (see AicuraDevice)."
+* device ^comment = "The atlas is the Device's brainAtlas property (see NeuroPlusDevice)."
 // Image series: the ImagingStudy in derivedFrom, the series UID in MII's extension
 * extension contains $MIISeriesUID named seriesUid 0..1 MS
 * extension[seriesUid] ^short = "DICOM Series Instance UID of the image series the values were computed from"

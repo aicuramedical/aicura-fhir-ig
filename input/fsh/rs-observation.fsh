@@ -1,9 +1,9 @@
-// Rules every AICURA Observation profile shares, whatever its parent
-// (AicuraObservation or one of FHIR's vital-signs profiles).
+// Rules every Neuro+ Observation profile shares, whatever its parent
+// (NeuroPlusObservation or one of FHIR's vital-signs profiles).
 RuleSet: ObservationCommon
 * subject MS
 * subject only Reference(Patient)
-* extension contains AicuraAgeAtObservation named ageAtObservation 0..1 MS
+* extension contains NeuroPlusAgeAtObservation named ageAtObservation 0..1 MS
 
 // Requires one category code from the HL7 observation-category code system,
 // in a slice named after it; further category codes stay allowed.
