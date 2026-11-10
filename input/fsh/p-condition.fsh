@@ -4,6 +4,7 @@ Id: condition
 Title: "AICURA Condition"
 Description: "Constrained Condition profile for AICURA's clinical data model, covering neurological, cardiovascular, and other disorders."
 * insert MetaProfile(condition)
+* insert IdentifierSystem
 // Must-support elements
 * clinicalStatus MS
 * verificationStatus MS

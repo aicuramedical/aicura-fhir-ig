@@ -4,8 +4,13 @@ Id: patient
 Title: "AICURA Patient"
 Description: "Constrained Patient profile for AICURA's clinical data model, the subject of record for observations, conditions, procedures, imaging studies, and research enrollment."
 * insert MetaProfile(patient)
+* insert IdentifierSystem
 // Must-support elements
 * identifier MS
+* identifier.type 1..1 MS
+* identifier.type = $v3ObsValue#PSEUDED
+* identifier.type ^short = "Pseudonym (PSEUDED), as in MII's pseudonymised Patient"
+* identifier.type.text 1..1 MS
 * gender MS
 * birthDate MS
 * deceased[x] MS
