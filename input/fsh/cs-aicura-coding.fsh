@@ -34,15 +34,6 @@ Description: "AICURA-local concepts, maintained in the AICURA concepts database.
 // Imaging dimension
 * #3D "3-Dimensional"
 * #2D "2-Dimensional"
-// Imaging device manufacturers
-* #Siemens "Siemens"
-* #GE "General Electric"
-* #Philips "Philips"
-* #CPS "CPS Innovations"
-* #Hitachi "Hitachi Medical Corporation"
-* #PMOD "PMOD Technologies"
-* #Toshiba "Toshiba"
-* #MiE "MiE medical imaging electronics"
 // PET tracers
 * #"Unresolved Tracer Label" "Unresolved Tracer Label"
 // Observations

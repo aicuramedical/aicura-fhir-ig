@@ -1,17 +1,16 @@
 ValueSet: AicuraPETTracerVS
 Id: aicura-pet-tracer
 Title: "AICURA PET Tracer ValueSet"
-Description: "PET radiotracer compounds used in AICURA imaging studies."
+Description: "PET tracers used in AICURA imaging studies, coded with their entry in DICOM's PET tracer list (CID 4021), as MII binds it. A tracer the list has no code for is coded by its PubChem compound ID. The label (CodeableConcept.text) is the PubChem name, see AicuraTracerPubChemVS."
 * ^experimental = false
-* $PubChem#68614 "Fluorodeoxyglucose F-18"
-* $PubChem#15950376 "Flutemetamol F-18"
-* $PubChem#70957463 "Flortaucipir F-18"
-* $PubChem#11501341 "Florbetaben F-18"
-* $PubChem#44815683 "Flutafuranol F-18"
-* $PubChem#24822371 "Florbetapir F-18"
-* $PubChem#17755050 "Florbenazine F-18"
-* $PubChem#2826731 "Pittsburgh Compound B"
-* $PubChem#134202705 "Izaflortaucipir"
-* $PubChem#507524301 "Florquinitau F-18"
-* $PubChem#3086674 "Ioflupane I-123" // DaTscan, on NM (SPECT) series
+* $SCT#35321007 "Fluorodeoxyglucose F^18^"
+* $SCT#456997008 "Flutemetamol F^18^"
+* $SCT#879808000 "Flortaucipir F^18^"
+* $SCT#712736002 "Florbetaben F^18^"
+* $SCT#456995000 "Florbetapir F^18^"
+* $DICOM#126500 "Pittsburgh compound B C^11^"
+* $UMLS#C5433257 "PI-2620 F^18^" // Izaflortaucipir
+* $UMLS#C2934038 "Fluoropropyl-dihydrotetrabenazine F^18^" // Florbenazine
+* $UMLS#C4506764 "MK-6240 F^18^" // Florquinitau
+* $PubChem#44815683 "Flutafuranol F 18" // not in CID 4021
 * $AicuraCoding#"Unresolved Tracer Label" "Unresolved Tracer Label"
