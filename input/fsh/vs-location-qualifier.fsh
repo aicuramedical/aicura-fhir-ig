@@ -1,7 +1,7 @@
 ValueSet: AicuraLocationQualifierVS
 Id: aicura-location-qualifier
 Title: "AICURA Location Qualifier ValueSet"
-Description: "Body site modifier codes qualifying a BodyStructure location (anatomical direction/region). Sourced from data-integration concepts; three source rows lacking a SNOMED code (Ventral, Mid-Posterior, Mid-Anterior) are excluded pending coding."
+Description: "Position qualifiers narrowing a BodyStructure location (anatomical direction or part, e.g. caudal, rostral); the side is not a qualifier but goes into the BodyStructureLaterality extension. SNOMED CT qualifier values, and AICURA codes for the positions SNOMED CT has no concept for (Ventral, Mid-Anterior, Mid-Posterior)."
 * ^experimental = false
 * $SCT#255554000 "Dorsal"
 * $SCT#255561001 "Medial"
@@ -13,3 +13,6 @@ Description: "Body site modifier codes qualifying a BodyStructure location (anat
 * $SCT#66787007 "Rostral"
 * $SCT#255549009 "Anterior"
 * $SCT#26216008 "Central"
+* $AicuraCoding#"Ventral" "Ventral"
+* $AicuraCoding#"Mid-Anterior" "Mid-Anterior"
+* $AicuraCoding#"Mid-Posterior" "Mid-Posterior"

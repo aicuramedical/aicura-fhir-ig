@@ -1,6 +1,6 @@
 ### Profiles
 
-This IG defines eighteen FHIR R4B profiles. All of them follow the [Shared Rules](shared-rules.html), e.g. every identifier names its issuer in `system`.
+This IG defines nineteen FHIR R4B profiles. All of them follow the [Shared Rules](shared-rules.html), e.g. every identifier names its issuer in `system`.
 
 #### AicuraImagingStudy
 
@@ -129,7 +129,7 @@ The extension is used exactly as the MII imaging module publishes it (this IG de
 
 #### AicuraObservation
 
-[AicuraObservation](StructureDefinition-observation.html) is the common parent of the Observation profiles per kind of result (below). It constrains Observation with must-support on status, category, code, subject, effective, value, performer, derivedFrom, component, bodySite, interpretation, and method. The `code` element is bound to the [AicuraObservationCodeVS](ValueSet-aicura-observation-code.html) covering LOINC, SNOMED-CT, and AICURA custom observation codes. Extensions record the patient's age at the observation and link the Observation to the body structure its value refers to; on each component, extensions link the component's value to its body structure and to the device (analysis software) that produced it.
+[AicuraObservation](StructureDefinition-observation.html) is the common parent of the Observation profiles per kind of result (below). It constrains Observation with must-support on status, category, code, subject, effective, value, performer, derivedFrom, component, bodySite, interpretation, and method. The `code` element is bound to the [AicuraObservationCodeVS](ValueSet-aicura-observation-code.html) covering LOINC, SNOMED-CT, and AICURA custom observation codes. Extensions record the patient's age at the observation and link the Observation to the body structure its value refers to; on each component, an extension links the component's value to its body structure.
 
 #### Observation profiles per kind of result
 
@@ -145,6 +145,35 @@ Each kind of result has its own Observation profile, so each kind can get the ru
 The category codes come from the HL7 [observation-category](http://terminology.hl7.org/CodeSystem/observation-category) code system; each profile requires its code and allows further categories. The lab, score and imaging profiles inherit all rules of AicuraObservation. The vital-sign profile derives from FHIR's vital-signs profile, as FHIR requires for vital signs, and repeats the rules all AICURA Observation profiles share: a Patient as subject and the patient's age at the observation. Results of a kind without its own profile (e.g. genetics) use AicuraObservation directly.
 
 The lab profile follows the structure of the MII lab module (laboratory category, grouping of lab codes) but uses international codes and English displays instead of MII's German ones, and claims no conformance to MII's lab profiles.
+
+#### AicuraObservationImagingMeasure
+
+[AicuraObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) holds measures derived from images, such as brain-region volumes, surface areas, cortical thickness and PET values. It inherits all rules of AicuraObservation and requires the category `imaging`.
+
+##### One Observation per image series, measure and atlas
+
+Brain volumetry produces one value per brain region, often more than a hundred per image series. The values of one image series, one measure (e.g. volume) and one atlas (e.g. Desikan-Killiany) form one Observation:
+
+- one component per brain region, holding the value (`component.valueQuantity`) and the link to its region (below);
+- the analysis software, with its atlas, once on the Observation in `Observation.device`, referencing an [AicuraDevice](StructureDefinition-device.html) of type Processing Equipment;
+- the image series once on the Observation (`derivedFrom` and MII's series-UID extension, see "Linking a result to a series" under AicuraImagingStudy).
+
+FHIR leaves the choice between components and separate Observations to context, and components fit when one method, one software and one time apply to all values, as they do here. Separate Observations would repeat the same patient, time, image series and software on every value. MII requires a value on every Observation; an export to MII turns each component into an Observation of its own. A measure that comes as a single value (e.g. the intracranial volume of a study without a regional breakdown) is one Observation with `valueQuantity` and no components.
+
+##### Link to the brain region
+
+Each value points directly to the [AicuraAtlasRegion](StructureDefinition-atlas-region.html) of its brain region (structure, side and position):
+
+| Value on | Extension |
+|---|---|
+| the Observation | [ObservationBodyStructure](StructureDefinition-ObservationBodyStructure.html) |
+| a component | [ObservationComponentBodyStructure](StructureDefinition-ObservationComponentBodyStructure.html) |
+
+FHIR R4B has no element that links an Observation to a BodyStructure; HL7's workaround is an extension inside `bodySite`, which MII uses. FHIR R5 and R6 add the direct link `Observation.bodyStructure`, and R6 deprecates `bodySite`. The AICURA extensions follow that newer design, so the move to R6 changes the format once: `ObservationBodyStructure` becomes `Observation.bodyStructure`. Components have no region element in any FHIR version, so `ObservationComponentBodyStructure` stays an extension. An export to MII moves the link into `bodySite`, with the region's SNOMED CT code there.
+
+##### Category and units
+
+The category is `imaging` from the HL7 [observation-category](http://terminology.hl7.org/CodeSystem/observation-category) code system (`http://terminology.hl7.org/CodeSystem/observation-category`), not the address of a FHIR web page. Units of `valueQuantity`, on the Observation and on each component, are UCUM: `system` is `http://unitsofmeasure.org` and `code` the UCUM code, e.g. `cm3` for a volume, `cm2` for a surface area and `cm` for a cortical thickness.
 
 #### AicuraCondition
 
@@ -190,6 +219,52 @@ The lab profile follows the structure of the MII lab module (laboratory category
 
 [AicuraDevice](StructureDefinition-device.html) constrains Device with must-support on identifier, udiCarrier, status, manufacturer, manufactureDate, expirationDate, lotNumber, serialNumber, deviceName, modelNumber, type, version, patient, owner, location, note, safety, and parent. It represents imaging scanners, referenced from `ImagingStudy.series.performer.actor`, and analysis software, referenced by derived results. `type` is required and bound to [AicuraDeviceTypeVS](ValueSet-aicura-device-type.html), which tells the two apart: Acquisition Equipment for a scanner, Processing Equipment for software.
 
-#### AicuraBodyStructure
+#### AicuraBodyStructure and AicuraAtlasRegion
 
-[AicuraBodyStructure](StructureDefinition-body-structure.html) constrains BodyStructure with must-support on identifier, active, morphology, location, locationQualifier, description, and patient. The `location` and `locationQualifier` elements are bound to the [AicuraBodyStructureVS](ValueSet-aicura-body-structure.html) and [AicuraLocationQualifierVS](ValueSet-aicura-location-qualifier.html) respectively, and a custom `laterality` extension ([BodyStructureLaterality](StructureDefinition-BodyStructureLaterality.html), bound to [AicuraLateralityVS](ValueSet-aicura-laterality.html)) captures body side, which base BodyStructure does not model.
+Body structures come in two kinds, each with its own profile:
+
+| Profile | For | Patient |
+|---|---|---|
+| [AicuraAtlasRegion](StructureDefinition-atlas-region.html) | A brain region as an atlas defines it, one record shared by all participants; imaging-derived measures link to it | None (see "Shared brain regions") |
+| [AicuraBodyStructure](StructureDefinition-body-structure.html) | A structure of one person, e.g. a lesion | References the patient |
+
+Both have must-support on identifier, active, morphology, location, locationQualifier, and description, and describe a region in three parts:
+
+| Part | Element | Example | Value set |
+|---|---|---|---|
+| Structure | `location` | Anterior cingulate cortex | [AicuraBodyStructureVS](ValueSet-aicura-body-structure.html) (extensible) |
+| Side | extension [BodyStructureLaterality](StructureDefinition-BodyStructureLaterality.html) | Left | [AicuraLateralityVS](ValueSet-aicura-laterality.html) (extensible) |
+| Position | `locationQualifier` | Caudal | [AicuraLocationQualifierVS](ValueSet-aicura-location-qualifier.html) (extensible) |
+
+##### Side and position
+
+The side (left, right, bilateral) has its own field, the extension BodyStructureLaterality, apart from the position in `locationQualifier`. FHIR R4B and MII put both into `locationQualifier`; FHIR R5 and R6 give the side its own element, `includedStructure.laterality`, next to the position in `includedStructure.qualifier`. AICURA follows that separation in a flat form, since each region is one atlas structure with one side; the nested `includedStructure` serves regions made of several structures, which atlas regions are not. With the move to R6, `location` becomes `includedStructure.structure`, the extension `includedStructure.laterality` and `locationQualifier` `includedStructure.qualifier`. A reader that does not know the extension sees the side only in the region's name. An export to MII copies the side into `locationQualifier`.
+
+##### Shared brain regions
+
+A brain region from an atlas, such as the left hippocampus, is the same definition for every participant. Each region (structure, side and position) is therefore one [AicuraAtlasRegion](StructureDefinition-atlas-region.html), shared by all participants, and every measurement links to it.
+
+FHIR R4B requires `BodyStructure.patient` (1..1), as R5 and MII do. A shared region belongs to no single patient, so in AicuraAtlasRegion the `patient` element carries no reference, only FHIR's standard extension `data-absent-reason` with the code `not-applicable`. The record stays valid R4B. FHIR R6 makes the patient optional (0..1); from then on the element is simply left out. An export to MII creates one copy of each region per patient.
+
+```json
+"patient": {
+  "extension": [{
+    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+    "valueCode": "not-applicable"
+  }]
+}
+```
+
+##### Region codes
+
+SNOMED CT is the main code system for brain regions (`location`). Brain atlases such as Desikan-Killiany divide the brain more finely than SNOMED CT names it, so a region keeps one of three codings:
+
+| Coding | When | Example |
+|---|---|---|
+| SNOMED CT concept of the region | SNOMED CT names the region | Hippocampus: SNOMED CT 5366008 |
+| AICURA region code | SNOMED CT has no concept of the region; a few regions SNOMED CT names keep the AICURA code they have (e.g. Intracranial volume [ICV]) | Isthmus of cingulate gyrus |
+| Broader SNOMED CT concept, with the position in `locationQualifier` | The atlas region is a part of a SNOMED CT structure | Corpus callosum (SNOMED CT 88442005) with the qualifier Mid-Anterior |
+
+A broader SNOMED CT concept alone would give different regions the same code (caudal anterior, rostral anterior and posterior cingulate would all become "cingulate gyrus"), so it is used only together with a position that tells them apart. The exact region is defined by the atlas (on the analysis software's Device) and the region's label; a code approximates it. As in every coded field (see [Shared Rules](shared-rules.html)), several codes may sit next to each other, e.g. a broader SNOMED CT concept next to an AICURA code. MII requires a SNOMED CT code for every region; regions with only an AICURA code deviate from MII.
+
+[AicuraBodyStructureVS](ValueSet-aicura-body-structure.html) holds every SNOMED CT anatomical or acquired body structure (`442083009` and its descendants) and the AICURA region codes. [AicuraLocationQualifierVS](ValueSet-aicura-location-qualifier.html) holds the position qualifiers: SNOMED CT qualifier values, and AICURA codes for Ventral, Mid-Anterior and Mid-Posterior, which SNOMED CT has no concept for.
