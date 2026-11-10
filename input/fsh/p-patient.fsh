@@ -14,6 +14,8 @@ Description: "Constrained Patient profile for AICURA's clinical data model, the 
 * gender MS
 * birthDate MS
 * deceased[x] MS
+* deceased[x] ^short = "Date of death (deceasedDateTime), where the source reports a death"
+* deceased[x] ^comment = "A death is recorded on the Patient record, as in base FHIR, with the date of death in deceasedDateTime at the precision the source gives. MII's separate vital-status Observation is not used: no source reports repeated vital-status checks, and follow-up states such as lost to follow-up belong to the study participation (ResearchSubject). An export to MII can derive that Observation from this field."
 // Custom extensions (mirror US Core race/ethnicity without a US Core dependency)
 * extension contains
     AicuraRace named race 0..1 MS and
