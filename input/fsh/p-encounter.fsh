@@ -4,6 +4,7 @@ Id: encounter
 Title: "AICURA Encounter"
 Description: "Constrained Encounter profile for AICURA's clinical data model, representing study visits and clinical contacts during which observations, conditions, procedures, and imaging studies are recorded."
 * insert MetaProfile(encounter)
+* insert IdentifierSystem
 // Must-support elements
 * status MS
 * class MS

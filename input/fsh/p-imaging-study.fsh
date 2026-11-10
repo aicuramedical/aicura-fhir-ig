@@ -4,6 +4,7 @@ Id: imaging-study
 Title: "AICURA ImagingStudy"
 Description: "Constrained ImagingStudy profile for AICURA's medical imaging data model with series-level extensions for MRI/PET metadata."
 * insert MetaProfile(imaging-study)
+* insert IdentifierSystem
 * id 1..1 MS
 * identifier 1..* MS
 * identifier.value 1..1 MS
