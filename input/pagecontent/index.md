@@ -1,6 +1,6 @@
 ### AICURA FHIR Implementation Guide
 
-This Implementation Guide (IG) formally profiles the FHIR R4B resources implemented by **AICURA Medical's** clinical data platform. The guide covers fourteen resource types in nineteen profiles, with associated terminology and extensions.
+This Implementation Guide (IG) formally profiles the FHIR R4B resources implemented by **AICURA Medical's** clinical data platform. The guide covers fourteen resource types in twenty-one profiles, with associated terminology and extensions.
 
 #### Scope
 
@@ -11,6 +11,7 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 | Observation | [AicuraObservationLab](StructureDefinition-observation-lab.html) | Lab values |
 | Observation | [AicuraObservationScore](StructureDefinition-observation-score.html) | Clinical scores |
 | Observation | [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html) | Vital signs, meeting FHIR's vital-signs profile |
+| Observation | [AicuraObservationBloodPressure](StructureDefinition-observation-blood-pressure.html) | Blood pressure as one record with systolic and diastolic components, meeting FHIR's blood-pressure profile |
 | Observation | [AicuraObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) | Imaging-derived measures |
 | Condition | [AicuraCondition](StructureDefinition-condition.html) | Neurological, cardiovascular, and other clinical conditions |
 | Patient | [AicuraPatient](StructureDefinition-patient.html) | Subject of record, with custom race and ethnicity extensions |
@@ -22,13 +23,10 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 | ResearchStudy | [AicuraResearchStudy](StructureDefinition-research-study.html) | Research studies (e.g. ADNI cohorts) patients are enrolled in |
 | ResearchSubject | [AicuraResearchSubject](StructureDefinition-research-subject.html) | Patient enrollment in a research study |
 | Consent | [AicuraConsent](StructureDefinition-consent.html) | Patient consent for research participation and data use |
-| Device | [AicuraDevice](StructureDefinition-device.html) | Imaging scanners and analysis software, told apart by device type |
+| Device | [AicuraDevice](StructureDefinition-device.html) | Imaging scanners, analysis software and lab assay platforms, told apart by device type |
+| Device | [AicuraAssayDevice](StructureDefinition-assay-device.html) | Lab assay platforms, one shared record per platform, linked from each lab value |
 | BodyStructure | [AicuraBodyStructure](StructureDefinition-body-structure.html) | Body structures of one person, with a laterality extension |
 | BodyStructure | [AicuraAtlasRegion](StructureDefinition-atlas-region.html) | Brain regions as an atlas defines them, one record shared by all participants |
-
-#### Shared rules
-
-Rules that apply to all profiles, such as how identifiers name their issuer and how each record names its profile and source dataset, are on the [Shared Rules](shared-rules.html) page.
 
 #### Shared rules
 
@@ -40,7 +38,7 @@ The ImagingStudy profile includes custom extensions on `ImagingStudy.series` for
 
 #### Terminology
 
-One AICURA CodeSystem (`https://aicuramedical.com/fhir/coding`) for all AICURA-specific codes and AICURA ValueSets define the codes for MRI sequences, contrasts, device types, PET and SPECT tracers, observation types, condition codes, encounter classes, body structures, laterality, location qualifiers, and race/ethnicity. External terminologies (SNOMED-CT, LOINC, MedDRA, DICOM, UMLS, PubChem, HL7 v3 ActCode, and the US CDC Race & Ethnicity code system) are also referenced.
+One AICURA CodeSystem (`https://aicuramedical.com/fhir/coding`) for all AICURA-specific codes and AICURA ValueSets define the codes for MRI sequences, contrasts, device types, lab methods, PET and SPECT tracers, observation types, condition codes, encounter classes, body structures, laterality, location qualifiers, and race/ethnicity. External terminologies (SNOMED-CT, LOINC, MedDRA, DICOM, UMLS, PubChem, HL7 v3 ActCode, and the US CDC Race & Ethnicity code system) are also referenced.
 
 #### Authors
 
