@@ -17,7 +17,7 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 | Patient | [AicuraPatient](StructureDefinition-patient.html) | Subject of record, with custom race and ethnicity extensions |
 | Encounter | [AicuraEncounter](StructureDefinition-encounter.html) | Study visits and clinical contacts |
 | Procedure | [AicuraProcedure](StructureDefinition-procedure.html) | Procedures as in base FHIR (no study dataset provides them) |
-| Medication | [AicuraMedication](StructureDefinition-medication.html) | Medication definitions referenced by medication statements |
+| Medication | [AicuraMedication](StructureDefinition-medication.html) | Medication definitions referenced by medication statements and administrations |
 | MedicationAdministration | [AicuraMedicationAdministration](StructureDefinition-medication-administration.html) | Tracer or contrast agent administered for imaging, linked from the imaging series |
 | MedicationStatement | [AicuraMedicationStatement](StructureDefinition-medication-statement.html) | Reported patient medication usage (the medication resource in the FHIR Bundle export) |
 | ResearchStudy | [AicuraResearchStudy](StructureDefinition-research-study.html) | Research studies (e.g. ADNI cohorts) patients are enrolled in; each dataset's data use agreement governs the use of its data |
@@ -27,6 +27,10 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 | Device | [AicuraAssayDevice](StructureDefinition-assay-device.html) | Lab assay platforms, one shared record per platform, linked from each lab value |
 | BodyStructure | [AicuraBodyStructure](StructureDefinition-body-structure.html) | Body structures of one person, with a laterality extension |
 | BodyStructure | [AicuraAtlasRegion](StructureDefinition-atlas-region.html) | Brain regions as an atlas defines them, one record shared by all participants |
+
+#### FHIR version and MII
+
+The IG is written for FHIR R4B (4.3.0). Where it follows the Medical Informatics Initiative (MII) core data set, it uses MII's published artifacts directly, e.g. MII's MR code lists and series-UID extension, and therefore depends on the MII imaging module (`de.medizininformatikinitiative.kerndatensatz.bildgebung` 2026.0.0). MII publishes for FHIR R4 (4.0.1); the IG Publisher reports each R4 package in an R4B guide, which is expected here.
 
 #### Shared rules
 
@@ -38,7 +42,7 @@ The ImagingStudy profile includes custom extensions on `ImagingStudy.series` for
 
 #### Terminology
 
-One AICURA CodeSystem (`https://aicuramedical.com/fhir/coding`) for all AICURA-specific codes and AICURA ValueSets define the codes for MRI sequences, contrasts, device types, lab methods, PET and SPECT tracers, observation types, condition codes, encounter classes, body structures, laterality, location qualifiers, and race/ethnicity. External terminologies (SNOMED-CT, LOINC, MedDRA, DICOM, UMLS, PubChem, HL7 v3 ActCode, and the US CDC Race & Ethnicity code system) are also referenced.
+One AICURA CodeSystem (`https://aicuramedical.com/fhir/coding`) for all AICURA-specific codes and AICURA ValueSets define the codes for MRI sequences, contrasts, device types, lab methods, PET and SPECT tracers, observation types, condition codes, encounter classes, body structures, laterality, location qualifiers, and race/ethnicity. External terminologies (SNOMED CT, LOINC, MedDRA, DICOM, UMLS, PubChem, HL7 v3 ActCode, and the US CDC Race & Ethnicity code system) are also referenced.
 
 #### Authors
 

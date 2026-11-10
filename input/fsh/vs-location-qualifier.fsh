@@ -1,7 +1,7 @@
 ValueSet: AicuraLocationQualifierVS
 Id: aicura-location-qualifier
 Title: "AICURA Location Qualifier ValueSet"
-Description: "Position qualifiers narrowing a BodyStructure location (anatomical direction or part, e.g. caudal, rostral); the side is not a qualifier but goes into the BodyStructureLaterality extension. SNOMED CT qualifier values, and AICURA codes for the positions SNOMED CT has no concept for (Ventral, Mid-Anterior, Mid-Posterior)."
+Description: "Position qualifiers narrowing a BodyStructure location (anatomical direction or part, e.g. caudal, rostral); the side is not a qualifier but goes into the BodyStructureLaterality extension. SNOMED CT qualifier values, and AICURA codes for the positions SNOMED CT has no fitting concept for (Ventral, Mid-Anterior, Mid-Posterior; SNOMED CT lists Ventral only as a synonym of Anterior, which in the brain is a different direction)."
 * ^experimental = false
 * $SCT#255554000 "Dorsal"
 * $SCT#255561001 "Medial"

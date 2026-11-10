@@ -6,3 +6,7 @@ Description: "Blood pressure in AICURA's clinical data model: one record (LOINC 
 * insert MetaProfile(observation-blood-pressure)
 * insert ObservationCommon
 * insert IdentifierSystem
+// FHIR's bp profile lets code.coding be empty although its LOINC slices require one coding
+* code.coding 1..*
+* component[SystolicBP].code.coding 1..*
+* component[DiastolicBP].code.coding 1..*

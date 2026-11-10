@@ -4,7 +4,7 @@ This IG defines twenty-one FHIR R4B profiles. All of them follow the [Shared Rul
 
 #### AicuraImagingStudy
 
-[AicuraImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on identifier, status, subject, encounter, started, description, endpoint, series and its uid, number, modality, description, instance count, start, endpoint, body site and performer (the scanner); id, the Study Instance UID identifier and subject are required. It adds the patient's age at the study and series-level extensions for the acquisition details listed on the [Extensions](extensions.html) page. The sections below explain the rules that go beyond base FHIR.
+[AicuraImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on identifier, status, subject, encounter, started, number of series, number of instances, description, endpoint, series and its uid, number, modality, description, instance count, start, endpoint, body site and performer (the scanner); id, the Study Instance UID identifier and subject are required. It adds the patient's age at the study and series-level extensions for the acquisition details listed on the [Extensions](extensions.html) page. The sections below explain the rules that go beyond base FHIR.
 
 ##### Study identity
 
@@ -42,24 +42,24 @@ Each MR series carries one extension, [ModalityMR](StructureDefinition-ModalityM
 - **Sequence name next to the technique codes.** The DICOM technique codes say which physics class a sequence belongs to; they are too coarse to select cohorts. Neurodegeneration research selects series by sequence name ("3D T1 MPRAGE"), so the name is kept as its own part.
 - **Contrast weighting** is the image weighting, the first criterion imaging researchers filter by (T1w for volume measurements, FLAIR for white-matter lesions). It is not the contrast agent, which is recorded through the series' link to the administration (below).
 - **Coded AICURA parts** carry a coding and its label (`text`); both are required.
-- **Rules:** an MR series carries the extension with a contrast weighting and a sequence name (`aic-mr-1`), and the sequence name fits the weighting (`aic-mr-2`): T1w needs an IR/MPRAGE-type sequence, T2w TSE or FSE, T2w FLAIR FLAIR, TSE or FSE, and T2\*w GRE or SWI. Other weightings accept any sequence; "Unresolved Sequence Label" is always allowed.
+- **Rules:** an MR series carries the extension with a contrast weighting and a sequence name (`aic-mr-1`), and the sequence name fits the weighting (`aic-mr-2`): T1w needs an IR/MPRAGE-type sequence, T2w TSE or FSE, T2w FLAIR TSE or FSE, and T2\*w GRE or SWI. Other weightings accept any sequence; "Unresolved Sequence Label" is always allowed.
 
 ##### PET and SPECT: tracer and injection
 
-PET and SPECT series carry their tracer details in [ModalityPT](StructureDefinition-ModalityPT.html) (modality PT) or [ModalityNM](StructureDefinition-ModalityNM.html) (modality NM, SPECT), shaped like MII's PET and NM extensions (`mii-ex-bildgebung-modalitaet-pt`, `-nm`). The first four parts keep MII's names, types and units; the last two are AICURA's.
+PET and SPECT series carry their tracer details in [ModalityPT](StructureDefinition-ModalityPT.html) (modality PT) or [ModalityNM](StructureDefinition-ModalityNM.html) (modality NM, SPECT), shaped like MII's PET and NM extensions (`mii-ex-bildgebung-modalitaet-pt`, `-nm`). The first four parts keep MII's names, types and units (PET dose in Bq, SPECT dose in MBq, as in MII); the last two are AICURA's.
 
 | Part | Content | Type |
 |---|---|---|
 | `radiopharmaceutical` | Tracer | CodeableConcept, DICOM CID 4021 (PET) or CID 25 (SPECT), extensible; PubChem name as text |
 | `radionuclide` | Radionuclide, e.g. 18F | CodeableConcept, DICOM CID 4020 (PET) or CID 18 (SPECT), extensible |
-| `radionuclideTotalDose` | Administered activity | Quantity, UCUM `Bq` |
+| `radionuclideTotalDose` | Administered activity | Quantity, UCUM `Bq` (PET) or `MBq` (SPECT) |
 | `radionuclideHalfLife` | Half-life of the radionuclide | Quantity, UCUM `s` |
 | `injectionTime` | Injection time, as DICOM Radiopharmaceutical Start DateTime (0018,1078) | dateTime |
 | `acquisitionPlane` | Axial, sagittal or coronal (SNOMED CT) | CodeableConcept, [AicuraAcquisitionPlaneVS](ValueSet-aicura-acquisition-plane.html) (extensible) |
 
 A PET series carries the extension with a tracer (`aic-pt-1`).
 
-**Tracer coding.** The tracer is coded with its entry in the DICOM tracer list MII binds: CID 4021 for PET, CID 25 for SPECT (both extensible; code system as listed there, mostly SNOMED CT). A tracer the list has no code for is coded by its PubChem compound ID instead, and only then (`aic-tr-1`). The label (`text`) is the tracer's PubChem name. The same coding goes into `Medication.code` of the administered substance.
+**Tracer coding.** The tracer is coded with its entry in the DICOM tracer list MII binds: CID 4021 for PET, CID 25 for SPECT (both extensible; code system as listed there, mostly SNOMED CT). A tracer the list has no code for is coded by its PubChem compound ID instead; a PubChem coding then stands alone, without a second coding (`aic-tr-1`). The label (`text`) is the tracer's PubChem name. The same coding goes into `Medication.code` of the administered substance.
 
 | Tracer | Code | PubChem compound ID | Label (PubChem name) |
 |---|---|---|---|
@@ -112,7 +112,7 @@ Each scanner is described once, as an [AicuraDevice](StructureDefinition-device.
 | Manufacturer's Model Name (0008,1090) | `deviceName` (type `model-name`) |
 | Device Serial Number (0018,1000), where present | `serialNumber` |
 
-Analysis software that produces results (e.g. FreeSurfer) is a Device too. `Device.type` is required and tells the two apart: DICOM `109101` "Acquisition Equipment" for a scanner, `109102` "Processing Equipment" for software ([AicuraDeviceTypeVS](ValueSet-aicura-device-type.html)).
+Analysis software that produces results (e.g. FreeSurfer) is a Device too. `Device.type` is required and tells them apart: DICOM `109101` "Acquisition Equipment" for a scanner, `109102` "Processing Equipment" for software ([AicuraDeviceTypeVS](ValueSet-aicura-device-type.html); lab assay platforms use the third type, see AicuraAssayDevice).
 
 ##### Age at study and series
 
@@ -125,11 +125,11 @@ Almost every result in neurodegeneration imaging (a regional volume, a quality c
 - `Observation.derivedFrom` referencing the ImagingStudy, and
 - MII's series-UID extension (`https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-series-uid`, `valueId`) holding the `series.uid` of that series, the DICOM Series Instance UID.
 
-The extension is used exactly as the MII imaging module publishes it (this IG depends on `de.medizininformatikinitiative.kerndatensatz.bildgebung` 2026.0.0), so MII systems recognise the link. A reference to the series as a resource of its own, such as `ImagingSeries/<uid>`, is not valid FHIR. When the model moves to FHIR R6, the resource ImagingSelection takes the place of this pair.
+The extension is used exactly as the MII imaging module publishes it (this IG depends on `de.medizininformatikinitiative.kerndatensatz.bildgebung` 2026.0.0), so MII systems recognise the link. [AicuraObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) carries it as the slice `seriesUid`. A reference to the series as a resource of its own, such as `ImagingSeries/<uid>`, is not valid FHIR. When the model moves to FHIR R6, the resource ImagingSelection takes the place of this pair.
 
 #### AicuraObservation
 
-[AicuraObservation](StructureDefinition-observation.html) is the common parent of the Observation profiles per kind of result (below). It constrains Observation with must-support on status, category, code, subject, effective, value, performer, derivedFrom, component, bodySite, interpretation, and method. The `code` element is bound to the [AicuraObservationCodeVS](ValueSet-aicura-observation-code.html) covering LOINC, SNOMED-CT, and AICURA custom observation codes. Extensions record the patient's age at the observation and link the Observation to the body structure its value refers to; on each component, an extension links the component's value to its body structure.
+[AicuraObservation](StructureDefinition-observation.html) is the common parent of the Observation profiles per kind of result (below). It constrains Observation with must-support on status, category, code, subject, encounter, effective, value, performer, derivedFrom, component, bodySite, interpretation, and method. The `code` element is bound to the [AicuraObservationCodeVS](ValueSet-aicura-observation-code.html) covering LOINC, SNOMED CT, and AICURA custom observation codes. Extensions record the patient's age at the observation and link the Observation to the body structure its value refers to; on each component, an extension links the component's value to its body structure.
 
 #### Observation profiles per kind of result
 
@@ -140,22 +140,22 @@ Each kind of result has its own Observation profile, so each kind can get the ru
 | [AicuraObservationLab](StructureDefinition-observation-lab.html) | AicuraObservation | `laboratory` | Lab values, e.g. CSF and plasma biomarkers |
 | [AicuraObservationScore](StructureDefinition-observation-score.html) | AicuraObservation | `survey` | Clinical scores from assessment instruments, clinician-rated or participant-reported |
 | [AicuraObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) | AicuraObservation | `imaging` | Measures derived from images, e.g. brain-region volumes and PET SUVr |
-| [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html) | FHIR [vital signs](http://hl7.org/fhir/R4B/observation-vitalsigns.html) | `vital-signs` | Vital signs, e.g. weight, height and heart rate |
+| [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html) | FHIR [vital signs](http://hl7.org/fhir/R4B/vitalsigns.html) | `vital-signs` | Vital signs, e.g. weight, height and heart rate |
 | [AicuraObservationBloodPressure](StructureDefinition-observation-blood-pressure.html) | FHIR [blood pressure](http://hl7.org/fhir/R4B/bp.html) | `vital-signs` | Blood pressure, one record with systolic and diastolic components |
 
-The category codes come from the HL7 [observation-category](http://terminology.hl7.org/CodeSystem/observation-category) code system; each profile requires its code and allows further categories. The lab, score and imaging profiles inherit all rules of AicuraObservation. The vital-sign profile derives from FHIR's vital-signs profile, as FHIR requires for vital signs, and repeats the rules all AICURA Observation profiles share: a Patient as subject and the patient's age at the observation. Results of a kind without its own profile (e.g. genetics) use AicuraObservation directly.
+The category codes come from the HL7 [observation-category](http://terminology.hl7.org/CodeSystem/observation-category) code system; each profile requires its code and allows further categories. The lab, score and imaging profiles inherit all rules of AicuraObservation. The vital-sign and blood-pressure profiles derive from FHIR's vital-signs and blood-pressure profiles, as FHIR requires for vital signs, and repeat the rules all AICURA Observation profiles share: a Patient as subject and the patient's age at the observation. Results of a kind without its own profile (e.g. genetics) use AicuraObservation directly.
 
 ##### Lab values
 
-The lab profile follows the structure of the MII lab module (laboratory category, grouping of lab codes) but uses international codes and English displays instead of MII's German ones, and claims no conformance to MII's lab profiles.
+The lab profile follows the structure of the MII lab module (laboratory category; MII's grouping code is added on export) but uses international codes and English displays instead of MII's German ones, and claims no conformance to MII's lab profiles.
 
 **Assay platform and technique.** The same biomarker measured with different assays gives values on different scales, so every lab value names the platform that produced it. `device` is must-support and references an [AicuraAssayDevice](StructureDefinition-assay-device.html): one shared record per platform (e.g. Roche Elecsys, Fujirebio Lumipulse, Quanterix SIMOA), referenced from every value it produced. Values from different assays then stay apart, and the platform can be searched. `method` names only the technique, from [AicuraLabMethodVS](ValueSet-aicura-lab-method.html) (extensible): immunoassay, one of its specific techniques, or mass spectrometry. The platform never goes into the method or its text.
 
 | Record | Element | Example |
 |--------|---------|---------|
 | Lab value | `code` | LOINC `33203-1` Amyloid beta 42 peptide (CSF) |
-| Lab value | `method` | SNOMED CT `726449005` Immunoassay technique |
-| Lab value | `device` | `Device/roche-elecsys` |
+| Lab value | `method` | SNOMED CT `66691000052100` Electrochemiluminescence immunoassay technique |
+| Lab value | `device` | `Device/lab-platform-roche-elecsys` |
 | Assay device | `type` | SNOMED CT `30234008` Medical laboratory analyzer |
 | Assay device | `manufacturer` | Roche |
 | Assay device | `deviceName` | Elecsys (type `manufacturer-name`) |
@@ -163,7 +163,7 @@ The lab profile follows the structure of the MII lab module (laboratory category
 
 Base FHIR and MII's lab module both provide `method` and `device` for this; the profile makes the device link must-support.
 
-**No body site.** A lab value carries no `bodySite` (0..0), as in MII's lab profile: the sample type (CSF, plasma, serum) is part of the LOINC code. Other kinds of result keep it.
+**No body site.** A lab value carries no `bodySite` and no link to a body structure (both 0..0), as in MII's lab profile: the sample type (CSF, plasma, serum) is part of the LOINC code. Other kinds of result keep them.
 
 **Codes.** A lab value takes a LOINC code wherever LOINC has the analyte. Analytes without a LOINC term (e.g. CSF neurogranin, GAP-43, sTREM2, plasma p-tau217 by mass spectrometry) carry an AICURA code. The IG sets no fixed order of code systems: MII sets one per lab profile, while AICURA's code list is one open (extensible) value set for all kinds of result.
 
@@ -191,7 +191,7 @@ Years of education (LOINC `82590-1`) is not a score: it is a quantity in years (
 
 ##### Vital signs
 
-FHIR requires vital signs to conform to its [vital-signs profiles](http://hl7.org/fhir/R4B/observation-vitalsigns.html): category `vital-signs`, a LOINC code and UCUM units. Both AICURA vital-sign profiles derive from them. Weight, height, BMI, heart rate, respiratory rate and body temperature are single records in [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html). Heart and respiratory rate carry the UCUM code `/min`, as FHIR's heart-rate and respiratory-rate profiles fix, with `beats/min` or `breaths/min` as the unit text.
+FHIR requires vital signs to conform to its [vital-signs profiles](http://hl7.org/fhir/R4B/vitalsigns.html): category `vital-signs`, a LOINC code and UCUM units. Both AICURA vital-sign profiles derive from them. Weight, height, BMI, heart rate, respiratory rate and body temperature are single records in [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html). Heart and respiratory rate carry the UCUM code `/min`, as FHIR's heart-rate and respiratory-rate profiles fix, with `beats/min` or `breaths/min` as the unit text.
 
 Blood pressure is one record with two parts, in [AicuraObservationBloodPressure](StructureDefinition-observation-blood-pressure.html):
 
@@ -212,8 +212,8 @@ The profile derives from FHIR's [blood-pressure profile](http://hl7.org/fhir/R4B
 Brain volumetry produces one value per brain region, often more than a hundred per image series. The values of one image series, one measure (e.g. volume) and one atlas (e.g. Desikan-Killiany) form one Observation:
 
 - one component per brain region, holding the value (`component.valueQuantity`) and the link to its region (below);
-- the analysis software, with its atlas, once on the Observation in `Observation.device`, referencing an [AicuraDevice](StructureDefinition-device.html) of type Processing Equipment;
-- the image series once on the Observation (`derivedFrom` and MII's series-UID extension, see "Linking a result to a series" under AicuraImagingStudy).
+- the analysis software, with its atlas, once on the Observation in `Observation.device`, referencing an [AicuraDevice](StructureDefinition-device.html) of type Processing Equipment that names the atlas in its `brainAtlas` property;
+- the image series once on the Observation (`derivedFrom` and MII's series-UID extension, slice `seriesUid`; see "Linking a result to a series" under AicuraImagingStudy).
 
 FHIR leaves the choice between components and separate Observations to context, and components fit when one method, one software and one time apply to all values, as they do here. Separate Observations would repeat the same patient, time, image series and software on every value. MII requires a value on every Observation; an export to MII turns each component into an Observation of its own. A measure that comes as a single value (e.g. the intracranial volume of a study without a regional breakdown) is one Observation with `valueQuantity` and no components.
 
@@ -244,21 +244,21 @@ ICD-10-GM, as German routine care uses it, and Orphanet, which covers the rare n
 
 ##### Prodromal: the stage of a disease
 
-Prodromal is the early phase before a disease shows its typical signs. It is recorded as the stage of the disease it precedes, not as a diagnosis of its own: `code` holds the disease, and `stage.summary` holds SNOMED CT 288480009 "Prodromal phase". The disease stays explicit, and the stage field is what FHIR provides for how far a disease has progressed. A stage needs a summary or an assessment (FHIR invariant `con-1`), so the stage goes in `summary`. Base FHIR and MII leave `stage` optional; AICURA keeps it and its summary must-support.
+Prodromal is the early phase before a disease shows its typical signs. It is recorded as the stage of the disease it precedes, not as a diagnosis of its own: `code` holds the disease, and `stage.summary` holds SNOMED CT 288480009 "Prodromal phase (qualifier value)". The disease stays explicit, and the stage field is what FHIR provides for how far a disease has progressed. A stage needs a summary or an assessment (FHIR invariant `con-1`), so the stage goes in `summary`. Base FHIR and MII leave `stage` optional; AICURA keeps it and its summary must-support.
 
 | Source diagnosis | `code` | `stage.summary` |
 |---|---|---|
-| Prodromal non-motor or motor Parkinson's disease | SNOMED CT 49049000 "Parkinson's disease" | SNOMED CT 288480009 "Prodromal phase" |
-| Prodromal synucleinopathy (e.g. REM sleep behaviour disorder) | SNOMED CT 785810000 "Synucleinopathy" | SNOMED CT 288480009 "Prodromal phase" |
+| Prodromal non-motor or motor Parkinson's disease | SNOMED CT 49049000 "Parkinson's disease (disorder)" | SNOMED CT 288480009 "Prodromal phase (qualifier value)" |
+| Prodromal synucleinopathy (e.g. REM sleep behaviour disorder) | SNOMED CT 785810000 "Synucleinopathy" | SNOMED CT 288480009 "Prodromal phase (qualifier value)" |
 
-For example, prodromal motor Parkinson's disease (shortened):
+For example, prodromal motor Parkinson's disease (shortened; displays as in [AicuraConditionCodeVS](ValueSet-aicura-condition-code.html)):
 
 ```json
 "code": {
   "coding": [{
     "system": "http://snomed.info/sct",
     "code": "49049000",
-    "display": "Parkinson's disease"
+    "display": "Parkinson's disease (disorder)"
   }]
 },
 "stage": [{
@@ -266,7 +266,7 @@ For example, prodromal motor Parkinson's disease (shortened):
     "coding": [{
       "system": "http://snomed.info/sct",
       "code": "288480009",
-      "display": "Prodromal phase"
+      "display": "Prodromal phase (qualifier value)"
     }]
   }
 }]
@@ -320,15 +320,17 @@ All visits are recorded after they took place. MII's extensions for planned star
 
 The study datasets are open research datasets, many of them natural history studies, and hold no consent per person. Each dataset comes with a data use agreement, and that agreement governs the use of its data. Participants therefore link no consent record (`ResearchSubject.consent` stays empty), and no Consent record is created in its place: it would claim a consent nobody documented. Participants thus meet base FHIR, where the consent link is optional, but not MII's study participant profile, which requires one.
 
-Where a source does record consent per person, each consent is one [AicuraConsent](StructureDefinition-consent.html) record referencing the patient, and a person may have several, e.g. consents to take part, to give samples and to future research. FHIR R4B lets a participation link one consent, so `ResearchSubject.consent` links the consent to take part; the others are found through `Consent.patient`.
+Where a source does record consent per person, each consent is one [AicuraConsent](StructureDefinition-consent.html) record that should reference the patient, and a person may have several, e.g. consents to take part, to give samples and to future research. FHIR R4B lets a participation link one consent, so `ResearchSubject.consent` links the consent to take part; the others are found through `Consent.patient` where it is filled.
 
 #### AicuraConsent
 
-[AicuraConsent](StructureDefinition-consent.html) constrains Consent with must-support on status, scope, category, patient, dateTime, performer, organization, source, policy, policyRule, verification, and provision. It is for sources that record consent per person, one Consent record per consent (see Consent and data use under AicuraResearchSubject). The study datasets hold no consent per person and carry no Consent records.
+[AicuraConsent](StructureDefinition-consent.html) constrains Consent with must-support on status, scope, category, patient, dateTime, performer, organization, source, policy, policyRule, verification, and provision. It is for sources that record consent per person, one Consent record per consent (see Consent and data use under AicuraResearchSubject). `patient` stays optional, as in FHIR R4B; a consent that is to be found from the person fills it. The study datasets hold no consent per person and carry no Consent records.
 
 #### AicuraDevice
 
 [AicuraDevice](StructureDefinition-device.html) constrains Device with must-support on identifier, udiCarrier, status, manufacturer, manufactureDate, expirationDate, lotNumber, serialNumber, deviceName, modelNumber, type, version, patient, owner, location, note, safety, and parent. It represents imaging scanners, referenced from `ImagingStudy.series.performer.actor`, analysis software, referenced by derived results, and lab assay platforms, referenced from lab results. `type` is required and bound to [AicuraDeviceTypeVS](ValueSet-aicura-device-type.html), which tells them apart: Acquisition Equipment for a scanner, Processing Equipment for software, Medical laboratory analyzer for an assay platform.
+
+Analysis software names the atlas it divides the brain by in the `brainAtlas` property: `property.type` is the AICURA code `brain-atlas`, `property.valueCode` the atlas, coded in the atlas's own system with its version, e.g. Desikan-Killiany (`https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation`, version 2010-03-25) or the FreeSurfer subcortical segmentation (`https://surfer.nmr.mgh.harvard.edu/fswiki/SubcorticalSegmentation`, version 2008-03-26). The atlas defines the brain regions of the software's results.
 
 #### AicuraAssayDevice
 
@@ -380,6 +382,6 @@ SNOMED CT is the main code system for brain regions (`location`). Brain atlases 
 | AICURA region code | SNOMED CT has no concept of the region; a few regions SNOMED CT names keep the AICURA code they have (e.g. Intracranial volume [ICV]) | Isthmus of cingulate gyrus |
 | Broader SNOMED CT concept, with the position in `locationQualifier` | The atlas region is a part of a SNOMED CT structure | Corpus callosum (SNOMED CT 88442005) with the qualifier Mid-Anterior |
 
-A broader SNOMED CT concept alone would give different regions the same code (caudal anterior, rostral anterior and posterior cingulate would all become "cingulate gyrus"), so it is used only together with a position that tells them apart. The exact region is defined by the atlas (on the analysis software's Device) and the region's label; a code approximates it. As in every coded field (see [Shared Rules](shared-rules.html)), several codes may sit next to each other, e.g. a broader SNOMED CT concept next to an AICURA code. MII requires a SNOMED CT code for every region; regions with only an AICURA code deviate from MII.
+A broader SNOMED CT concept alone would give different regions the same code (caudal anterior, rostral anterior and posterior cingulate would all become "cingulate gyrus"), so it is used only together with a position that tells them apart. The exact region is defined by the atlas (the `brainAtlas` property of the analysis software's Device) and the region's label; a code approximates it. As in every coded field (see [Shared Rules](shared-rules.html)), several codes may sit next to each other, e.g. a broader SNOMED CT concept next to an AICURA code. MII requires a SNOMED CT code for every region; regions with only an AICURA code deviate from MII.
 
-[AicuraBodyStructureVS](ValueSet-aicura-body-structure.html) holds every SNOMED CT anatomical or acquired body structure (`442083009` and its descendants) and the AICURA region codes. [AicuraLocationQualifierVS](ValueSet-aicura-location-qualifier.html) holds the position qualifiers: SNOMED CT qualifier values, and AICURA codes for Ventral, Mid-Anterior and Mid-Posterior, which SNOMED CT has no concept for.
+[AicuraBodyStructureVS](ValueSet-aicura-body-structure.html) holds every SNOMED CT anatomical or acquired body structure (`442083009` and its descendants) and the AICURA region codes. [AicuraLocationQualifierVS](ValueSet-aicura-location-qualifier.html) holds the position qualifiers: SNOMED CT qualifier values, and AICURA codes for Ventral, Mid-Anterior and Mid-Posterior, which SNOMED CT has no fitting concept for (it lists Ventral only as a synonym of Anterior, which in the brain is a different direction).

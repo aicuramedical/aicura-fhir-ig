@@ -27,3 +27,13 @@ Description: "Constrained Device profile for AICURA's clinical data model, repre
 * note MS
 * safety MS
 * parent MS
+// Analysis software: the atlas it divides the brain by
+* property MS
+* property ^slicing.discriminator.type = #pattern
+* property ^slicing.discriminator.path = "type"
+* property ^slicing.rules = #open
+* property contains brainAtlas 0..1 MS
+* property[brainAtlas] ^short = "Brain atlas of the analysis software"
+* property[brainAtlas] ^comment = "The atlas that defines the brain regions of the software's results, e.g. Desikan-Killiany (system https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation) or the FreeSurfer subcortical segmentation (https://surfer.nmr.mgh.harvard.edu/fswiki/SubcorticalSegmentation), with the atlas version."
+* property[brainAtlas].type = $AicuraCoding#brain-atlas
+* property[brainAtlas].valueCode 1..1 MS

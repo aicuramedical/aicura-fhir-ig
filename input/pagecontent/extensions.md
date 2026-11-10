@@ -20,7 +20,7 @@ The following extensions are defined on `ImagingStudy.series` and capture imagin
 | [AgeAtImagingSeries](StructureDefinition-AgeAtImagingSeries.html) | Integer | Patient age in whole years at the series date |
 | [ImagingSeriesSize](StructureDefinition-ImagingSeriesSize.html) | Quantity | Storage size of the series files |
 
-Coded values carry a code and its label, both required: in the modality extensions as a CodeableConcept with one coding and `text`, in Dimension as a `Coding` and a label sub-extension.
+AICURA's own coded parts carry a code and its label, both required: in the modality extensions as a CodeableConcept with one coding and `text`, in Dimension as a `Coding` and a label sub-extension. The parts shaped like MII's follow MII: the tracer has one or more codings and its PubChem name as `text`; radionuclide, scanning sequence and sequence variant are coded as MII codes them.
 
 #### ImagingStudy extensions
 
