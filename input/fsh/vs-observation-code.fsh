@@ -53,7 +53,7 @@ Description: "Observation codes used in AICURA studies, including assessments, l
 * $SCT#273499007 "Hachinski ischemia score (assessment scale)"
 * $SCT#415238003 "Rapid eye movement sleep behavior disorder (disorder)"
 * $SCT#83156004 "Sense of smell impaired (finding)"
-// LOINC codes (164)
+// LOINC codes (165)
 * $LOINC#72106-8 "Total score [MMSE]"
 * $LOINC#72172-0 "Total score [MoCA]"
 * $LOINC#48545-8 "Geriatric depression scale (GDS) short version total"
@@ -68,6 +68,7 @@ Description: "Observation codes used in AICURA studies, including assessments, l
 * $LOINC#8302-2 "Body height"
 * $LOINC#39156-5 "Body mass index (BMI) [Ratio]"
 * $LOINC#8310-5 "Body temperature"
+* $LOINC#85354-9 "Blood pressure panel with all children optional"
 * $LOINC#8462-4 "Diastolic blood pressure"
 * $LOINC#8480-6 "Systolic blood pressure"
 * $LOINC#8867-4 "Heart rate"
