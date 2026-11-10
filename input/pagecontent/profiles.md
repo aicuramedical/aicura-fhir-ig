@@ -234,15 +234,63 @@ The category is `imaging` from the HL7 [observation-category](http://terminology
 
 #### AicuraCondition
 
-[AicuraCondition](StructureDefinition-condition.html) constrains Condition with must-support on clinicalStatus, verificationStatus, code, bodySite, subject, encounter, onset, recordedDate, and stage. The `code` element is bound to the [AicuraConditionCodeVS](ValueSet-aicura-condition-code.html) spanning SNOMED-CT, AICURA custom, and MedDRA codes. Extensions record the patient's age at the recorded date (`AgeRecorded`) and at onset (`AgeOnset`, and the older `AgeAtCondition` with the same value).
+[AicuraCondition](StructureDefinition-condition.html) constrains Condition with must-support on clinicalStatus, verificationStatus, code, bodySite, subject, encounter, onset, recordedDate, and stage with its summary. The `code` element is bound (extensible) to the [AicuraConditionCodeVS](ValueSet-aicura-condition-code.html), which lists the codes in use: SNOMED CT, AICURA custom, and MedDRA codes. Extensions record the patient's age at the recorded date (`AgeRecorded`) and at onset (`AgeOnset`, and the older `AgeAtCondition` with the same value).
+
+##### Diagnosis codes
+
+Every diagnosis is coded with SNOMED CT wherever SNOMED CT has the concept, and with an AICURA code (`https://aicuramedical.com/fhir/coding`) only where it has none. SNOMED CT names the neurodegenerative subtypes the studies distinguish, such as behavioural-variant frontotemporal dementia, semantic dementia and progressive non-fluent aphasia, which ICD-10-GM merges into one code, and it fits the SNOMED CT slot of MII's diagnosis profile. A diagnosis still coded otherwise although SNOMED CT has the concept moves to SNOMED CT.
+
+ICD-10-GM, as German routine care uses it, and Orphanet, which covers the rare neurodegenerative subtypes, may follow as further codings of the same diagnosis (see coded fields in the [Shared Rules](shared-rules.html)). Until they are added, a search by ICD-10-GM code does not find these diagnoses.
+
+##### Prodromal: the stage of a disease
+
+Prodromal is the early phase before a disease shows its typical signs. It is recorded as the stage of the disease it precedes, not as a diagnosis of its own: `code` holds the disease, and `stage.summary` holds SNOMED CT 288480009 "Prodromal phase". The disease stays explicit, and the stage field is what FHIR provides for how far a disease has progressed. A stage needs a summary or an assessment (FHIR invariant `con-1`), so the stage goes in `summary`. Base FHIR and MII leave `stage` optional; AICURA keeps it and its summary must-support.
+
+| Source diagnosis | `code` | `stage.summary` |
+|---|---|---|
+| Prodromal non-motor or motor Parkinson's disease | SNOMED CT 49049000 "Parkinson's disease" | SNOMED CT 288480009 "Prodromal phase" |
+| Prodromal synucleinopathy (e.g. REM sleep behaviour disorder) | SNOMED CT 785810000 "Synucleinopathy" | SNOMED CT 288480009 "Prodromal phase" |
+
+For example, prodromal motor Parkinson's disease (shortened):
+
+```json
+"code": {
+  "coding": [{
+    "system": "http://snomed.info/sct",
+    "code": "49049000",
+    "display": "Parkinson's disease"
+  }]
+},
+"stage": [{
+  "summary": {
+    "coding": [{
+      "system": "http://snomed.info/sct",
+      "code": "288480009",
+      "display": "Prodromal phase"
+    }]
+  }
+}]
+```
+
+##### Date of a diagnosis
+
+`recordedDate` is the date of the visit at which the diagnosis was recorded. The studies record a diagnosis in the case report form of that visit, so the date is both the record date and the date the diagnosis was asserted, and it fills the recorded date MII requires.
 
 #### AicuraPatient
 
 [AicuraPatient](StructureDefinition-patient.html) constrains Patient with must-support on identifier, gender, birthDate, and deceased. It adds `race` and `ethnicity` extensions bound to the [AicuraRaceEthnicityVS](ValueSet-aicura-race-ethnicity.html) (US CDC Race & Ethnicity code system); these mirror the US Core race/ethnicity extensions without taking a US Core dependency. Patient identifiers are typed as pseudonyms (`PSEUDED`).
 
+##### Death
+
+When a source reports that a participant has died, the date of death goes on the Patient record in `deceasedDateTime`, as base FHIR intends, with the precision the source gives (partial dates as in the [Shared Rules](shared-rules.html)). MII records vital status as a separate Observation with dated checks (alive, dead, lost to follow-up), which suits hospitals that check vital status repeatedly. No source reports such checks, so AICURA does not use that Observation; follow-up states such as lost to follow-up belong to the study participation ([AicuraResearchSubject](StructureDefinition-research-subject.html)). MII's pseudonymised Patient profile allows `deceased[x]`, and an export to MII can derive the vital-status Observation from it.
+
 #### AicuraEncounter
 
 [AicuraEncounter](StructureDefinition-encounter.html) constrains Encounter with must-support on status, class, type, subject, period, and location. The `class` element is bound to the [AicuraEncounterClassVS](ValueSet-aicura-encounter-class.html) (HL7 v3 ActCode). The `AgeAtEncounter` extension records the patient's age at the start of the encounter.
+
+##### Planned dates
+
+All visits are recorded after they took place. MII's extensions for planned start and end dates of a contact do not apply.
 
 #### AicuraProcedure
 
