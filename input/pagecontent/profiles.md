@@ -2,9 +2,9 @@
 
 This IG defines twenty-one FHIR R4B profiles. All of them follow the [Shared Rules](shared-rules.html), e.g. every identifier names its issuer in `system`.
 
-#### AicuraImagingStudy
+#### NeuroPlusImagingStudy
 
-[AicuraImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on identifier, status, subject, encounter, started, number of series, number of instances, description, endpoint, series and its uid, number, modality, description, instance count, start, endpoint, body site and performer (the scanner); id, the Study Instance UID identifier and subject are required. It adds the patient's age at the study and series-level extensions for the acquisition details listed on the [Extensions](extensions.html) page. The sections below explain the rules that go beyond base FHIR.
+[NeuroPlusImagingStudy](StructureDefinition-imaging-study.html) constrains ImagingStudy with must-support on identifier, status, subject, encounter, started, number of series, number of instances, description, endpoint, series and its uid, number, modality, description, instance count, start, endpoint, body site and performer (the scanner); id, the Study Instance UID identifier and subject are required. It adds the patient's age at the study and series-level extensions for the acquisition details listed on the [Extensions](extensions.html) page. The sections below explain the rules that go beyond base FHIR.
 
 ##### Study identity
 
@@ -24,7 +24,7 @@ The profile catalogues the scans; it does not copy them. Single images (`series.
 
 ##### MR acquisition details
 
-Each MR series carries one extension, [ModalityMR](StructureDefinition-ModalityMR.html), with the acquisition details read from the DICOM header. Its first seven parts are shaped like MII's MR extension (`mii-ex-bildgebung-modalitaet-mr`): same names, types and units, so they map 1:1 to MII. Explicit units make scans from different studies comparable. The last three parts are AICURA's and have no MII counterpart.
+Each MR series carries one extension, [ModalityMR](StructureDefinition-ModalityMR.html), with the acquisition details read from the DICOM header. Its first seven parts are shaped like MII's MR extension (`mii-ex-bildgebung-modalitaet-mr`): same names, types and units, so they map 1:1 to MII. Explicit units make scans from different studies comparable. The last three parts are Neuro+'s and have no MII counterpart.
 
 | Part | Content | DICOM tag | Type |
 |---|---|---|---|
@@ -35,18 +35,18 @@ Each MR series carries one extension, [ModalityMR](StructureDefinition-ModalityM
 | `repetitionTime` | Repetition time (TR) | (0018,0080) | Quantity, UCUM `ms` |
 | `inversionTime` | Inversion time (TI) | (0018,0082) | Quantity, UCUM `ms` |
 | `flipAngle` | Flip angle | (0018,1314) | Quantity, UCUM `deg` |
-| `sequenceName` | Sequence name, e.g. MPRAGE, IR-SPGR, TSE | derived | CodeableConcept, [AicuraMRISequenceVS](ValueSet-aicura-mri-sequence.html) (required) |
-| `contrastWeighting` | Contrast weighting, e.g. T1w, T2w, T2w FLAIR | derived | CodeableConcept, [AicuraMRIContrastVS](ValueSet-aicura-mri-contrast.html) (required) |
-| `acquisitionPlane` | Axial, sagittal or coronal (SNOMED CT) | derived | CodeableConcept, [AicuraAcquisitionPlaneVS](ValueSet-aicura-acquisition-plane.html) (extensible) |
+| `sequenceName` | Sequence name, e.g. MPRAGE, IR-SPGR, TSE | derived | CodeableConcept, [NeuroPlusMRISequenceVS](ValueSet-neuroplus-mri-sequence.html) (required) |
+| `contrastWeighting` | Contrast weighting, e.g. T1w, T2w, T2w FLAIR | derived | CodeableConcept, [NeuroPlusMRIContrastVS](ValueSet-neuroplus-mri-contrast.html) (required) |
+| `acquisitionPlane` | Axial, sagittal or coronal (SNOMED CT) | derived | CodeableConcept, [NeuroPlusAcquisitionPlaneVS](ValueSet-neuroplus-acquisition-plane.html) (extensible) |
 
 - **Sequence name next to the technique codes.** The DICOM technique codes say which physics class a sequence belongs to; they are too coarse to select cohorts. Neurodegeneration research selects series by sequence name ("3D T1 MPRAGE"), so the name is kept as its own part.
 - **Contrast weighting** is the image weighting, the first criterion imaging researchers filter by (T1w for volume measurements, FLAIR for white-matter lesions). It is not the contrast agent, which is recorded through the series' link to the administration (below).
-- **Coded AICURA parts** carry a coding and its label (`text`); both are required.
+- **Coded Neuro+ parts** carry a coding and its label (`text`); both are required.
 - **Rules:** an MR series carries the extension with a contrast weighting and a sequence name (`aic-mr-1`), and the sequence name fits the weighting (`aic-mr-2`): T1w needs an IR/MPRAGE-type sequence, T2w TSE or FSE, T2w FLAIR TSE or FSE, and T2\*w GRE or SWI. Other weightings accept any sequence; "Unresolved Sequence Label" is always allowed.
 
 ##### PET and SPECT: tracer and injection
 
-PET and SPECT series carry their tracer details in [ModalityPT](StructureDefinition-ModalityPT.html) (modality PT) or [ModalityNM](StructureDefinition-ModalityNM.html) (modality NM, SPECT), shaped like MII's PET and NM extensions (`mii-ex-bildgebung-modalitaet-pt`, `-nm`). The first four parts keep MII's names, types and units (PET dose in Bq, SPECT dose in MBq, as in MII); the last two are AICURA's.
+PET and SPECT series carry their tracer details in [ModalityPT](StructureDefinition-ModalityPT.html) (modality PT) or [ModalityNM](StructureDefinition-ModalityNM.html) (modality NM, SPECT), shaped like MII's PET and NM extensions (`mii-ex-bildgebung-modalitaet-pt`, `-nm`). The first four parts keep MII's names, types and units (PET dose in Bq, SPECT dose in MBq, as in MII); the last two are Neuro+'s.
 
 | Part | Content | Type |
 |---|---|---|
@@ -55,7 +55,7 @@ PET and SPECT series carry their tracer details in [ModalityPT](StructureDefinit
 | `radionuclideTotalDose` | Administered activity | Quantity, UCUM `Bq` (PET) or `MBq` (SPECT) |
 | `radionuclideHalfLife` | Half-life of the radionuclide | Quantity, UCUM `s` |
 | `injectionTime` | Injection time, as DICOM Radiopharmaceutical Start DateTime (0018,1078) | dateTime |
-| `acquisitionPlane` | Axial, sagittal or coronal (SNOMED CT) | CodeableConcept, [AicuraAcquisitionPlaneVS](ValueSet-aicura-acquisition-plane.html) (extensible) |
+| `acquisitionPlane` | Axial, sagittal or coronal (SNOMED CT) | CodeableConcept, [NeuroPlusAcquisitionPlaneVS](ValueSet-neuroplus-acquisition-plane.html) (extensible) |
 
 A PET series carries the extension with a tracer (`aic-pt-1`).
 
@@ -75,7 +75,7 @@ A PET series carries the extension with a tracer (`aic-pt-1`).
 | Flutafuranol F-18 (NAV4694) | PubChem 44815683 (not in CID 4021) | 44815683 | Flutafuranol F 18 |
 | Ioflupane I-123 (SPECT) | SNOMED CT 429296007 (CID 25) | 3086674 | Ioflupane I-123 |
 
-Value sets: [AicuraPETTracerVS](ValueSet-aicura-pet-tracer.html), [AicuraSPECTTracerVS](ValueSet-aicura-spect-tracer.html), and [AicuraTracerPubChemVS](ValueSet-aicura-tracer-pubchem.html) for the PubChem IDs and names.
+Value sets: [NeuroPlusPETTracerVS](ValueSet-neuroplus-pet-tracer.html), [NeuroPlusSPECTTracerVS](ValueSet-neuroplus-spect-tracer.html), and [NeuroPlusTracerPubChemVS](ValueSet-neuroplus-tracer-pubchem.html) for the PubChem IDs and names.
 
 The injection itself is recorded once, as a [MedicationAdministration](StructureDefinition-medication-administration.html) that names the substance ([Medication](StructureDefinition-medication.html)) and holds dose (`dosage.dose`) and injection time (`effective[x]`). Each series points to it with the extension [SeriesMedicationAdministration](StructureDefinition-SeriesMedicationAdministration.html), so one record serves all series acquired after the same injection. Contrast agents use the same link.
 
@@ -104,7 +104,7 @@ Geometry is recorded once per series, the level researchers search at ("1 mm in 
 
 ##### Scanner
 
-Each scanner is described once, as an [AicuraDevice](StructureDefinition-device.html), and every series it acquired references it in `series.performer.actor`, as MII does. Questions such as "all scans from this scanner model" become direct, and scanner details are not copied into every series. The scanner's DICOM header values map to the Device as follows:
+Each scanner is described once, as an [NeuroPlusDevice](StructureDefinition-device.html), and every series it acquired references it in `series.performer.actor`, as MII does. Questions such as "all scans from this scanner model" become direct, and scanner details are not copied into every series. The scanner's DICOM header values map to the Device as follows:
 
 | DICOM attribute | Device element |
 |---|---|
@@ -112,7 +112,7 @@ Each scanner is described once, as an [AicuraDevice](StructureDefinition-device.
 | Manufacturer's Model Name (0008,1090) | `deviceName` (type `model-name`) |
 | Device Serial Number (0018,1000), where present | `serialNumber` |
 
-Analysis software that produces results (e.g. FreeSurfer) is a Device too. `Device.type` is required and tells them apart: DICOM `109101` "Acquisition Equipment" for a scanner, `109102` "Processing Equipment" for software ([AicuraDeviceTypeVS](ValueSet-aicura-device-type.html); lab assay platforms use the third type, see AicuraAssayDevice).
+Analysis software that produces results (e.g. FreeSurfer) is a Device too. `Device.type` is required and tells them apart: DICOM `109101` "Acquisition Equipment" for a scanner, `109102` "Processing Equipment" for software ([NeuroPlusDeviceTypeVS](ValueSet-neuroplus-device-type.html); lab assay platforms use the third type, see NeuroPlusAssayDevice).
 
 ##### Age at study and series
 
@@ -125,11 +125,11 @@ Almost every result in neurodegeneration imaging (a regional volume, a quality c
 - `Observation.derivedFrom` referencing the ImagingStudy, and
 - MII's series-UID extension (`https://www.medizininformatik-initiative.de/fhir/ext/modul-bildgebung/StructureDefinition/mii-ex-bildgebung-series-uid`, `valueId`) holding the `series.uid` of that series, the DICOM Series Instance UID.
 
-The extension is used exactly as the MII imaging module publishes it (this IG depends on `de.medizininformatikinitiative.kerndatensatz.bildgebung` 2026.0.0), so MII systems recognise the link. [AicuraObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) carries it as the slice `seriesUid`. A reference to the series as a resource of its own, such as `ImagingSeries/<uid>`, is not valid FHIR. When the model moves to FHIR R6, the resource ImagingSelection takes the place of this pair.
+The extension is used exactly as the MII imaging module publishes it (this IG depends on `de.medizininformatikinitiative.kerndatensatz.bildgebung` 2026.0.0), so MII systems recognise the link. [NeuroPlusObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) carries it as the slice `seriesUid`. A reference to the series as a resource of its own, such as `ImagingSeries/<uid>`, is not valid FHIR. When the model moves to FHIR R6, the resource ImagingSelection takes the place of this pair.
 
-#### AicuraObservation
+#### NeuroPlusObservation
 
-[AicuraObservation](StructureDefinition-observation.html) is the common parent of the Observation profiles per kind of result (below). It constrains Observation with must-support on status, category, code, subject, encounter, effective, value, performer, derivedFrom, component, bodySite, interpretation, and method. The `code` element is bound to the [AicuraObservationCodeVS](ValueSet-aicura-observation-code.html) covering LOINC, SNOMED CT, and AICURA custom observation codes. Extensions record the patient's age at the observation and link the Observation to the body structure its value refers to; on each component, an extension links the component's value to its body structure.
+[NeuroPlusObservation](StructureDefinition-observation.html) is the common parent of the Observation profiles per kind of result (below). It constrains Observation with must-support on status, category, code, subject, encounter, effective, value, performer, derivedFrom, component, bodySite, interpretation, and method. The `code` element is bound to the [NeuroPlusObservationCodeVS](ValueSet-neuroplus-observation-code.html) covering LOINC, SNOMED CT, and Neuro+ custom observation codes. Extensions record the patient's age at the observation and link the Observation to the body structure its value refers to; on each component, an extension links the component's value to its body structure.
 
 #### Observation profiles per kind of result
 
@@ -137,19 +137,19 @@ Each kind of result has its own Observation profile, so each kind can get the ru
 
 | Profile | Parent | Category | For |
 |---------|--------|----------|-----|
-| [AicuraObservationLab](StructureDefinition-observation-lab.html) | AicuraObservation | `laboratory` | Lab values, e.g. CSF and plasma biomarkers |
-| [AicuraObservationScore](StructureDefinition-observation-score.html) | AicuraObservation | `survey` | Clinical scores from assessment instruments, clinician-rated or participant-reported |
-| [AicuraObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) | AicuraObservation | `imaging` | Measures derived from images, e.g. brain-region volumes and PET SUVr |
-| [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html) | FHIR [vital signs](http://hl7.org/fhir/R4B/vitalsigns.html) | `vital-signs` | Vital signs, e.g. weight, height and heart rate |
-| [AicuraObservationBloodPressure](StructureDefinition-observation-blood-pressure.html) | FHIR [blood pressure](http://hl7.org/fhir/R4B/bp.html) | `vital-signs` | Blood pressure, one record with systolic and diastolic components |
+| [NeuroPlusObservationLab](StructureDefinition-observation-lab.html) | NeuroPlusObservation | `laboratory` | Lab values, e.g. CSF and plasma biomarkers |
+| [NeuroPlusObservationScore](StructureDefinition-observation-score.html) | NeuroPlusObservation | `survey` | Clinical scores from assessment instruments, clinician-rated or participant-reported |
+| [NeuroPlusObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) | NeuroPlusObservation | `imaging` | Measures derived from images, e.g. brain-region volumes and PET SUVr |
+| [NeuroPlusObservationVitalSign](StructureDefinition-observation-vital-sign.html) | FHIR [vital signs](http://hl7.org/fhir/R4B/vitalsigns.html) | `vital-signs` | Vital signs, e.g. weight, height and heart rate |
+| [NeuroPlusObservationBloodPressure](StructureDefinition-observation-blood-pressure.html) | FHIR [blood pressure](http://hl7.org/fhir/R4B/bp.html) | `vital-signs` | Blood pressure, one record with systolic and diastolic components |
 
-The category codes come from the HL7 [observation-category](http://terminology.hl7.org/CodeSystem/observation-category) code system; each profile requires its code and allows further categories. The lab, score and imaging profiles inherit all rules of AicuraObservation. The vital-sign and blood-pressure profiles derive from FHIR's vital-signs and blood-pressure profiles, as FHIR requires for vital signs, and repeat the rules all AICURA Observation profiles share: a Patient as subject and the patient's age at the observation. Results of a kind without its own profile (e.g. genetics) use AicuraObservation directly.
+The category codes come from the HL7 [observation-category](http://terminology.hl7.org/CodeSystem/observation-category) code system; each profile requires its code and allows further categories. The lab, score and imaging profiles inherit all rules of NeuroPlusObservation. The vital-sign and blood-pressure profiles derive from FHIR's vital-signs and blood-pressure profiles, as FHIR requires for vital signs, and repeat the rules all Neuro+ Observation profiles share: a Patient as subject and the patient's age at the observation. Results of a kind without its own profile (e.g. genetics) use NeuroPlusObservation directly.
 
 ##### Lab values
 
 The lab profile follows the structure of the MII lab module (laboratory category; MII's grouping code is added on export) but uses international codes and English displays instead of MII's German ones, and claims no conformance to MII's lab profiles.
 
-**Assay platform and technique.** The same biomarker measured with different assays gives values on different scales, so every lab value names the platform that produced it. `device` is must-support and references an [AicuraAssayDevice](StructureDefinition-assay-device.html): one shared record per platform (e.g. Roche Elecsys, Fujirebio Lumipulse, Quanterix SIMOA), referenced from every value it produced. Values from different assays then stay apart, and the platform can be searched. `method` names only the technique, from [AicuraLabMethodVS](ValueSet-aicura-lab-method.html) (extensible): immunoassay, one of its specific techniques, or mass spectrometry. The platform never goes into the method or its text.
+**Assay platform and technique.** The same biomarker measured with different assays gives values on different scales, so every lab value names the platform that produced it. `device` is must-support and references an [NeuroPlusAssayDevice](StructureDefinition-assay-device.html): one shared record per platform (e.g. Roche Elecsys, Fujirebio Lumipulse, Quanterix SIMOA), referenced from every value it produced. Values from different assays then stay apart, and the platform can be searched. `method` names only the technique, from [NeuroPlusLabMethodVS](ValueSet-neuroplus-lab-method.html) (extensible): immunoassay, one of its specific techniques, or mass spectrometry. The platform never goes into the method or its text.
 
 | Record | Element | Example |
 |--------|---------|---------|
@@ -165,7 +165,7 @@ Base FHIR and MII's lab module both provide `method` and `device` for this; the 
 
 **No body site.** A lab value carries no `bodySite` and no link to a body structure (both 0..0), as in MII's lab profile: the sample type (CSF, plasma, serum) is part of the LOINC code. Other kinds of result keep them.
 
-**Codes.** A lab value takes a LOINC code wherever LOINC has the analyte. Analytes without a LOINC term (e.g. CSF neurogranin, GAP-43, sTREM2, plasma p-tau217 by mass spectrometry) carry an AICURA code. The IG sets no fixed order of code systems: MII sets one per lab profile, while AICURA's code list is one open (extensible) value set for all kinds of result.
+**Codes.** A lab value takes a LOINC code wherever LOINC has the analyte. Analytes without a LOINC term (e.g. CSF neurogranin, GAP-43, sTREM2, plasma p-tau217 by mass spectrometry) carry a Neuro+ code. The IG sets no fixed order of code systems: MII sets one per lab profile, while Neuro+'s code list is one open (extensible) value set for all kinds of result.
 
 **One record per value; no report or order.** Each lab value is its own record. MII groups values in a lab report (DiagnosticReport) with its order (ServiceRequest), which hold report and order numbers that study data don't have; this IG models neither.
 
@@ -191,9 +191,9 @@ Years of education (LOINC `82590-1`) is not a score: it is a quantity in years (
 
 ##### Vital signs
 
-FHIR requires vital signs to conform to its [vital-signs profiles](http://hl7.org/fhir/R4B/vitalsigns.html): category `vital-signs`, a LOINC code and UCUM units. Both AICURA vital-sign profiles derive from them. Weight, height, BMI, heart rate, respiratory rate and body temperature are single records in [AicuraObservationVitalSign](StructureDefinition-observation-vital-sign.html). Heart and respiratory rate carry the UCUM code `/min`, as FHIR's heart-rate and respiratory-rate profiles fix, with `beats/min` or `breaths/min` as the unit text.
+FHIR requires vital signs to conform to its [vital-signs profiles](http://hl7.org/fhir/R4B/vitalsigns.html): category `vital-signs`, a LOINC code and UCUM units. Both Neuro+ vital-sign profiles derive from them. Weight, height, BMI, heart rate, respiratory rate and body temperature are single records in [NeuroPlusObservationVitalSign](StructureDefinition-observation-vital-sign.html). Heart and respiratory rate carry the UCUM code `/min`, as FHIR's heart-rate and respiratory-rate profiles fix, with `beats/min` or `breaths/min` as the unit text.
 
-Blood pressure is one record with two parts, in [AicuraObservationBloodPressure](StructureDefinition-observation-blood-pressure.html):
+Blood pressure is one record with two parts, in [NeuroPlusObservationBloodPressure](StructureDefinition-observation-blood-pressure.html):
 
 | Element | Code |
 |---------|------|
@@ -201,57 +201,57 @@ Blood pressure is one record with two parts, in [AicuraObservationBloodPressure]
 | `component` (systolic) | LOINC `8480-6` Systolic blood pressure, `valueQuantity` in `mm[Hg]` |
 | `component` (diastolic) | LOINC `8462-4` Diastolic blood pressure, `valueQuantity` in `mm[Hg]` |
 
-The profile derives from FHIR's [blood-pressure profile](http://hl7.org/fhir/R4B/bp.html), which defines the code and both components, and adds the rules all AICURA Observation profiles share. FHIR tools expect blood pressure in this shape. A systolic or diastolic value is never a record of its own: AicuraObservationVitalSign rejects the codes `8480-6` and `8462-4` as a record's code (invariant `aic-vs-1`).
+The profile derives from FHIR's [blood-pressure profile](http://hl7.org/fhir/R4B/bp.html), which defines the code and both components, and adds the rules all Neuro+ Observation profiles share. FHIR tools expect blood pressure in this shape. A systolic or diastolic value is never a record of its own: NeuroPlusObservationVitalSign rejects the codes `8480-6` and `8462-4` as a record's code (invariant `aic-vs-1`).
 
-#### AicuraObservationImagingMeasure
+#### NeuroPlusObservationImagingMeasure
 
-[AicuraObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) holds measures derived from images, such as brain-region volumes, surface areas, cortical thickness and PET values. It inherits all rules of AicuraObservation and requires the category `imaging`.
+[NeuroPlusObservationImagingMeasure](StructureDefinition-observation-imaging-measure.html) holds measures derived from images, such as brain-region volumes, surface areas, cortical thickness and PET values. It inherits all rules of NeuroPlusObservation and requires the category `imaging`.
 
 ##### One Observation per image series, measure and atlas
 
 Brain volumetry produces one value per brain region, often more than a hundred per image series. The values of one image series, one measure (e.g. volume) and one atlas (e.g. Desikan-Killiany) form one Observation:
 
 - one component per brain region, holding the value (`component.valueQuantity`) and the link to its region (below);
-- the analysis software, with its atlas, once on the Observation in `Observation.device`, referencing an [AicuraDevice](StructureDefinition-device.html) of type Processing Equipment that names the atlas in its `brainAtlas` property;
-- the image series once on the Observation (`derivedFrom` and MII's series-UID extension, slice `seriesUid`; see "Linking a result to a series" under AicuraImagingStudy).
+- the analysis software, with its atlas, once on the Observation in `Observation.device`, referencing an [NeuroPlusDevice](StructureDefinition-device.html) of type Processing Equipment that names the atlas in its `brainAtlas` property;
+- the image series once on the Observation (`derivedFrom` and MII's series-UID extension, slice `seriesUid`; see "Linking a result to a series" under NeuroPlusImagingStudy).
 
 FHIR leaves the choice between components and separate Observations to context, and components fit when one method, one software and one time apply to all values, as they do here. Separate Observations would repeat the same patient, time, image series and software on every value. MII requires a value on every Observation; an export to MII turns each component into an Observation of its own. A measure that comes as a single value (e.g. the intracranial volume of a study without a regional breakdown) is one Observation with `valueQuantity` and no components.
 
 ##### Link to the brain region
 
-Each value points directly to the [AicuraAtlasRegion](StructureDefinition-atlas-region.html) of its brain region (structure, side and position):
+Each value points directly to the [NeuroPlusAtlasRegion](StructureDefinition-atlas-region.html) of its brain region (structure, side and position):
 
 | Value on | Extension |
 |---|---|
 | the Observation | [ObservationBodyStructure](StructureDefinition-ObservationBodyStructure.html) |
 | a component | [ObservationComponentBodyStructure](StructureDefinition-ObservationComponentBodyStructure.html) |
 
-FHIR R4B has no element that links an Observation to a BodyStructure; HL7's workaround is an extension inside `bodySite`, which MII uses. FHIR R5 and R6 add the direct link `Observation.bodyStructure`, and R6 deprecates `bodySite`. The AICURA extensions follow that newer design, so the move to R6 changes the format once: `ObservationBodyStructure` becomes `Observation.bodyStructure`. Components have no region element in any FHIR version, so `ObservationComponentBodyStructure` stays an extension. An export to MII moves the link into `bodySite`, with the region's SNOMED CT code there.
+FHIR R4B has no element that links an Observation to a BodyStructure; HL7's workaround is an extension inside `bodySite`, which MII uses. FHIR R5 and R6 add the direct link `Observation.bodyStructure`, and R6 deprecates `bodySite`. The Neuro+ extensions follow that newer design, so the move to R6 changes the format once: `ObservationBodyStructure` becomes `Observation.bodyStructure`. Components have no region element in any FHIR version, so `ObservationComponentBodyStructure` stays an extension. An export to MII moves the link into `bodySite`, with the region's SNOMED CT code there.
 
 ##### Category and units
 
 The category is `imaging` from the HL7 [observation-category](http://terminology.hl7.org/CodeSystem/observation-category) code system (`http://terminology.hl7.org/CodeSystem/observation-category`), not the address of a FHIR web page. Units of `valueQuantity`, on the Observation and on each component, are UCUM: `system` is `http://unitsofmeasure.org` and `code` the UCUM code, e.g. `cm3` for a volume, `cm2` for a surface area and `cm` for a cortical thickness.
 
-#### AicuraCondition
+#### NeuroPlusCondition
 
-[AicuraCondition](StructureDefinition-condition.html) constrains Condition with must-support on clinicalStatus, verificationStatus, code, bodySite, subject, encounter, onset, recordedDate, and stage with its summary. The `code` element is bound (extensible) to the [AicuraConditionCodeVS](ValueSet-aicura-condition-code.html), which lists the codes in use: SNOMED CT, AICURA custom, and MedDRA codes. Extensions record the patient's age at the recorded date (`AgeRecorded`) and at onset (`AgeOnset`, and the older `AgeAtCondition` with the same value).
+[NeuroPlusCondition](StructureDefinition-condition.html) constrains Condition with must-support on clinicalStatus, verificationStatus, code, bodySite, subject, encounter, onset, recordedDate, and stage with its summary. The `code` element is bound (extensible) to the [NeuroPlusConditionCodeVS](ValueSet-neuroplus-condition-code.html), which lists the codes in use: SNOMED CT, Neuro+ custom, and MedDRA codes. Extensions record the patient's age at the recorded date (`AgeRecorded`) and at onset (`AgeOnset`, and the older `AgeAtCondition` with the same value).
 
 ##### Diagnosis codes
 
-Every diagnosis is coded with SNOMED CT wherever SNOMED CT has the concept, and with an AICURA code (`https://aicuramedical.com/fhir/coding`) only where it has none. SNOMED CT names the neurodegenerative subtypes the studies distinguish, such as behavioural-variant frontotemporal dementia, semantic dementia and progressive non-fluent aphasia, which ICD-10-GM merges into one code, and it fits the SNOMED CT slot of MII's diagnosis profile. A diagnosis still coded otherwise although SNOMED CT has the concept moves to SNOMED CT.
+Every diagnosis is coded with SNOMED CT wherever SNOMED CT has the concept, and with a Neuro+ code (`https://sphin-x.de/fhir/coding`) only where it has none. SNOMED CT names the neurodegenerative subtypes the studies distinguish, such as behavioural-variant frontotemporal dementia, semantic dementia and progressive non-fluent aphasia, which ICD-10-GM merges into one code, and it fits the SNOMED CT slot of MII's diagnosis profile. A diagnosis still coded otherwise although SNOMED CT has the concept moves to SNOMED CT.
 
 ICD-10-GM, as German routine care uses it, and Orphanet, which covers the rare neurodegenerative subtypes, may follow as further codings of the same diagnosis (see coded fields in the [Shared Rules](shared-rules.html)). Until they are added, a search by ICD-10-GM code does not find these diagnoses.
 
 ##### Prodromal: the stage of a disease
 
-Prodromal is the early phase before a disease shows its typical signs. It is recorded as the stage of the disease it precedes, not as a diagnosis of its own: `code` holds the disease, and `stage.summary` holds SNOMED CT 288480009 "Prodromal phase (qualifier value)". The disease stays explicit, and the stage field is what FHIR provides for how far a disease has progressed. A stage needs a summary or an assessment (FHIR invariant `con-1`), so the stage goes in `summary`. Base FHIR and MII leave `stage` optional; AICURA keeps it and its summary must-support.
+Prodromal is the early phase before a disease shows its typical signs. It is recorded as the stage of the disease it precedes, not as a diagnosis of its own: `code` holds the disease, and `stage.summary` holds SNOMED CT 288480009 "Prodromal phase (qualifier value)". The disease stays explicit, and the stage field is what FHIR provides for how far a disease has progressed. A stage needs a summary or an assessment (FHIR invariant `con-1`), so the stage goes in `summary`. Base FHIR and MII leave `stage` optional; Neuro+ keeps it and its summary must-support.
 
 | Source diagnosis | `code` | `stage.summary` |
 |---|---|---|
 | Prodromal non-motor or motor Parkinson's disease | SNOMED CT 49049000 "Parkinson's disease (disorder)" | SNOMED CT 288480009 "Prodromal phase (qualifier value)" |
 | Prodromal synucleinopathy (e.g. REM sleep behaviour disorder) | SNOMED CT 785810000 "Synucleinopathy" | SNOMED CT 288480009 "Prodromal phase (qualifier value)" |
 
-For example, prodromal motor Parkinson's disease (shortened; displays as in [AicuraConditionCodeVS](ValueSet-aicura-condition-code.html)):
+For example, prodromal motor Parkinson's disease (shortened; displays as in [NeuroPlusConditionCodeVS](ValueSet-neuroplus-condition-code.html)):
 
 ```json
 "code": {
@@ -276,92 +276,92 @@ For example, prodromal motor Parkinson's disease (shortened; displays as in [Aic
 
 `recordedDate` is the date of the visit at which the diagnosis was recorded. The studies record a diagnosis in the case report form of that visit, so the date is both the record date and the date the diagnosis was asserted, and it fills the recorded date MII requires.
 
-#### AicuraPatient
+#### NeuroPlusPatient
 
-[AicuraPatient](StructureDefinition-patient.html) constrains Patient with must-support on identifier, gender, birthDate, and deceased. It adds `race` and `ethnicity` extensions bound to the [AicuraRaceEthnicityVS](ValueSet-aicura-race-ethnicity.html) (US CDC Race & Ethnicity code system); these mirror the US Core race/ethnicity extensions without taking a US Core dependency. Patient identifiers are typed as pseudonyms (`PSEUDED`).
+[NeuroPlusPatient](StructureDefinition-patient.html) constrains Patient with must-support on identifier, gender, birthDate, and deceased. It adds `race` and `ethnicity` extensions bound to the [NeuroPlusRaceEthnicityVS](ValueSet-neuroplus-race-ethnicity.html) (US CDC Race & Ethnicity code system); these mirror the US Core race/ethnicity extensions without taking a US Core dependency. Patient identifiers are typed as pseudonyms (`PSEUDED`).
 
 ##### Death
 
-When a source reports that a participant has died, the date of death goes on the Patient record in `deceasedDateTime`, as base FHIR intends, with the precision the source gives (partial dates as in the [Shared Rules](shared-rules.html)). MII records vital status as a separate Observation with dated checks (alive, dead, lost to follow-up), which suits hospitals that check vital status repeatedly. No source reports such checks, so AICURA does not use that Observation; follow-up states such as lost to follow-up belong to the study participation ([AicuraResearchSubject](StructureDefinition-research-subject.html)). MII's pseudonymised Patient profile allows `deceased[x]`, and an export to MII can derive the vital-status Observation from it.
+When a source reports that a participant has died, the date of death goes on the Patient record in `deceasedDateTime`, as base FHIR intends, with the precision the source gives (partial dates as in the [Shared Rules](shared-rules.html)). MII records vital status as a separate Observation with dated checks (alive, dead, lost to follow-up), which suits hospitals that check vital status repeatedly. No source reports such checks, so Neuro+ does not use that Observation; follow-up states such as lost to follow-up belong to the study participation ([NeuroPlusResearchSubject](StructureDefinition-research-subject.html)). MII's pseudonymised Patient profile allows `deceased[x]`, and an export to MII can derive the vital-status Observation from it.
 
-#### AicuraEncounter
+#### NeuroPlusEncounter
 
-[AicuraEncounter](StructureDefinition-encounter.html) constrains Encounter with must-support on status, class, type, subject, period, and location. The `class` element is bound to the [AicuraEncounterClassVS](ValueSet-aicura-encounter-class.html) (HL7 v3 ActCode). The `AgeAtEncounter` extension records the patient's age at the start of the encounter.
+[NeuroPlusEncounter](StructureDefinition-encounter.html) constrains Encounter with must-support on status, class, type, subject, period, and location. The `class` element is bound to the [NeuroPlusEncounterClassVS](ValueSet-neuroplus-encounter-class.html) (HL7 v3 ActCode). The `AgeAtEncounter` extension records the patient's age at the start of the encounter.
 
 ##### Planned dates
 
 All visits are recorded after they took place. MII's extensions for planned start and end dates of a contact do not apply.
 
-#### AicuraProcedure
+#### NeuroPlusProcedure
 
-[AicuraProcedure](StructureDefinition-procedure.html) leaves Procedure as in base FHIR R4B apart from the [Shared Rules](shared-rules.html), without bindings or must-support flags of its own. The `AgeAtProcedure` extension records the patient's age at the procedure. No AICURA study dataset provides procedures; the platform holds them from other clinical sources.
+[NeuroPlusProcedure](StructureDefinition-procedure.html) leaves Procedure as in base FHIR R4B apart from the [Shared Rules](shared-rules.html), without bindings or must-support flags of its own. The `AgeAtProcedure` extension records the patient's age at the procedure. No Neuro+ study dataset provides procedures; the platform holds them from other clinical sources.
 
-#### AicuraMedication
+#### NeuroPlusMedication
 
-[AicuraMedication](StructureDefinition-medication.html) constrains Medication with must-support on code, status, manufacturer, form, amount, ingredient, and batch. It defines the medications referenced by medication statements and administrations.
+[NeuroPlusMedication](StructureDefinition-medication.html) constrains Medication with must-support on code, status, manufacturer, form, amount, ingredient, and batch. It defines the medications referenced by medication statements and administrations.
 
-#### AicuraMedicationStatement
+#### NeuroPlusMedicationStatement
 
-[AicuraMedicationStatement](StructureDefinition-medication-statement.html) constrains MedicationStatement with must-support on status, statusReason, category, medication, subject, context, effective, dateAsserted, informationSource, reasonCode, reasonReference, and dosage. This is the medication resource included in AICURA's FHIR Bundle export.
+[NeuroPlusMedicationStatement](StructureDefinition-medication-statement.html) constrains MedicationStatement with must-support on status, statusReason, category, medication, subject, context, effective, dateAsserted, informationSource, reasonCode, reasonReference, and dosage. This is the medication resource included in Neuro+'s FHIR Bundle export.
 
-#### AicuraMedicationAdministration
+#### NeuroPlusMedicationAdministration
 
-[AicuraMedicationAdministration](StructureDefinition-medication-administration.html) constrains MedicationAdministration with must-support on status, medication, subject, context, effective, dosage, route and dose. It records a tracer or contrast agent administered for imaging; the medication is a reference to an [AicuraMedication](StructureDefinition-medication.html), and imaging series point to the administration through the [SeriesMedicationAdministration](StructureDefinition-SeriesMedicationAdministration.html) extension.
+[NeuroPlusMedicationAdministration](StructureDefinition-medication-administration.html) constrains MedicationAdministration with must-support on status, medication, subject, context, effective, dosage, route and dose. It records a tracer or contrast agent administered for imaging; the medication is a reference to an [NeuroPlusMedication](StructureDefinition-medication.html), and imaging series point to the administration through the [SeriesMedicationAdministration](StructureDefinition-SeriesMedicationAdministration.html) extension.
 
-#### AicuraResearchStudy
+#### NeuroPlusResearchStudy
 
-[AicuraResearchStudy](StructureDefinition-research-study.html) constrains ResearchStudy with must-support on identifier, title, status, primaryPurposeType, phase, category, focus, condition, period, description, sponsor, principalInvestigator, site, arm, and objective. It describes the studies (e.g. ADNI cohorts) that patients are enrolled in. Each study dataset's data use agreement governs the use of its data (see Consent and data use under AicuraResearchSubject).
+[NeuroPlusResearchStudy](StructureDefinition-research-study.html) constrains ResearchStudy with must-support on identifier, title, status, primaryPurposeType, phase, category, focus, condition, period, description, sponsor, principalInvestigator, site, arm, and objective. It describes the studies (e.g. ADNI cohorts) that patients are enrolled in. Each study dataset's data use agreement governs the use of its data (see Consent and data use under NeuroPlusResearchSubject).
 
-#### AicuraResearchSubject
+#### NeuroPlusResearchSubject
 
-[AicuraResearchSubject](StructureDefinition-research-subject.html) constrains ResearchSubject with must-support on identifier, status, period, study, individual, assignedArm, and actualArm; `consent` is not must-support. Participant codes are typed as anonymised (`ANON`). The `AgeAtResearch` extension records the patient's age at the start of the participation.
+[NeuroPlusResearchSubject](StructureDefinition-research-subject.html) constrains ResearchSubject with must-support on identifier, status, period, study, individual, assignedArm, and actualArm; `consent` is not must-support. Participant codes are typed as anonymised (`ANON`). The `AgeAtResearch` extension records the patient's age at the start of the participation.
 
 ##### Consent and data use
 
 The study datasets are open research datasets, many of them natural history studies, and hold no consent per person. Each dataset comes with a data use agreement, and that agreement governs the use of its data. Participants therefore link no consent record (`ResearchSubject.consent` stays empty), and no Consent record is created in its place: it would claim a consent nobody documented. Participants thus meet base FHIR, where the consent link is optional, but not MII's study participant profile, which requires one.
 
-Where a source does record consent per person, each consent is one [AicuraConsent](StructureDefinition-consent.html) record that should reference the patient, and a person may have several, e.g. consents to take part, to give samples and to future research. FHIR R4B lets a participation link one consent, so `ResearchSubject.consent` links the consent to take part; the others are found through `Consent.patient` where it is filled.
+Where a source does record consent per person, each consent is one [NeuroPlusConsent](StructureDefinition-consent.html) record that should reference the patient, and a person may have several, e.g. consents to take part, to give samples and to future research. FHIR R4B lets a participation link one consent, so `ResearchSubject.consent` links the consent to take part; the others are found through `Consent.patient` where it is filled.
 
-#### AicuraConsent
+#### NeuroPlusConsent
 
-[AicuraConsent](StructureDefinition-consent.html) constrains Consent with must-support on status, scope, category, patient, dateTime, performer, organization, source, policy, policyRule, verification, and provision. It is for sources that record consent per person, one Consent record per consent (see Consent and data use under AicuraResearchSubject). `patient` stays optional, as in FHIR R4B; a consent that is to be found from the person fills it. The study datasets hold no consent per person and carry no Consent records.
+[NeuroPlusConsent](StructureDefinition-consent.html) constrains Consent with must-support on status, scope, category, patient, dateTime, performer, organization, source, policy, policyRule, verification, and provision. It is for sources that record consent per person, one Consent record per consent (see Consent and data use under NeuroPlusResearchSubject). `patient` stays optional, as in FHIR R4B; a consent that is to be found from the person fills it. The study datasets hold no consent per person and carry no Consent records.
 
-#### AicuraDevice
+#### NeuroPlusDevice
 
-[AicuraDevice](StructureDefinition-device.html) constrains Device with must-support on identifier, udiCarrier, status, manufacturer, manufactureDate, expirationDate, lotNumber, serialNumber, deviceName, modelNumber, type, version, patient, owner, location, note, safety, and parent. It represents imaging scanners, referenced from `ImagingStudy.series.performer.actor`, analysis software, referenced by derived results, and lab assay platforms, referenced from lab results. `type` is required and bound to [AicuraDeviceTypeVS](ValueSet-aicura-device-type.html), which tells them apart: Acquisition Equipment for a scanner, Processing Equipment for software, Medical laboratory analyzer for an assay platform.
+[NeuroPlusDevice](StructureDefinition-device.html) constrains Device with must-support on identifier, udiCarrier, status, manufacturer, manufactureDate, expirationDate, lotNumber, serialNumber, deviceName, modelNumber, type, version, patient, owner, location, note, safety, and parent. It represents imaging scanners, referenced from `ImagingStudy.series.performer.actor`, analysis software, referenced by derived results, and lab assay platforms, referenced from lab results. `type` is required and bound to [NeuroPlusDeviceTypeVS](ValueSet-neuroplus-device-type.html), which tells them apart: Acquisition Equipment for a scanner, Processing Equipment for software, Medical laboratory analyzer for an assay platform.
 
-Analysis software names the atlas it divides the brain by in the `brainAtlas` property: `property.type` is the AICURA code `brain-atlas`, `property.valueCode` the atlas, coded in the atlas's own system with its version, e.g. Desikan-Killiany (`https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation`, version 2010-03-25) or the FreeSurfer subcortical segmentation (`https://surfer.nmr.mgh.harvard.edu/fswiki/SubcorticalSegmentation`, version 2008-03-26). The atlas defines the brain regions of the software's results.
+Analysis software names the atlas it divides the brain by in the `brainAtlas` property: `property.type` is the Neuro+ code `brain-atlas`, `property.valueCode` the atlas, coded in the atlas's own system with its version, e.g. Desikan-Killiany (`https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation`, version 2010-03-25) or the FreeSurfer subcortical segmentation (`https://surfer.nmr.mgh.harvard.edu/fswiki/SubcorticalSegmentation`, version 2008-03-26). The atlas defines the brain regions of the software's results.
 
-#### AicuraAssayDevice
+#### NeuroPlusAssayDevice
 
-[AicuraAssayDevice](StructureDefinition-assay-device.html) derives from AicuraDevice and describes a lab assay platform, e.g. Roche Elecsys, Fujirebio Lumipulse or Quanterix SIMOA. There is one shared record per platform, referenced from the `device` of every lab value it produced. `type` is always SNOMED CT `30234008` "Medical laboratory analyzer": SNOMED CT has no concept for an assay or test kit, nor for a mass spectrometer, so the platform is told apart by `manufacturer` (required) and `deviceName` (at least one, type `manufacturer-name`). `version` is must-support and holds the assay generation where known. `patient` is not used, since the record is shared by all participants' results.
+[NeuroPlusAssayDevice](StructureDefinition-assay-device.html) derives from NeuroPlusDevice and describes a lab assay platform, e.g. Roche Elecsys, Fujirebio Lumipulse or Quanterix SIMOA. There is one shared record per platform, referenced from the `device` of every lab value it produced. `type` is always SNOMED CT `30234008` "Medical laboratory analyzer": SNOMED CT has no concept for an assay or test kit, nor for a mass spectrometer, so the platform is told apart by `manufacturer` (required) and `deviceName` (at least one, type `manufacturer-name`). `version` is must-support and holds the assay generation where known. `patient` is not used, since the record is shared by all participants' results.
 
-#### AicuraBodyStructure and AicuraAtlasRegion
+#### NeuroPlusBodyStructure and NeuroPlusAtlasRegion
 
 Body structures come in two kinds, each with its own profile:
 
 | Profile | For | Patient |
 |---|---|---|
-| [AicuraAtlasRegion](StructureDefinition-atlas-region.html) | A brain region as an atlas defines it, one record shared by all participants; imaging-derived measures link to it | None (see "Shared brain regions") |
-| [AicuraBodyStructure](StructureDefinition-body-structure.html) | A structure of one person, e.g. a lesion | References the patient |
+| [NeuroPlusAtlasRegion](StructureDefinition-atlas-region.html) | A brain region as an atlas defines it, one record shared by all participants; imaging-derived measures link to it | None (see "Shared brain regions") |
+| [NeuroPlusBodyStructure](StructureDefinition-body-structure.html) | A structure of one person, e.g. a lesion | References the patient |
 
 Both have must-support on identifier, active, morphology, location, locationQualifier, and description, and describe a region in three parts:
 
 | Part | Element | Example | Value set |
 |---|---|---|---|
-| Structure | `location` | Anterior cingulate cortex | [AicuraBodyStructureVS](ValueSet-aicura-body-structure.html) (extensible) |
-| Side | extension [BodyStructureLaterality](StructureDefinition-BodyStructureLaterality.html) | Left | [AicuraLateralityVS](ValueSet-aicura-laterality.html) (extensible) |
-| Position | `locationQualifier` | Caudal | [AicuraLocationQualifierVS](ValueSet-aicura-location-qualifier.html) (extensible) |
+| Structure | `location` | Anterior cingulate cortex | [NeuroPlusBodyStructureVS](ValueSet-neuroplus-body-structure.html) (extensible) |
+| Side | extension [BodyStructureLaterality](StructureDefinition-BodyStructureLaterality.html) | Left | [NeuroPlusLateralityVS](ValueSet-neuroplus-laterality.html) (extensible) |
+| Position | `locationQualifier` | Caudal | [NeuroPlusLocationQualifierVS](ValueSet-neuroplus-location-qualifier.html) (extensible) |
 
 ##### Side and position
 
-The side (left, right, bilateral) has its own field, the extension BodyStructureLaterality, apart from the position in `locationQualifier`. FHIR R4B and MII put both into `locationQualifier`; FHIR R5 and R6 give the side its own element, `includedStructure.laterality`, next to the position in `includedStructure.qualifier`. AICURA follows that separation in a flat form, since each region is one atlas structure with one side; the nested `includedStructure` serves regions made of several structures, which atlas regions are not. With the move to R6, `location` becomes `includedStructure.structure`, the extension `includedStructure.laterality` and `locationQualifier` `includedStructure.qualifier`. A reader that does not know the extension sees the side only in the region's name. An export to MII copies the side into `locationQualifier`.
+The side (left, right, bilateral) has its own field, the extension BodyStructureLaterality, apart from the position in `locationQualifier`. FHIR R4B and MII put both into `locationQualifier`; FHIR R5 and R6 give the side its own element, `includedStructure.laterality`, next to the position in `includedStructure.qualifier`. Neuro+ follows that separation in a flat form, since each region is one atlas structure with one side; the nested `includedStructure` serves regions made of several structures, which atlas regions are not. With the move to R6, `location` becomes `includedStructure.structure`, the extension `includedStructure.laterality` and `locationQualifier` `includedStructure.qualifier`. A reader that does not know the extension sees the side only in the region's name. An export to MII copies the side into `locationQualifier`.
 
 ##### Shared brain regions
 
-A brain region from an atlas, such as the left hippocampus, is the same definition for every participant. Each region (structure, side and position) is therefore one [AicuraAtlasRegion](StructureDefinition-atlas-region.html), shared by all participants, and every measurement links to it.
+A brain region from an atlas, such as the left hippocampus, is the same definition for every participant. Each region (structure, side and position) is therefore one [NeuroPlusAtlasRegion](StructureDefinition-atlas-region.html), shared by all participants, and every measurement links to it.
 
-FHIR R4B requires `BodyStructure.patient` (1..1), as R5 and MII do. A shared region belongs to no single patient, so in AicuraAtlasRegion the `patient` element carries no reference, only FHIR's standard extension `data-absent-reason` with the code `not-applicable`. The record stays valid R4B. FHIR R6 makes the patient optional (0..1); from then on the element is simply left out. An export to MII creates one copy of each region per patient.
+FHIR R4B requires `BodyStructure.patient` (1..1), as R5 and MII do. A shared region belongs to no single patient, so in NeuroPlusAtlasRegion the `patient` element carries no reference, only FHIR's standard extension `data-absent-reason` with the code `not-applicable`. The record stays valid R4B. FHIR R6 makes the patient optional (0..1); from then on the element is simply left out. An export to MII creates one copy of each region per patient.
 
 ```json
 "patient": {
@@ -379,9 +379,9 @@ SNOMED CT is the main code system for brain regions (`location`). Brain atlases 
 | Coding | When | Example |
 |---|---|---|
 | SNOMED CT concept of the region | SNOMED CT names the region | Hippocampus: SNOMED CT 5366008 |
-| AICURA region code | SNOMED CT has no concept of the region; a few regions SNOMED CT names keep the AICURA code they have (e.g. Intracranial volume [ICV]) | Isthmus of cingulate gyrus |
+| Neuro+ region code | SNOMED CT has no concept of the region; a few regions SNOMED CT names keep the Neuro+ code they have (e.g. Intracranial volume [ICV]) | Isthmus of cingulate gyrus |
 | Broader SNOMED CT concept, with the position in `locationQualifier` | The atlas region is a part of a SNOMED CT structure | Corpus callosum (SNOMED CT 88442005) with the qualifier Mid-Anterior |
 
-A broader SNOMED CT concept alone would give different regions the same code (caudal anterior, rostral anterior and posterior cingulate would all become "cingulate gyrus"), so it is used only together with a position that tells them apart. The exact region is defined by the atlas (the `brainAtlas` property of the analysis software's Device) and the region's label; a code approximates it. As in every coded field (see [Shared Rules](shared-rules.html)), several codes may sit next to each other, e.g. a broader SNOMED CT concept next to an AICURA code. MII requires a SNOMED CT code for every region; regions with only an AICURA code deviate from MII.
+A broader SNOMED CT concept alone would give different regions the same code (caudal anterior, rostral anterior and posterior cingulate would all become "cingulate gyrus"), so it is used only together with a position that tells them apart. The exact region is defined by the atlas (the `brainAtlas` property of the analysis software's Device) and the region's label; a code approximates it. As in every coded field (see [Shared Rules](shared-rules.html)), several codes may sit next to each other, e.g. a broader SNOMED CT concept next to a Neuro+ code. MII requires a SNOMED CT code for every region; regions with only a Neuro+ code deviate from MII.
 
-[AicuraBodyStructureVS](ValueSet-aicura-body-structure.html) holds every SNOMED CT anatomical or acquired body structure (`442083009` and its descendants) and the AICURA region codes. [AicuraLocationQualifierVS](ValueSet-aicura-location-qualifier.html) holds the position qualifiers: SNOMED CT qualifier values, and AICURA codes for Ventral, Mid-Anterior and Mid-Posterior, which SNOMED CT has no fitting concept for (it lists Ventral only as a synonym of Anterior, which in the brain is a different direction).
+[NeuroPlusBodyStructureVS](ValueSet-neuroplus-body-structure.html) holds every SNOMED CT anatomical or acquired body structure (`442083009` and its descendants) and the Neuro+ region codes. [NeuroPlusLocationQualifierVS](ValueSet-neuroplus-location-qualifier.html) holds the position qualifiers: SNOMED CT qualifier values, and Neuro+ codes for Ventral, Mid-Anterior and Mid-Posterior, which SNOMED CT has no fitting concept for (it lists Ventral only as a synonym of Anterior, which in the brain is a different direction).

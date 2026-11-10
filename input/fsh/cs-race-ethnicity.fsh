@@ -1,6 +1,6 @@
-CodeSystem: AicuraRaceEthnicityCS
-Id: aicura-race-ethnicity
-Title: "AICURA Race & Ethnicity CodeSystem"
+CodeSystem: NeuroPlusRaceEthnicityCS
+Id: neuroplus-race-ethnicity
+Title: "Neuro+ Race & Ethnicity CodeSystem"
 Description: "Race and ethnicity concepts from the US CDC Race & Ethnicity code system (OID 2.16.840.1.113883.6.238), reproduced locally so the IG can reference them without a US Core dependency."
 * ^caseSensitive = true
 * ^experimental = false

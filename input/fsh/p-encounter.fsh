@@ -1,8 +1,8 @@
-Profile: AicuraEncounter
+Profile: NeuroPlusEncounter
 Parent: Encounter
 Id: encounter
-Title: "AICURA Encounter"
-Description: "Constrained Encounter profile for AICURA's clinical data model, representing study visits and clinical contacts during which observations, conditions, procedures, and imaging studies are recorded."
+Title: "Neuro+ Encounter"
+Description: "Constrained Encounter profile for Neuro+'s clinical data model, representing study visits and clinical contacts during which observations, conditions, procedures, and imaging studies are recorded."
 * insert MetaProfile(encounter)
 * insert IdentifierSystem
 // Must-support elements
@@ -14,6 +14,6 @@ Description: "Constrained Encounter profile for AICURA's clinical data model, re
 * period MS
 * location MS
 // Custom extensions (age instead of dates)
-* extension contains AicuraAgeAtEncounter named ageAtEncounter 0..1 MS
+* extension contains NeuroPlusAgeAtEncounter named ageAtEncounter 0..1 MS
 // ValueSet bindings
-* class from AicuraEncounterClassVS (extensible)
+* class from NeuroPlusEncounterClassVS (extensible)

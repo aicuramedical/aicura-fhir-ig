@@ -1,7 +1,7 @@
-ValueSet: AicuraDimensionVS
-Id: aicura-dimension
-Title: "AICURA Dimension ValueSet"
+ValueSet: NeuroPlusDimensionVS
+Id: neuroplus-dimension
+Title: "Neuro+ Dimension ValueSet"
 Description: "Imaging dimensionality (2D or 3D)."
 * ^experimental = false
-* $AicuraCoding#3D "3-Dimensional"
-* $AicuraCoding#2D "2-Dimensional"
+* $NeuroPlusCoding#3D "3-Dimensional"
+* $NeuroPlusCoding#2D "2-Dimensional"

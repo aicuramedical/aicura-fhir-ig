@@ -1,7 +1,7 @@
-ValueSet: AicuraConditionCodeVS
-Id: aicura-condition-code
-Title: "AICURA Condition Code ValueSet"
-Description: "Condition codes used in AICURA studies, spanning neurological, cardiovascular, and other disorders. SNOMED CT is the main code system; an AICURA code stands in only where SNOMED CT has no concept. The MedDRA codes and the AICURA codes listed for diagnoses SNOMED CT covers are still in use and move to SNOMED CT."
+ValueSet: NeuroPlusConditionCodeVS
+Id: neuroplus-condition-code
+Title: "Neuro+ Condition Code ValueSet"
+Description: "Condition codes used in Neuro+ studies, spanning neurological, cardiovascular, and other disorders. SNOMED CT is the main code system; a Neuro+ code stands in only where SNOMED CT has no concept. The MedDRA codes and the Neuro+ codes listed for diagnoses SNOMED CT covers are still in use and move to SNOMED CT."
 * ^experimental = false
 // SNOMED CT codes (37)
 * $SCT#449888003 "Normal cognition"
@@ -41,11 +41,11 @@ Description: "Condition codes used in AICURA studies, spanning neurological, car
 * $SCT#723124007 "Primary progressive apraxia of speech (disorder)"
 * $SCT#83156004 "Sense of smell impaired (finding)"
 * $SCT#415238003 "Rapid eye movement sleep behavior disorder (disorder)"
-// AICURA custom codes (4)
-* $AicuraCoding#"Motor Neurone disease with parkinsonism" "Motor Neurone disease with parkinsonism"
-* $AicuraCoding#"Psychogenic parkinsonism" "Psychogenic parkinsonism"
-* $AicuraCoding#"Juvenile autosomal recessive parkinsonism" "Juvenile autosomal recessive parkinsonism"
-* $AicuraCoding#SRDC "Sporadic Parkinson's disease"
+// Neuro+ custom codes (4)
+* $NeuroPlusCoding#"Motor Neurone disease with parkinsonism" "Motor Neurone disease with parkinsonism"
+* $NeuroPlusCoding#"Psychogenic parkinsonism" "Psychogenic parkinsonism"
+* $NeuroPlusCoding#"Juvenile autosomal recessive parkinsonism" "Juvenile autosomal recessive parkinsonism"
+* $NeuroPlusCoding#SRDC "Sporadic Parkinson's disease"
 // MedDRA codes (10)
 * $MedDRA#10037174 "Psychiatric disorder NOS"
 * $MedDRA#10029298 "Neurological disorder NOS"

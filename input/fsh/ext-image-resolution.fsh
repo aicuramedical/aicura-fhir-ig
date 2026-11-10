@@ -1,8 +1,8 @@
-Extension: AicuraImageResolution
+Extension: NeuroPlusImageResolution
 Id: ImageResolution
 Title: "Image Resolution"
 Description: "Matrix size of an imaging series: columns, rows and slices per volume. A series with several volumes (e.g. diffusion, functional or dynamic PET) counts the slices of one volume."
-* ^url = "http://aicuramedical.com/fhir/StructureDefinition/ImageResolution"
+* ^url = "http://sphin-x.de/fhir/StructureDefinition/ImageResolution"
 * insert ExtensionContext(ImagingStudy.series)
 * extension contains
     valueX 1..1 and

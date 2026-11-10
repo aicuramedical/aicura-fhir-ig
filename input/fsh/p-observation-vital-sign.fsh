@@ -3,11 +3,11 @@ Description: "Systolic and diastolic blood pressure are the components of one bl
 Severity: #error
 Expression: "code.coding.where(system = 'http://loinc.org' and (code = '8480-6' or code = '8462-4')).empty()"
 
-Profile: AicuraObservationVitalSign
+Profile: NeuroPlusObservationVitalSign
 Parent: http://hl7.org/fhir/StructureDefinition/vitalsigns
 Id: observation-vital-sign
-Title: "AICURA Vital Sign"
-Description: "Vital sign (e.g. weight, height, heart rate) in AICURA's clinical data model. It derives from FHIR's vital-signs profile, so every record also meets that profile, and carries the rules all AICURA Observation profiles share. Blood pressure is one record of its own profile, AICURA Blood Pressure."
+Title: "Neuro+ Vital Sign"
+Description: "Vital sign (e.g. weight, height, heart rate) in Neuro+'s clinical data model. It derives from FHIR's vital-signs profile, so every record also meets that profile, and carries the rules all Neuro+ Observation profiles share. Blood pressure is one record of its own profile, Neuro+ Blood Pressure."
 * insert MetaProfile(observation-vital-sign)
 * insert ObservationCommon
 * insert IdentifierSystem

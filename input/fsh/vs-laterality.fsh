@@ -1,6 +1,6 @@
-ValueSet: AicuraLateralityVS
-Id: aicura-laterality
-Title: "AICURA Laterality ValueSet"
+ValueSet: NeuroPlusLateralityVS
+Id: neuroplus-laterality
+Title: "Neuro+ Laterality ValueSet"
 Description: "Body side laterality codes (left, right, bilateral)."
 * ^experimental = false
 * $SCT#7771000 "Left"

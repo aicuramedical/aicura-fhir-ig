@@ -1,8 +1,8 @@
-Profile: AicuraObservation
+Profile: NeuroPlusObservation
 Parent: Observation
 Id: observation
-Title: "AICURA Observation"
-Description: "Common parent of AICURA's Observation profiles per kind of result: lab value, clinical score and imaging-derived measure. Results of a kind without its own profile (e.g. genetics) use it directly. The vital-sign and blood-pressure profiles share its common rules but derive from FHIR's vital-signs profiles."
+Title: "Neuro+ Observation"
+Description: "Common parent of Neuro+'s Observation profiles per kind of result: lab value, clinical score and imaging-derived measure. Results of a kind without its own profile (e.g. genetics) use it directly. The vital-sign and blood-pressure profiles share its common rules but derive from FHIR's vital-signs profiles."
 * insert MetaProfile(observation)
 * insert ObservationCommon
 * insert IdentifierSystem
@@ -21,8 +21,8 @@ Description: "Common parent of AICURA's Observation profiles per kind of result:
 * method MS
 // Custom extensions
 * extension contains
-    AicuraObservationBodyStructure named bodyStructure 0..1 MS
+    NeuroPlusObservationBodyStructure named bodyStructure 0..1 MS
 * component.extension contains
-    AicuraObservationComponentBodyStructure named bodyStructure 0..1 MS
+    NeuroPlusObservationComponentBodyStructure named bodyStructure 0..1 MS
 // ValueSet bindings
-* code from AicuraObservationCodeVS (extensible)
+* code from NeuroPlusObservationCodeVS (extensible)

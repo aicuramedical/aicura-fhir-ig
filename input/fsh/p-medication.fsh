@@ -1,8 +1,8 @@
-Profile: AicuraMedication
+Profile: NeuroPlusMedication
 Parent: Medication
 Id: medication
-Title: "AICURA Medication"
-Description: "Constrained Medication profile for AICURA's clinical data model, defining the medications referenced by medication statements and administrations."
+Title: "Neuro+ Medication"
+Description: "Constrained Medication profile for Neuro+'s clinical data model, defining the medications referenced by medication statements and administrations."
 * insert MetaProfile(medication)
 * insert IdentifierSystem
 // Must-support elements

@@ -1,8 +1,8 @@
-Extension: AicuraModalityNM
+Extension: NeuroPlusModalityNM
 Id: ModalityNM
 Title: "SPECT (NM) Acquisition"
-Description: "Tracer and acquisition details of a SPECT series (modality NM). Shaped like MII's NM extension (mii-ex-bildgebung-modalitaet-nm): the parts radiopharmaceutical, radionuclide, radionuclideTotalDose and radionuclideHalfLife keep MII's names, types and units, so they map 1:1. AICURA adds the injection time and the acquisition plane. Tracer, dose and injection time are filled from the source known to be correct for the dataset (curated study data, or the scanner header where its values have been checked), the same source as the series' administration record (SeriesMedicationAdministration)."
-* ^url = "http://aicuramedical.com/fhir/StructureDefinition/ModalityNM"
+Description: "Tracer and acquisition details of a SPECT series (modality NM). Shaped like MII's NM extension (mii-ex-bildgebung-modalitaet-nm): the parts radiopharmaceutical, radionuclide, radionuclideTotalDose and radionuclideHalfLife keep MII's names, types and units, so they map 1:1. Neuro+ adds the injection time and the acquisition plane. Tracer, dose and injection time are filled from the source known to be correct for the dataset (curated study data, or the scanner header where its values have been checked), the same source as the series' administration record (SeriesMedicationAdministration)."
+* ^url = "http://sphin-x.de/fhir/StructureDefinition/ModalityNM"
 * insert ExtensionContext(ImagingStudy.series)
 * obeys aic-tr-1
 * extension contains
@@ -30,13 +30,13 @@ Description: "Tracer and acquisition details of a SPECT series (modality NM). Sh
 * extension[radionuclideHalfLife] ^short = "Half-life of the radionuclide, in seconds"
 * extension[radionuclideHalfLife].value[x] only Quantity
 * extension[radionuclideHalfLife].valueQuantity = $UCUM#s "Seconds"
-// AICURA parts
+// Neuro+ parts
 * extension[injectionTime] ^short = "Injection time (start of the administration)"
 * extension[injectionTime] ^definition = "Date and time the radiopharmaceutical was injected, as DICOM Radiopharmaceutical Start DateTime (0018,1078). Equals the effective time of the linked administration record."
 * extension[injectionTime].value[x] only dateTime
 * extension[acquisitionPlane] ^short = "Acquisition plane: axial, sagittal or coronal"
 * extension[acquisitionPlane].value[x] only CodeableConcept
-* extension[acquisitionPlane].valueCodeableConcept from AicuraAcquisitionPlaneVS (extensible)
+* extension[acquisitionPlane].valueCodeableConcept from NeuroPlusAcquisitionPlaneVS (extensible)
 * extension[acquisitionPlane].valueCodeableConcept.coding 1..1
 * extension[acquisitionPlane].valueCodeableConcept.text 1..1
 * value[x] 0..0

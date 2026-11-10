@@ -1,8 +1,8 @@
-Extension: AicuraVoxelResolution
+Extension: NeuroPlusVoxelResolution
 Id: VoxelResolution
 Title: "Voxel Resolution"
 Description: "Acquired voxel size of an imaging series, in millimetres: in-plane pixel spacing (x, y) and slice thickness (z). The distance between slice centres is a separate value (SliceSpacing). The slice thickness maps 1:1 to MII's series slice thickness (mii-ex-bildgebung-serie-schichtdicke)."
-* ^url = "http://aicuramedical.com/fhir/StructureDefinition/VoxelResolution"
+* ^url = "http://sphin-x.de/fhir/StructureDefinition/VoxelResolution"
 * insert ExtensionContext(ImagingStudy.series)
 * extension contains
     valueX 1..1 and

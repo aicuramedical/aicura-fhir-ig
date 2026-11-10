@@ -1,22 +1,22 @@
-id: aicura.fhir.ig
-canonical: http://aicuramedical.com/fhir
-name: AicuraFHIRIG
-title: AICURA FHIR Implementation Guide
+id: neuroplus.fhir.ig
+canonical: http://sphin-x.de/fhir
+name: NeuroPlus
+title: Neuro+ (hosted by sphin-X) FHIR Implementation Guide
 status: draft
-version: 0.1.0
+version: 1.0.0
 fhirVersion: 4.3.0
 copyrightYear: 2024+
 releaseLabel: ci-build
 publisher:
-  name: AICURA Medical GmbH
-  url: https://aicura-medical.com
+  name: sphin-X
+  url: https://sphin-x.de
 dependencies:
   de.medizininformatikinitiative.kerndatensatz.bildgebung: 2026.0.0
 description: >-
-  FHIR R4B Implementation Guide for AICURA Medical's clinical data model for
-  neurodegeneration research, covering fourteen resource types in twenty-one profiles.
+  FHIR R4B Implementation Guide for the Neuro+ data model for neurodegeneration
+  research, covering fourteen resource types in twenty-one profiles.
 parameters:
-  special-url: https://aicuramedical.com/fhir/coding
+  special-url: https://sphin-x.de/fhir/coding
 
 pages:
   index.md:

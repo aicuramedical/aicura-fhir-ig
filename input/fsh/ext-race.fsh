@@ -1,7 +1,7 @@
-Extension: AicuraRace
+Extension: NeuroPlusRace
 Id: Race
 Title: "Race"
 Description: "Patient race, coded with the US CDC Race & Ethnicity code system. Mirrors the US Core race extension without taking a US Core dependency."
-* ^url = "http://aicuramedical.com/fhir/StructureDefinition/Race"
+* ^url = "http://sphin-x.de/fhir/StructureDefinition/Race"
 * insert ExtensionContext(Patient)
 * value[x] only CodeableConcept

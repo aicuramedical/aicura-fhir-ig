@@ -1,7 +1,7 @@
-ValueSet: AicuraTracerPubChemVS
-Id: aicura-tracer-pubchem
-Title: "AICURA Tracer PubChem ValueSet"
-Description: "PubChem compound ID and name of every PET and SPECT tracer in AICURA imaging studies. The PubChem name is the tracer's label (CodeableConcept.text). The PubChem code itself is used only where DICOM's tracer list has no code (so far Flutafuranol); otherwise the DICOM-list code is used (AicuraPETTracerVS, AicuraSPECTTracerVS)."
+ValueSet: NeuroPlusTracerPubChemVS
+Id: neuroplus-tracer-pubchem
+Title: "Neuro+ Tracer PubChem ValueSet"
+Description: "PubChem compound ID and name of every PET and SPECT tracer in Neuro+ imaging studies. The PubChem name is the tracer's label (CodeableConcept.text). The PubChem code itself is used only where DICOM's tracer list has no code (so far Flutafuranol); otherwise the DICOM-list code is used (NeuroPlusPETTracerVS, NeuroPlusSPECTTracerVS)."
 * ^experimental = false
 * $PubChem#68614 "Fludeoxyglucose F-18"
 * $PubChem#15950376 "Flutemetamol F-18"
