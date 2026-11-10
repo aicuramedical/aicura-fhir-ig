@@ -23,7 +23,6 @@ Description: "Common parent of AICURA's Observation profiles per kind of result:
 * extension contains
     AicuraObservationBodyStructure named bodyStructure 0..1 MS
 * component.extension contains
-    AicuraObservationComponentBodyStructure named bodyStructure 0..1 MS and
-    AicuraObservationComponentDevice named device 0..1 MS
+    AicuraObservationComponentBodyStructure named bodyStructure 0..1 MS
 // ValueSet bindings
 * code from AicuraObservationCodeVS (extensible)

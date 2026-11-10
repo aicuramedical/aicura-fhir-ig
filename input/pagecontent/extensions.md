@@ -30,14 +30,15 @@ Coded values carry a code and its label, both required: in the modality extensio
 
 #### Observation extensions
 
-These extensions link an Observation and its components to the body structure (e.g. a brain region) and the analysis software a value comes from, and record the patient's age at the observation.
+These extensions link an Observation and its components to the body structure (e.g. a brain region) a value refers to, and record the patient's age at the observation. The analysis software that produced a value is the Observation's own `device`.
 
 | Extension | Context | Type | Description |
 |-----------|---------|------|-------------|
 | [AgeAtObservation](StructureDefinition-AgeAtObservation.html) | Observation | Integer | Patient age at the observation's effective date |
 | [ObservationBodyStructure](StructureDefinition-ObservationBodyStructure.html) | Observation | Reference(BodyStructure) | Body structure the observation's value refers to |
 | [ObservationComponentBodyStructure](StructureDefinition-ObservationComponentBodyStructure.html) | Observation.component | Reference(BodyStructure) | Body structure the component's value refers to |
-| [ObservationComponentDevice](StructureDefinition-ObservationComponentDevice.html) | Observation.component | Reference(Device) | Device (analysis software) that produced the component's value |
+
+The two body-structure links follow the direct link FHIR R5 and R6 define (`Observation.bodyStructure`), which FHIR R4B lacks. With the move to R6, ObservationBodyStructure becomes that element; ObservationComponentBodyStructure stays, since components have no such element in any FHIR version.
 
 #### Age at an event
 
@@ -60,4 +61,4 @@ These extensions are defined on the clinical and demographic profiles added alon
 |-----------|---------|------|-------------|
 | [Race](StructureDefinition-Race.html) | Patient | CodeableConcept | Patient race (US CDC Race & Ethnicity code system) |
 | [Ethnicity](StructureDefinition-Ethnicity.html) | Patient | CodeableConcept | Patient ethnicity (US CDC Race & Ethnicity code system) |
-| [BodyStructureLaterality](StructureDefinition-BodyStructureLaterality.html) | BodyStructure | CodeableConcept | Body side laterality (left, right, bilateral) |
+| [BodyStructureLaterality](StructureDefinition-BodyStructureLaterality.html) | BodyStructure | CodeableConcept | Body side (left, right, bilateral), apart from the position in `locationQualifier`, as in FHIR R6's `includedStructure.laterality` |

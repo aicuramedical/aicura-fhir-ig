@@ -1,6 +1,6 @@
 ### AICURA FHIR Implementation Guide
 
-This Implementation Guide (IG) formally profiles the FHIR R4B resources implemented by **AICURA Medical's** clinical data platform. The guide covers fourteen resource types in eighteen profiles, with associated terminology and extensions.
+This Implementation Guide (IG) formally profiles the FHIR R4B resources implemented by **AICURA Medical's** clinical data platform. The guide covers fourteen resource types in nineteen profiles, with associated terminology and extensions.
 
 #### Scope
 
@@ -23,7 +23,12 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources implemen
 | ResearchSubject | [AicuraResearchSubject](StructureDefinition-research-subject.html) | Patient enrollment in a research study |
 | Consent | [AicuraConsent](StructureDefinition-consent.html) | Patient consent for research participation and data use |
 | Device | [AicuraDevice](StructureDefinition-device.html) | Imaging scanners and analysis software, told apart by device type |
-| BodyStructure | [AicuraBodyStructure](StructureDefinition-body-structure.html) | Anatomical sites (neuroimaging focus) with a custom laterality extension |
+| BodyStructure | [AicuraBodyStructure](StructureDefinition-body-structure.html) | Body structures of one person, with a laterality extension |
+| BodyStructure | [AicuraAtlasRegion](StructureDefinition-atlas-region.html) | Brain regions as an atlas defines them, one record shared by all participants |
+
+#### Shared rules
+
+Rules that apply to all profiles, such as how identifiers name their issuer and how each record names its profile and source dataset, are on the [Shared Rules](shared-rules.html) page.
 
 #### Shared rules
 
@@ -31,7 +36,7 @@ Rules that apply to all profiles, such as how identifiers name their issuer and 
 
 #### Extensions
 
-The ImagingStudy profile includes custom extensions on `ImagingStudy.series` for detailed acquisition metadata such as the MR, PET and SPECT acquisition details, the link to the tracer or contrast administration, and voxel resolution, and one on `ImagingStudy` for the patient's age at the study. Additional custom extensions cover `Race` and `Ethnicity` on Patient, `BodyStructureLaterality` on BodyStructure, the patient's age at each event (observation, encounter, condition, participation, procedure), and the links from an Observation and its components to body structures and analysis devices. See [Extensions](extensions.html) for the full list.
+The ImagingStudy profile includes custom extensions on `ImagingStudy.series` for detailed acquisition metadata such as the MR, PET and SPECT acquisition details, the link to the tracer or contrast administration, and voxel resolution, and one on `ImagingStudy` for the patient's age at the study. Additional custom extensions cover `Race` and `Ethnicity` on Patient, `BodyStructureLaterality` on BodyStructure, the patient's age at each event (observation, encounter, condition, participation, procedure), and the links from an Observation and its components to body structures. See [Extensions](extensions.html) for the full list.
 
 #### Terminology
 
