@@ -14,7 +14,7 @@ dependencies:
   de.medizininformatikinitiative.kerndatensatz.bildgebung: 2026.0.0
 description: >-
   FHIR R4B Implementation Guide for the Neuro+ data model for neurodegeneration
-  research, covering fourteen resource types in twenty-one profiles.
+  research, covering seventeen resource types in twenty-four profiles.
 parameters:
   special-url: https://sphin-x.de/fhir/coding
 

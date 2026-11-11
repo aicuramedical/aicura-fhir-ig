@@ -1,6 +1,6 @@
 ### Profiles
 
-This IG defines twenty-one FHIR R4B profiles. All of them follow the [Shared Rules](shared-rules.html), e.g. every identifier names its issuer in `system`.
+This IG defines twenty-four FHIR R4B profiles. All of them follow the [Shared Rules](shared-rules.html), e.g. every identifier names its issuer in `system`.
 
 #### NeuroPlusImagingStudy
 
@@ -325,6 +325,14 @@ Where a source does record consent per person, each consent is one [NeuroPlusCon
 #### NeuroPlusConsent
 
 [NeuroPlusConsent](StructureDefinition-consent.html) constrains Consent with must-support on status, scope, category, patient, dateTime, performer, organization, source, policy, policyRule, verification, and provision. It is for sources that record consent per person, one Consent record per consent (see Consent and data use under NeuroPlusResearchSubject). `patient` stays optional, as in FHIR R4B; a consent that is to be found from the person fills it. The study datasets hold no consent per person and carry no Consent records.
+
+#### NeuroPlusEndpoint, NeuroPlusLocation and NeuroPlusOrganization
+
+These three profiles add only the [Shared Rules](shared-rules.html) to base FHIR and mark the elements the data fill:
+
+* [NeuroPlusEndpoint](StructureDefinition-endpoint.html): the image archive a study or series points to, with must-support on status, connectionType, payloadType, payloadMimeType, and address. `ImagingStudy.endpoint` and `ImagingStudy.series.endpoint` reference it (see [Images and the image archive](#images-and-the-image-archive)).
+* [NeuroPlusLocation](StructureDefinition-location.html): a study site, with must-support on status, address (country), and managingOrganization. `Encounter.location` and `ResearchStudy.site` reference it.
+* [NeuroPlusOrganization](StructureDefinition-organization.html): an organization, with must-support on active. `Location.managingOrganization`, `Medication.manufacturer` and `Consent.organization` reference it.
 
 #### NeuroPlusDevice
 
