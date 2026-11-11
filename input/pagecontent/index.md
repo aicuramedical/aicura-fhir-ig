@@ -1,6 +1,6 @@
 ### Neuro+ (hosted by sphin-X) FHIR Implementation Guide
 
-This Implementation Guide (IG) formally profiles the FHIR R4B resources of the **Neuro+** data model for neurodegeneration research. The guide covers fourteen resource types in twenty-one profiles, with associated terminology and extensions.
+This Implementation Guide (IG) formally profiles the FHIR R4B resources of the **Neuro+** data model for neurodegeneration research. The guide covers seventeen resource types in twenty-four profiles, with associated terminology and extensions.
 
 #### Scope
 
@@ -27,6 +27,9 @@ This Implementation Guide (IG) formally profiles the FHIR R4B resources of the *
 | Device | [NeuroPlusAssayDevice](StructureDefinition-assay-device.html) | Lab assay platforms, one shared record per platform, linked from each lab value |
 | BodyStructure | [NeuroPlusBodyStructure](StructureDefinition-body-structure.html) | Body structures of one person, with a laterality extension |
 | BodyStructure | [NeuroPlusAtlasRegion](StructureDefinition-atlas-region.html) | Brain regions as an atlas defines them, one record shared by all participants |
+| Endpoint | [NeuroPlusEndpoint](StructureDefinition-endpoint.html) | The image archive a study or series points to |
+| Location | [NeuroPlusLocation](StructureDefinition-location.html) | Study sites |
+| Organization | [NeuroPlusOrganization](StructureDefinition-organization.html) | Organizations that manage sites, make medications or receive consent |
 
 #### FHIR version and MII
 
