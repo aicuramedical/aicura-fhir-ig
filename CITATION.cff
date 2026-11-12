@@ -4,6 +4,15 @@ type: software
 title: "Neuro+ (hosted by sphin-X) FHIR Implementation Guide"
 version: 1.0.0
 authors:
+  - given-names: Manuel
+    family-names: Kienast
+    email: manuel.kienast@aicura-medical.com
+    orcid: "https://orcid.org/0000-0002-5522-6619"
+    affiliation: AICURA Medical GmbH
+  - given-names: Elisa
+    family-names: Piehler
+    email: elisapiehler@web.de
+    affiliation: AICURA Medical GmbH
   - given-names: Janis
     family-names: Reinelt
     email: janis.reinelt@aicura-medical.com
@@ -13,9 +22,4 @@ authors:
     family-names: Thierbach
     email: konstantin.thierbach@aicura-medical.com
     orcid: "https://orcid.org/0000-0002-4418-9963"
-    affiliation: AICURA Medical GmbH
-  - given-names: Manuel
-    family-names: Kienast
-    email: manuel.kienast@aicura-medical.com
-    orcid: "https://orcid.org/0000-0002-5522-6619"
     affiliation: AICURA Medical GmbH
